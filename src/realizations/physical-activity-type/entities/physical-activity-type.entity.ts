@@ -1,5 +1,6 @@
 import { AbstractBaseEntity } from 'src/realizations/abstract-base-entity';
-import { Column, Entity } from 'typeorm';
+import { ConditionEntity } from 'src/realizations/condition/entities/condition.entity';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity('PhysicalActivityType')
 export class PhysicalActivityTypeEntity extends AbstractBaseEntity {
@@ -8,4 +9,10 @@ export class PhysicalActivityTypeEntity extends AbstractBaseEntity {
 
   @Column()
   description: string;
+
+  @OneToMany(
+    () => ConditionEntity,
+    (condition) => condition.physicalActivityType,
+  )
+  conditions: ConditionEntity[];
 }

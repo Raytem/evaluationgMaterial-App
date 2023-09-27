@@ -4,7 +4,7 @@ import { BendingTypeEntity } from 'src/realizations/bending-type/entities/bendin
 import { MaterialEntity } from 'src/realizations/material/entities/material.entity';
 import { PhysicalActivityTypeEntity } from 'src/realizations/physical-activity-type/entities/physical-activity-type.entity';
 import { WashingEntity } from 'src/realizations/washing/entities/washing.entity';
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 
 @Entity('Condition')
 export class ConditionEntity extends AbstractBaseEntity {
@@ -32,23 +32,27 @@ export class ConditionEntity extends AbstractBaseEntity {
   @OneToOne(() => MaterialEntity, (material) => material.condition, {
     onDelete: 'CASCADE',
   })
+  @JoinColumn({ name: 'material_id' })
   material: MaterialEntity;
 
-  @OneToOne(() => AbrasionTypeEntity, { eager: true })
+  @ManyToOne(() => AbrasionTypeEntity, { eager: true })
   @JoinColumn({ name: 'abrasionType_id' })
   abrasionType: AbrasionTypeEntity;
 
   @OneToOne(() => WashingEntity, (washing) => washing.condition, {
     eager: true,
   })
-  @JoinColumn({ name: 'washing_id' })
   washing: WashingEntity;
 
-  @OneToOne(() => BendingTypeEntity, { eager: true })
+  @ManyToOne(() => BendingTypeEntity, (bendingType) => bendingType.conditions, {
+    eager: true,
+  })
   @JoinColumn({ name: 'bendingType_id' })
   bendingType: BendingTypeEntity;
 
-  @OneToOne(() => PhysicalActivityTypeEntity, { eager: true })
+  @ManyToOne(() => PhysicalActivityTypeEntity, {
+    eager: true,
+  })
   @JoinColumn({ name: 'physicalActivityType_id' })
   physicalActivityType: PhysicalActivityTypeEntity;
 }

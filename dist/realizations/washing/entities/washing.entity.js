@@ -33,10 +33,13 @@ __decorate([
     (0, typeorm_1.OneToOne)(() => condition_entity_1.ConditionEntity, (condition) => condition.washing, {
         onDelete: 'CASCADE',
     }),
+    (0, typeorm_1.JoinColumn)({ name: 'washing_id' }),
     __metadata("design:type", condition_entity_1.ConditionEntity)
 ], WashingEntity.prototype, "condition", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => washing_type_entity_1.WashingTypeEntity, { eager: true }),
+    (0, typeorm_1.ManyToOne)(() => washing_type_entity_1.WashingTypeEntity, (washingType) => washingType.washings, {
+        eager: true,
+    }),
     (0, typeorm_1.JoinColumn)({ name: 'washingType_id' }),
     __metadata("design:type", washing_type_entity_1.WashingTypeEntity)
 ], WashingEntity.prototype, "washingType", void 0);

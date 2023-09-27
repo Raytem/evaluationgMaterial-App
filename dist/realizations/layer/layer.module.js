@@ -9,11 +9,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LayerModule = void 0;
 const common_1 = require("@nestjs/common");
 const layer_service_1 = require("./layer.service");
+const typeorm_1 = require("@nestjs/typeorm");
+const layer_entity_1 = require("./entities/layer.entity");
 let LayerModule = class LayerModule {
 };
 exports.LayerModule = LayerModule;
 exports.LayerModule = LayerModule = __decorate([
     (0, common_1.Module)({
+        imports: [typeorm_1.TypeOrmModule.forFeature([layer_entity_1.LayerEntity])],
         providers: [layer_service_1.LayerService],
     })
 ], LayerModule);

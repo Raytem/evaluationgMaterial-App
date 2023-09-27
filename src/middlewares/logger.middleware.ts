@@ -7,7 +7,7 @@ export class LoggerMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: (error?: any) => void) {
     const loggerBody = {
       method: req.method,
-      path: req.path,
+      path: req.baseUrl,
       params: req.params,
       query: req.query,
       body: req.body,

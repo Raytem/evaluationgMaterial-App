@@ -8,7 +8,9 @@ export class LayerEntity extends AbstractBaseEntity {
   @Column()
   indexNum: number;
 
-  @OneToOne(() => LayerTypeEntity, { eager: true })
+  @ManyToOne(() => LayerTypeEntity, (layerType) => layerType.layers, {
+    eager: true,
+  })
   @JoinColumn({ name: 'layerType_id' })
   layerType: LayerTypeEntity;
 

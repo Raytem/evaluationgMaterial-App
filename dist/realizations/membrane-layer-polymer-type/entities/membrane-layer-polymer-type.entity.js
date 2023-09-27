@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MembraneLayerPolymerTypeEntity = void 0;
 const abstract_base_entity_1 = require("../../abstract-base-entity");
+const material_entity_1 = require("../../material/entities/material.entity");
 const typeorm_1 = require("typeorm");
 let MembraneLayerPolymerTypeEntity = class MembraneLayerPolymerTypeEntity extends abstract_base_entity_1.AbstractBaseEntity {
 };
@@ -19,6 +20,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], MembraneLayerPolymerTypeEntity.prototype, "name", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => material_entity_1.MaterialEntity, (material) => material.membraneLayerPolymerType),
+    __metadata("design:type", material_entity_1.MaterialEntity)
+], MembraneLayerPolymerTypeEntity.prototype, "material", void 0);
 exports.MembraneLayerPolymerTypeEntity = MembraneLayerPolymerTypeEntity = __decorate([
     (0, typeorm_1.Entity)('MembraneLayerPolymerType')
 ], MembraneLayerPolymerTypeEntity);

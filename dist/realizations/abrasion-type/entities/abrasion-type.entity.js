@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AbrasionTypeEntity = void 0;
 const abstract_base_entity_1 = require("../../abstract-base-entity");
+const condition_entity_1 = require("../../condition/entities/condition.entity");
 const typeorm_1 = require("typeorm");
 let AbrasionTypeEntity = class AbrasionTypeEntity extends abstract_base_entity_1.AbstractBaseEntity {
 };
@@ -19,6 +20,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], AbrasionTypeEntity.prototype, "name", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => condition_entity_1.ConditionEntity, (condition) => condition.abrasionType),
+    __metadata("design:type", Array)
+], AbrasionTypeEntity.prototype, "conditions", void 0);
 exports.AbrasionTypeEntity = AbrasionTypeEntity = __decorate([
     (0, typeorm_1.Entity)('AbrasionType')
 ], AbrasionTypeEntity);

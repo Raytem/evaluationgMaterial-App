@@ -52,10 +52,11 @@ __decorate([
     (0, typeorm_1.OneToOne)(() => material_entity_1.MaterialEntity, (material) => material.condition, {
         onDelete: 'CASCADE',
     }),
+    (0, typeorm_1.JoinColumn)({ name: 'material_id' }),
     __metadata("design:type", material_entity_1.MaterialEntity)
 ], ConditionEntity.prototype, "material", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => abrasion_type_entity_1.AbrasionTypeEntity, { eager: true }),
+    (0, typeorm_1.ManyToOne)(() => abrasion_type_entity_1.AbrasionTypeEntity, { eager: true }),
     (0, typeorm_1.JoinColumn)({ name: 'abrasionType_id' }),
     __metadata("design:type", abrasion_type_entity_1.AbrasionTypeEntity)
 ], ConditionEntity.prototype, "abrasionType", void 0);
@@ -63,16 +64,19 @@ __decorate([
     (0, typeorm_1.OneToOne)(() => washing_entity_1.WashingEntity, (washing) => washing.condition, {
         eager: true,
     }),
-    (0, typeorm_1.JoinColumn)({ name: 'washing_id' }),
     __metadata("design:type", washing_entity_1.WashingEntity)
 ], ConditionEntity.prototype, "washing", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => bending_type_entity_1.BendingTypeEntity, { eager: true }),
+    (0, typeorm_1.ManyToOne)(() => bending_type_entity_1.BendingTypeEntity, (bendingType) => bendingType.conditions, {
+        eager: true,
+    }),
     (0, typeorm_1.JoinColumn)({ name: 'bendingType_id' }),
     __metadata("design:type", bending_type_entity_1.BendingTypeEntity)
 ], ConditionEntity.prototype, "bendingType", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => physical_activity_type_entity_1.PhysicalActivityTypeEntity, { eager: true }),
+    (0, typeorm_1.ManyToOne)(() => physical_activity_type_entity_1.PhysicalActivityTypeEntity, {
+        eager: true,
+    }),
     (0, typeorm_1.JoinColumn)({ name: 'physicalActivityType_id' }),
     __metadata("design:type", physical_activity_type_entity_1.PhysicalActivityTypeEntity)
 ], ConditionEntity.prototype, "physicalActivityType", void 0);

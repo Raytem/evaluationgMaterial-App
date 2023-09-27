@@ -9,7 +9,7 @@ class LoggerMiddleware {
     use(req, res, next) {
         const loggerBody = {
             method: req.method,
-            path: req.path,
+            path: req.baseUrl,
             params: req.params,
             query: req.query,
             body: req.body,

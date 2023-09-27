@@ -1,9 +1,8 @@
 import { CreateLayerDto } from './dto/create-layer.dto';
-import { UpdateLayerDto } from './dto/update-layer.dto';
+import { Repository } from 'typeorm';
+import { LayerEntity } from './entities/layer.entity';
 export declare class LayerService {
-    create(createLayerDto: CreateLayerDto): string;
-    findAll(): string;
-    findOne(id: number): string;
-    update(id: number, updateLayerDto: UpdateLayerDto): string;
-    remove(id: number): string;
+    private layerRepository;
+    constructor(layerRepository: Repository<LayerEntity>);
+    create(createLayerDto: CreateLayerDto): Promise<string>;
 }

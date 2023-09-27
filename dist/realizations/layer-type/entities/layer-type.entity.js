@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LayerTypeEntity = void 0;
 const abstract_base_entity_1 = require("../../abstract-base-entity");
+const layer_entity_1 = require("../../layer/entities/layer.entity");
 const typeorm_1 = require("typeorm");
 let LayerTypeEntity = class LayerTypeEntity extends abstract_base_entity_1.AbstractBaseEntity {
 };
@@ -19,6 +20,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], LayerTypeEntity.prototype, "name", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => layer_entity_1.LayerEntity, (layer) => layer.layerType),
+    __metadata("design:type", Array)
+], LayerTypeEntity.prototype, "layers", void 0);
 exports.LayerTypeEntity = LayerTypeEntity = __decorate([
     (0, typeorm_1.Entity)('LayerType')
 ], LayerTypeEntity);

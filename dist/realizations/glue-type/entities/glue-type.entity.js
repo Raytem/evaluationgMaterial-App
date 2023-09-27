@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GlueTypeEntity = void 0;
 const abstract_base_entity_1 = require("../../abstract-base-entity");
+const material_entity_1 = require("../../material/entities/material.entity");
 const typeorm_1 = require("typeorm");
 let GlueTypeEntity = class GlueTypeEntity extends abstract_base_entity_1.AbstractBaseEntity {
 };
@@ -19,6 +20,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], GlueTypeEntity.prototype, "name", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => material_entity_1.MaterialEntity, (material) => material.glueType),
+    __metadata("design:type", material_entity_1.MaterialEntity)
+], GlueTypeEntity.prototype, "material", void 0);
 exports.GlueTypeEntity = GlueTypeEntity = __decorate([
     (0, typeorm_1.Entity)('GlueType')
 ], GlueTypeEntity);

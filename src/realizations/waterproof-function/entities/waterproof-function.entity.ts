@@ -1,12 +1,13 @@
 import { AbstractBaseEntity } from 'src/realizations/abstract-base-entity';
 import { MaterialEntity } from 'src/realizations/material/entities/material.entity';
-import { Column, Entity, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 
 @Entity('WaterproofFunction')
 export class WaterproofFunctionEntity extends AbstractBaseEntity {
   @OneToOne(() => MaterialEntity, (material) => material.waterproofFunction, {
     onDelete: 'CASCADE',
   })
+  @JoinColumn({ name: 'material_id' })
   material: MaterialEntity;
 
   @Column()

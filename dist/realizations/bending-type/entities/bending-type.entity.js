@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BendingTypeEntity = void 0;
 const abstract_base_entity_1 = require("../../abstract-base-entity");
+const condition_entity_1 = require("../../condition/entities/condition.entity");
 const typeorm_1 = require("typeorm");
 let BendingTypeEntity = class BendingTypeEntity extends abstract_base_entity_1.AbstractBaseEntity {
 };
@@ -19,6 +20,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], BendingTypeEntity.prototype, "name", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => condition_entity_1.ConditionEntity, (condition) => condition.bendingType),
+    __metadata("design:type", Array)
+], BendingTypeEntity.prototype, "conditions", void 0);
 exports.BendingTypeEntity = BendingTypeEntity = __decorate([
     (0, typeorm_1.Entity)('BendingType')
 ], BendingTypeEntity);

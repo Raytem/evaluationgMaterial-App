@@ -20,6 +20,7 @@ __decorate([
     (0, typeorm_1.OneToOne)(() => material_entity_1.MaterialEntity, (material) => material.estimation, {
         onDelete: 'CASCADE',
     }),
+    (0, typeorm_1.JoinColumn)({ name: 'material_id' }),
     __metadata("design:type", material_entity_1.MaterialEntity)
 ], EstimationEntity.prototype, "material", void 0);
 exports.EstimationEntity = EstimationEntity = __decorate([

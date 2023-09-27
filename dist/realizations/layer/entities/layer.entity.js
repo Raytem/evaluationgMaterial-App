@@ -22,7 +22,9 @@ __decorate([
     __metadata("design:type", Number)
 ], LayerEntity.prototype, "indexNum", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => layer_type_entity_1.LayerTypeEntity, { eager: true }),
+    (0, typeorm_1.ManyToOne)(() => layer_type_entity_1.LayerTypeEntity, (layerType) => layerType.layers, {
+        eager: true,
+    }),
     (0, typeorm_1.JoinColumn)({ name: 'layerType_id' }),
     __metadata("design:type", layer_type_entity_1.LayerTypeEntity)
 ], LayerEntity.prototype, "layerType", void 0);

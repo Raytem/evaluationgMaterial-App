@@ -46,29 +46,24 @@ __decorate([
     (0, typeorm_1.OneToOne)(() => condition_entity_1.ConditionEntity, (condition) => condition.material, {
         eager: true,
     }),
-    (0, typeorm_1.JoinColumn)({ name: 'condition_id' }),
     __metadata("design:type", condition_entity_1.ConditionEntity)
 ], MaterialEntity.prototype, "condition", void 0);
 __decorate([
     (0, typeorm_1.OneToOne)(() => waterproof_function_entity_1.WaterproofFunctionEntity, (waterproofFunction) => waterproofFunction.material, { eager: true }),
-    (0, typeorm_1.JoinColumn)({ name: 'waterproofFunction_id' }),
     __metadata("design:type", waterproof_function_entity_1.WaterproofFunctionEntity)
 ], MaterialEntity.prototype, "waterproofFunction", void 0);
 __decorate([
     (0, typeorm_1.OneToOne)(() => homeostasis_function_entity_1.HomeostasisFunctionEntity, (homeostasisFunction) => homeostasisFunction.material, { eager: true }),
-    (0, typeorm_1.JoinColumn)({ name: 'homeostasisFunction_id' }),
     __metadata("design:type", homeostasis_function_entity_1.HomeostasisFunctionEntity)
 ], MaterialEntity.prototype, "homeostasisFunction", void 0);
 __decorate([
     (0, typeorm_1.OneToOne)(() => reliability_function_entity_1.ReliabilityFunctionEntity, (reliabilityFunction) => reliabilityFunction.material, { eager: true }),
-    (0, typeorm_1.JoinColumn)({ name: 'reliabilityFunction_id' }),
     __metadata("design:type", reliability_function_entity_1.ReliabilityFunctionEntity)
 ], MaterialEntity.prototype, "reliabilityFunction", void 0);
 __decorate([
     (0, typeorm_1.OneToOne)(() => estimation_entity_1.EstimationEntity, (estimation) => estimation.material, {
         eager: true,
     }),
-    (0, typeorm_1.JoinColumn)({ name: 'estimation_id' }),
     __metadata("design:type", estimation_entity_1.EstimationEntity)
 ], MaterialEntity.prototype, "estimation", void 0);
 __decorate([
@@ -85,17 +80,17 @@ __decorate([
     __metadata("design:type", user_entity_1.UserEntity)
 ], MaterialEntity.prototype, "user", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => production_method_entity_1.ProductionMethodEntity, { eager: true }),
+    (0, typeorm_1.ManyToOne)(() => production_method_entity_1.ProductionMethodEntity, { eager: true }),
     (0, typeorm_1.JoinColumn)({ name: 'productionMethod_id' }),
     __metadata("design:type", production_method_entity_1.ProductionMethodEntity)
 ], MaterialEntity.prototype, "productionMethod", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => membrane_layer_polymer_type_entity_1.MembraneLayerPolymerTypeEntity, { eager: true }),
+    (0, typeorm_1.ManyToOne)(() => membrane_layer_polymer_type_entity_1.MembraneLayerPolymerTypeEntity, { eager: true }),
     (0, typeorm_1.JoinColumn)({ name: 'membraneLayerPolymerType_id' }),
     __metadata("design:type", membrane_layer_polymer_type_entity_1.MembraneLayerPolymerTypeEntity)
 ], MaterialEntity.prototype, "membraneLayerPolymerType", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => glue_type_entity_1.GlueTypeEntity, { eager: true }),
+    (0, typeorm_1.ManyToOne)(() => glue_type_entity_1.GlueTypeEntity, { eager: true }),
     (0, typeorm_1.JoinColumn)({ name: 'glueType_id' }),
     __metadata("design:type", glue_type_entity_1.GlueTypeEntity)
 ], MaterialEntity.prototype, "glueType", void 0);

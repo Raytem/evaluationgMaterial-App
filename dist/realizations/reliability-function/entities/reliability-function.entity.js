@@ -20,6 +20,7 @@ __decorate([
     (0, typeorm_1.OneToOne)(() => material_entity_1.MaterialEntity, (material) => material.reliabilityFunction, {
         onDelete: 'CASCADE',
     }),
+    (0, typeorm_1.JoinColumn)({ name: 'material_id' }),
     __metadata("design:type", material_entity_1.MaterialEntity)
 ], ReliabilityFunctionEntity.prototype, "material", void 0);
 __decorate([

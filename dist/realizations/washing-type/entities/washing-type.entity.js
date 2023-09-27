@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WashingTypeEntity = void 0;
 const abstract_base_entity_1 = require("../../abstract-base-entity");
+const washing_entity_1 = require("../../washing/entities/washing.entity");
 const typeorm_1 = require("typeorm");
 let WashingTypeEntity = class WashingTypeEntity extends abstract_base_entity_1.AbstractBaseEntity {
 };
@@ -19,6 +20,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], WashingTypeEntity.prototype, "name", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => washing_entity_1.WashingEntity, (washing) => washing.washingType),
+    __metadata("design:type", Array)
+], WashingTypeEntity.prototype, "washings", void 0);
 exports.WashingTypeEntity = WashingTypeEntity = __decorate([
     (0, typeorm_1.Entity)('WashingType')
 ], WashingTypeEntity);

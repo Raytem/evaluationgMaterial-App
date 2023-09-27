@@ -36,7 +36,6 @@ export class MaterialEntity extends AbstractBaseEntity {
   @OneToOne(() => ConditionEntity, (condition) => condition.material, {
     eager: true,
   })
-  @JoinColumn({ name: 'condition_id' })
   condition: ConditionEntity;
 
   @OneToOne(
@@ -44,7 +43,6 @@ export class MaterialEntity extends AbstractBaseEntity {
     (waterproofFunction) => waterproofFunction.material,
     { eager: true },
   )
-  @JoinColumn({ name: 'waterproofFunction_id' })
   waterproofFunction: WaterproofFunctionEntity;
 
   @OneToOne(
@@ -52,7 +50,6 @@ export class MaterialEntity extends AbstractBaseEntity {
     (homeostasisFunction) => homeostasisFunction.material,
     { eager: true },
   )
-  @JoinColumn({ name: 'homeostasisFunction_id' })
   homeostasisFunction: HomeostasisFunctionEntity;
 
   @OneToOne(
@@ -60,13 +57,11 @@ export class MaterialEntity extends AbstractBaseEntity {
     (reliabilityFunction) => reliabilityFunction.material,
     { eager: true },
   )
-  @JoinColumn({ name: 'reliabilityFunction_id' })
   reliabilityFunction: ReliabilityFunctionEntity;
 
   @OneToOne(() => EstimationEntity, (estimation) => estimation.material, {
     eager: true,
   })
-  @JoinColumn({ name: 'estimation_id' })
   estimation: EstimationEntity;
 
   @OneToMany(() => LayerEntity, (layer) => layer.material, { eager: true })
@@ -79,15 +74,15 @@ export class MaterialEntity extends AbstractBaseEntity {
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
-  @OneToOne(() => ProductionMethodEntity, { eager: true })
+  @ManyToOne(() => ProductionMethodEntity, { eager: true })
   @JoinColumn({ name: 'productionMethod_id' })
   productionMethod: ProductionMethodEntity;
 
-  @OneToOne(() => MembraneLayerPolymerTypeEntity, { eager: true })
+  @ManyToOne(() => MembraneLayerPolymerTypeEntity, { eager: true })
   @JoinColumn({ name: 'membraneLayerPolymerType_id' })
   membraneLayerPolymerType: MembraneLayerPolymerTypeEntity;
 
-  @OneToOne(() => GlueTypeEntity, { eager: true })
+  @ManyToOne(() => GlueTypeEntity, { eager: true })
   @JoinColumn({ name: 'glueType_id' })
   glueType: GlueTypeEntity;
 }

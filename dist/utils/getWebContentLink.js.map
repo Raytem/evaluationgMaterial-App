@@ -1,0 +1,1 @@
+{"version":3,"file":"getWebContentLink.js","sourceRoot":"","sources":["../../src/utils/getWebContentLink.ts"],"names":[],"mappings":";;;AAAO,MAAM,iBAAiB,GAAG,CAAC,QAAgB,EAAE,EAAE;IACpD,OAAO,GAAG,OAAO,CAAC,GAAG,CAAC,OAAO,IAAI,OAAO,CAAC,GAAG,CAAC,mBAAmB,IAAI,QAAQ,EAAE,CAAC;AACjF,CAAC,CAAC;AAFW,QAAA,iBAAiB,qBAE5B"}

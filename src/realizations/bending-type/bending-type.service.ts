@@ -7,6 +7,7 @@ import { BendingTypeEntity } from './entities/bending-type.entity';
 import { PaginationService } from 'src/pagination/pagination.service';
 import { PaginationDto } from 'src/pagination/dto/pagination.dto';
 import { NoSuchException } from 'src/exceptions/no-such.exception';
+import { EntitiesReferException } from 'src/exceptions/entities-refer.exception';
 
 @Injectable()
 export class BendingTypeService {
@@ -84,8 +85,11 @@ export class BendingTypeService {
 
   async remove(id: number): Promise<BendingTypeEntity> {
     const bendingType = await this.findOne(id);
-
-    await this.bendingTypeRepository.delete({ id });
+    try {
+      await this.bendingTypeRepository.delete({ id });
+    } catch {
+      throw new EntitiesReferException('bending type');
+    }
 
     return bendingType;
   }

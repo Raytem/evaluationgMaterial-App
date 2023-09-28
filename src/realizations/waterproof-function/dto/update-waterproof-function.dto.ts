@@ -1,4 +1,6 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { PartialType } from '@nestjs/swagger';
 import { CreateWaterproofFunctionDto } from './create-waterproof-function.dto';
 
-export class UpdateWaterproofFunctionDto extends PartialType(CreateWaterproofFunctionDto) {}
+export class UpdateWaterproofFunctionDto extends PartialType(
+  CreateWaterproofFunctionDto,
+) {}

@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { LayerTypeEntity } from './entities/layer-type.entity';
 import { Repository } from 'typeorm';
 import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import { EntitiesReferException } from 'src/exceptions/entities-refer.exception';
 
 @Injectable()
 export class LayerTypeService {
@@ -83,7 +84,11 @@ export class LayerTypeService {
   async remove(id: number): Promise<LayerTypeEntity> {
     const layerType = await this.findOne(id);
 
-    await this.layerTypeRepository.delete({ id });
+    try {
+      await this.layerTypeRepository.delete({ id });
+    } catch {
+      throw new EntitiesReferException('layer type');
+    }
 
     return layerType;
   }

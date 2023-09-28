@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { AbstractBaseEntity } from 'src/realizations/abstract-base-entity';
 import { ConditionEntity } from 'src/realizations/condition/entities/condition.entity';
 import { EstimationEntity } from 'src/realizations/estimation/entities/estimation.entity';
@@ -21,23 +22,29 @@ import {
 
 @Entity('Material')
 export class MaterialEntity extends AbstractBaseEntity {
+  @ApiProperty({ type: String })
   @Column()
   name: string;
 
+  @ApiProperty({ type: String })
   @Column()
   manufacturer: string;
 
+  @ApiProperty({ type: String })
   @Column()
   description: string;
 
+  @ApiProperty({ type: Number })
   @Column()
   depth: number;
 
+  @ApiProperty({ type: () => ConditionEntity })
   @OneToOne(() => ConditionEntity, (condition) => condition.material, {
     eager: true,
   })
   condition: ConditionEntity;
 
+  @ApiProperty({ type: () => WaterproofFunctionEntity })
   @OneToOne(
     () => WaterproofFunctionEntity,
     (waterproofFunction) => waterproofFunction.material,
@@ -45,6 +52,7 @@ export class MaterialEntity extends AbstractBaseEntity {
   )
   waterproofFunction: WaterproofFunctionEntity;
 
+  @ApiProperty({ type: () => HomeostasisFunctionEntity })
   @OneToOne(
     () => HomeostasisFunctionEntity,
     (homeostasisFunction) => homeostasisFunction.material,
@@ -52,6 +60,7 @@ export class MaterialEntity extends AbstractBaseEntity {
   )
   homeostasisFunction: HomeostasisFunctionEntity;
 
+  @ApiProperty({ type: () => ReliabilityFunctionEntity })
   @OneToOne(
     () => ReliabilityFunctionEntity,
     (reliabilityFunction) => reliabilityFunction.material,
@@ -59,14 +68,17 @@ export class MaterialEntity extends AbstractBaseEntity {
   )
   reliabilityFunction: ReliabilityFunctionEntity;
 
+  @ApiProperty({ type: () => EstimationEntity })
   @OneToOne(() => EstimationEntity, (estimation) => estimation.material, {
     eager: true,
   })
   estimation: EstimationEntity;
 
+  @ApiProperty({ type: () => LayerEntity, isArray: true })
   @OneToMany(() => LayerEntity, (layer) => layer.material, { eager: true })
   layers: LayerEntity[];
 
+  @ApiProperty({ type: () => ImageEntity, isArray: true })
   @OneToMany(() => ImageEntity, (image) => image.material, { eager: true })
   images: ImageEntity[];
 
@@ -74,14 +86,17 @@ export class MaterialEntity extends AbstractBaseEntity {
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
+  @ApiProperty({ type: () => ProductionMethodEntity })
   @ManyToOne(() => ProductionMethodEntity, { eager: true })
   @JoinColumn({ name: 'productionMethod_id' })
   productionMethod: ProductionMethodEntity;
 
+  @ApiProperty({ type: () => MembraneLayerPolymerTypeEntity })
   @ManyToOne(() => MembraneLayerPolymerTypeEntity, { eager: true })
   @JoinColumn({ name: 'membraneLayerPolymerType_id' })
   membraneLayerPolymerType: MembraneLayerPolymerTypeEntity;
 
+  @ApiProperty({ type: () => GlueTypeEntity })
   @ManyToOne(() => GlueTypeEntity, { eager: true })
   @JoinColumn({ name: 'glueType_id' })
   glueType: GlueTypeEntity;

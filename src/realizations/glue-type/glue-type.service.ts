@@ -7,6 +7,7 @@ import { NoSuchException } from 'src/exceptions/no-such.exception';
 import { PaginationDto } from 'src/pagination/dto/pagination.dto';
 import { Repository } from 'typeorm';
 import { PaginationService } from 'src/pagination/pagination.service';
+import { EntitiesReferException } from 'src/exceptions/entities-refer.exception';
 
 @Injectable()
 export class GlueTypeService {
@@ -80,8 +81,11 @@ export class GlueTypeService {
 
   async remove(id: number): Promise<GlueTypeEntity> {
     const glueType = await this.findOne(id);
-
-    await this.glueTypeRepository.delete({ id });
+    try {
+      await this.glueTypeRepository.delete({ id });
+    } catch {
+      throw new EntitiesReferException('glue type');
+    }
 
     return glueType;
   }

@@ -10,6 +10,6 @@ import { PaginationService } from 'src/pagination/pagination.service';
   imports: [PaginationModule, TypeOrmModule.forFeature([UserEntity])],
   controllers: [UserController],
   providers: [UserService, PaginationService],
-  exports: [UserModule, TypeOrmModule],
+  exports: [UserService, TypeOrmModule],
 })
 export class UserModule {}

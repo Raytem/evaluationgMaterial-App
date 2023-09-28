@@ -7,6 +7,7 @@ import { PaginationDto } from 'src/pagination/dto/pagination.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationService } from 'src/pagination/pagination.service';
+import { EntitiesReferException } from 'src/exceptions/entities-refer.exception';
 
 @Injectable()
 export class ProductionMethodService {
@@ -90,7 +91,11 @@ export class ProductionMethodService {
   async remove(id: number): Promise<ProductionMethodEntity> {
     const productionMethod = await this.findOne(id);
 
-    await this.productionMethodRepository.delete({ id });
+    try {
+      await this.productionMethodRepository.delete({ id });
+    } catch {
+      throw new EntitiesReferException('production method');
+    }
 
     return productionMethod;
   }

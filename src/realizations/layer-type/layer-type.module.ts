@@ -10,5 +10,6 @@ import { PaginationService } from 'src/pagination/pagination.service';
   imports: [PaginationModule, TypeOrmModule.forFeature([LayerTypeEntity])],
   controllers: [LayerTypeController],
   providers: [LayerTypeService, PaginationService],
+  exports: [LayerTypeService],
 })
 export class LayerTypeModule {}

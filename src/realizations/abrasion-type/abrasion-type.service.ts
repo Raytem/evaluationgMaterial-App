@@ -7,6 +7,7 @@ import { PaginationDto } from 'src/pagination/dto/pagination.dto';
 import { PaginationService } from 'src/pagination/pagination.service';
 import { Repository } from 'typeorm';
 import { NoSuchException } from 'src/exceptions/no-such.exception';
+import { EntitiesReferException } from 'src/exceptions/entities-refer.exception';
 
 @Injectable()
 export class AbrasionTypeService {
@@ -85,7 +86,11 @@ export class AbrasionTypeService {
   async remove(id: number): Promise<AbrasionTypeEntity> {
     const abrasionType = await this.findOne(id);
 
-    await this.abrasionTypeRepository.delete({ id });
+    try {
+      await this.abrasionTypeRepository.delete({ id });
+    } catch {
+      throw new EntitiesReferException('abrasion type');
+    }
 
     return abrasionType;
   }

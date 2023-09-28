@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { PaginationService } from 'src/pagination/pagination.service';
 import { PaginationDto } from 'src/pagination/dto/pagination.dto';
 import { NoSuchException } from 'src/exceptions/no-such.exception';
+import { EntitiesReferException } from 'src/exceptions/entities-refer.exception';
 
 @Injectable()
 export class PhysicalActivityTypeService {
@@ -96,7 +97,11 @@ export class PhysicalActivityTypeService {
   async remove(id: number): Promise<PhysicalActivityTypeEntity> {
     const physicalActivityType = await this.findOne(id);
 
-    await this.physicalActivityTypeRepository.delete({ id });
+    try {
+      await this.physicalActivityTypeRepository.delete({ id });
+    } catch {
+      throw new EntitiesReferException('physical activity type');
+    }
 
     return physicalActivityType;
   }

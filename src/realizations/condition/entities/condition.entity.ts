@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { AbrasionTypeEntity } from 'src/realizations/abrasion-type/entities/abrasion-type.entity';
 import { AbstractBaseEntity } from 'src/realizations/abstract-base-entity';
 import { BendingTypeEntity } from 'src/realizations/bending-type/entities/bending-type.entity';
@@ -8,24 +9,31 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 
 @Entity('Condition')
 export class ConditionEntity extends AbstractBaseEntity {
+  @ApiProperty({ type: Boolean })
   @Column()
   isPositive: boolean;
 
+  @ApiProperty({ type: Number })
   @Column()
   minAirTemp: number;
 
+  @ApiProperty({ type: Number })
   @Column()
   maxAirHumidity: number;
 
+  @ApiProperty({ type: Number })
   @Column()
   avgAirSpeed: number;
 
+  @ApiProperty({ type: Number })
   @Column()
   residenceTime: number;
 
+  @ApiProperty({ type: Number, required: false })
   @Column({ nullable: true })
   torsionAngle: number;
 
+  @ApiProperty({ type: Number, required: false })
   @Column({ nullable: true })
   stretchingCompression: number;
 
@@ -35,6 +43,7 @@ export class ConditionEntity extends AbstractBaseEntity {
   @JoinColumn({ name: 'material_id' })
   material: MaterialEntity;
 
+  @ApiProperty({ type: () => AbrasionTypeEntity })
   @ManyToOne(() => AbrasionTypeEntity, { eager: true })
   @JoinColumn({ name: 'abrasionType_id' })
   abrasionType: AbrasionTypeEntity;
@@ -44,6 +53,7 @@ export class ConditionEntity extends AbstractBaseEntity {
   })
   washing: WashingEntity;
 
+  @ApiProperty({ type: () => BendingTypeEntity })
   @ManyToOne(() => BendingTypeEntity, (bendingType) => bendingType.conditions, {
     eager: true,
   })

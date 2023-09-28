@@ -7,6 +7,7 @@ import { PaginationService } from 'src/pagination/pagination.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import { EntitiesReferException } from 'src/exceptions/entities-refer.exception';
 
 @Injectable()
 export class MembraneLayerPolymerTypeService {
@@ -96,7 +97,11 @@ export class MembraneLayerPolymerTypeService {
   async remove(id: number): Promise<MembraneLayerPolymerTypeEntity> {
     const membraneLayerPolymerType = await this.findOne(id);
 
-    await this.membraneLayerPolymerTypeRepository.delete({ id });
+    try {
+      await this.membraneLayerPolymerTypeRepository.delete({ id });
+    } catch {
+      throw new EntitiesReferException('membrane layer polymer type');
+    }
 
     return membraneLayerPolymerType;
   }

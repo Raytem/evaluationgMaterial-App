@@ -3,7 +3,9 @@ import { CreateUserDto } from 'src/realizations/user/dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
 import { AuthService } from './auth.service';
 import { Public } from 'src/decorators/public.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('auth')
 @Public()
 @Controller('auth')
 export class AuthController {

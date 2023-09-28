@@ -19,11 +19,6 @@ import { AllExceptionFilter } from './exception-filters/all-exception.filter';
 import { TimeoutInterceptor } from './interceptors/timeout.interceptor';
 import { AuthModule } from './auth/auth.module';
 import { PaginationModule } from './pagination/pagination.module';
-import { LocalAuthGuard } from './auth/guards/local-auth.guard';
-import { LocalHeadersAuthGuard } from './auth/guards/local-headers-auth.guard';
-import { AuthService } from './auth/auth.service';
-import { UserService } from './realizations/user/user.service';
-import { PaginationService } from './pagination/pagination.service';
 import { AdminGuard } from './auth/guards/admin.guard';
 import { ExelModule } from './exel/exel.module';
 import { AbrasionTypeModule } from './realizations/abrasion-type/abrasion-type.module';
@@ -43,6 +38,7 @@ import { ReliabilityFunctionModule } from './realizations/reliability-function/r
 import { WashingModule } from './realizations/washing/washing.module';
 import { WashingTypeModule } from './realizations/washing-type/washing-type.module';
 import { WaterproofFunctionModule } from './realizations/waterproof-function/waterproof-function.module';
+import { BasicAuthGuard } from './auth/guards/basic-auth.guard';
 
 @Module({
   imports: [
@@ -55,8 +51,9 @@ import { WaterproofFunctionModule } from './realizations/waterproof-function/wat
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,
     }),
-    UserModule,
     AuthModule,
+    UserModule,
+    MaterialModule,
     PaginationModule,
     ExelModule,
     AbrasionTypeModule,
@@ -68,7 +65,6 @@ import { WaterproofFunctionModule } from './realizations/waterproof-function/wat
     ImageModule,
     LayerModule,
     LayerTypeModule,
-    MaterialModule,
     MembraneLayerPolymerTypeModule,
     PhysicalActivityTypeModule,
     ProductionMethodModule,
@@ -81,7 +77,7 @@ import { WaterproofFunctionModule } from './realizations/waterproof-function/wat
   providers: [
     {
       provide: APP_GUARD,
-      useClass: LocalHeadersAuthGuard,
+      useClass: BasicAuthGuard,
     },
     {
       provide: APP_GUARD,
@@ -100,9 +96,6 @@ import { WaterproofFunctionModule } from './realizations/waterproof-function/wat
       useClass: ClassSerializerInterceptor,
     },
     AppService,
-    AuthService,
-    UserService,
-    PaginationService,
   ],
 })
 export class AppModule implements NestModule {

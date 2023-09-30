@@ -12,42 +12,41 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateConditionDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
-class CreateConditionDto {
+const condition_entity_1 = require("../entities/condition.entity");
+const create_washing_dto_1 = require("../../washing/dto/create-washing.dto");
+const class_transformer_1 = require("class-transformer");
+class CreateConditionDto extends (0, swagger_1.OmitType)(condition_entity_1.ConditionEntity, [
+    'id',
+    'material',
+    'washing',
+    'bendingType',
+    'abrasionType',
+    'physicalActivityType',
+]) {
 }
 exports.CreateConditionDto = CreateConditionDto;
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: Boolean }),
-    (0, class_validator_1.IsBoolean)(),
-    __metadata("design:type", Boolean)
-], CreateConditionDto.prototype, "isPositive", void 0);
+    (0, swagger_1.ApiProperty)({ type: () => create_washing_dto_1.CreateWashingDto }),
+    (0, class_validator_1.ValidateNested)(),
+    (0, class_transformer_1.Type)(() => create_washing_dto_1.CreateWashingDto),
+    __metadata("design:type", create_washing_dto_1.CreateWashingDto)
+], CreateConditionDto.prototype, "washing", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, swagger_1.ApiProperty)({ type: Number, minimum: 1 }),
     (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsPositive)(),
     __metadata("design:type", Number)
-], CreateConditionDto.prototype, "minAirTemp", void 0);
+], CreateConditionDto.prototype, "bendingType_id", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, swagger_1.ApiProperty)({ type: Number, minimum: 1 }),
     (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsPositive)(),
     __metadata("design:type", Number)
-], CreateConditionDto.prototype, "maxAirHumidity", void 0);
+], CreateConditionDto.prototype, "abrasionType_id", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, swagger_1.ApiProperty)({ type: Number, minimum: 1 }),
     (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsPositive)(),
     __metadata("design:type", Number)
-], CreateConditionDto.prototype, "avgAirSpeed", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], CreateConditionDto.prototype, "residenceTime", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], CreateConditionDto.prototype, "torsionAngle", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], CreateConditionDto.prototype, "stretchingCompression", void 0);
+], CreateConditionDto.prototype, "physicalActivityType_id", void 0);
 //# sourceMappingURL=create-condition.dto.js.map

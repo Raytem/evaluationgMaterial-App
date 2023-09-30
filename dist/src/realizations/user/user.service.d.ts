@@ -2,8 +2,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
-import { PaginationService } from 'src/pagination/pagination.service';
-import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import { PaginationService } from 'src/services/pagination/pagination.service';
+import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 export declare class UserService {
     private paginationService;
     private userRepository;

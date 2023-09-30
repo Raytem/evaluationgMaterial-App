@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MaterialEntity = void 0;
 const swagger_1 = require("@nestjs/swagger");
+const class_transformer_1 = require("class-transformer");
 const abstract_base_entity_1 = require("../../abstract-base-entity");
 const condition_entity_1 = require("../../condition/entities/condition.entity");
 const estimation_entity_1 = require("../../estimation/entities/estimation.entity");
@@ -82,8 +83,11 @@ __decorate([
     __metadata("design:type", Array)
 ], MaterialEntity.prototype, "layers", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: () => image_entity_1.ImageEntity, isArray: true }),
+    (0, swagger_1.ApiProperty)({ type: () => String, isArray: true }),
     (0, typeorm_1.OneToMany)(() => image_entity_1.ImageEntity, (image) => image.material, { eager: true }),
+    (0, class_transformer_1.Transform)(({ value }) => {
+        return value.map((imageEntity) => imageEntity.webContentLink);
+    }),
     __metadata("design:type", Array)
 ], MaterialEntity.prototype, "images", void 0);
 __decorate([

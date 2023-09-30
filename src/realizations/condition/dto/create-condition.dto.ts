@@ -1,32 +1,34 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsNumber } from 'class-validator';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { IsBoolean, IsNumber, IsPositive, ValidateNested } from 'class-validator';
+import { ConditionEntity } from '../entities/condition.entity';
+import { CreateWashingDto } from 'src/realizations/washing/dto/create-washing.dto';
+import { Type } from 'class-transformer';
 
-export class CreateConditionDto {
-  @ApiProperty({ type: Boolean })
-  @IsBoolean()
-  isPositive: boolean;
+export class CreateConditionDto extends OmitType(ConditionEntity, [
+  'id',
+  'material',
+  'washing',
+  'bendingType',
+  'abrasionType',
+  'physicalActivityType',
+]) {
+  @ApiProperty({ type: () => CreateWashingDto })
+  @ValidateNested()
+  @Type(() => CreateWashingDto)
+  washing: CreateWashingDto;
 
-  @ApiProperty({ type: Number })
+  @ApiProperty({ type: Number, minimum: 1 })
   @IsNumber()
-  minAirTemp: number;
+  @IsPositive()
+  bendingType_id: number;
 
-  @ApiProperty({ type: Number })
+  @ApiProperty({ type: Number, minimum: 1 })
   @IsNumber()
-  maxAirHumidity: number;
+  @IsPositive()
+  abrasionType_id: number;
 
-  @ApiProperty({ type: Number })
+  @ApiProperty({ type: Number, minimum: 1 })
   @IsNumber()
-  avgAirSpeed: number;
-
-  @ApiProperty({ type: Number })
-  @IsNumber()
-  residenceTime: number;
-
-  @ApiProperty({ type: Number })
-  @IsNumber()
-  torsionAngle: number;
-
-  @ApiProperty({ type: Number })
-  @IsNumber()
-  stretchingCompression: number;
+  @IsPositive()
+  physicalActivityType_id: number;
 }

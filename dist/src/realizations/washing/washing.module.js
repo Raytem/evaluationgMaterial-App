@@ -9,12 +9,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.WashingModule = void 0;
 const common_1 = require("@nestjs/common");
 const washing_service_1 = require("./washing.service");
+const typeorm_1 = require("@nestjs/typeorm");
+const washing_entity_1 = require("./entities/washing.entity");
+const washing_type_module_1 = require("../washing-type/washing-type.module");
 let WashingModule = class WashingModule {
 };
 exports.WashingModule = WashingModule;
 exports.WashingModule = WashingModule = __decorate([
     (0, common_1.Module)({
+        imports: [washing_type_module_1.WashingTypeModule, typeorm_1.TypeOrmModule.forFeature([washing_entity_1.WashingEntity])],
         providers: [washing_service_1.WashingService],
+        exports: [washing_service_1.WashingService],
     })
 ], WashingModule);
 //# sourceMappingURL=washing.module.js.map

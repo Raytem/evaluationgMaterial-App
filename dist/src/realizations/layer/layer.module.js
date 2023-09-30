@@ -19,6 +19,7 @@ exports.LayerModule = LayerModule = __decorate([
     (0, common_1.Module)({
         imports: [layer_type_module_1.LayerTypeModule, typeorm_1.TypeOrmModule.forFeature([layer_entity_1.LayerEntity])],
         providers: [layer_service_1.LayerService],
+        exports: [layer_service_1.LayerService],
     })
 ], LayerModule);
 //# sourceMappingURL=layer.module.js.map

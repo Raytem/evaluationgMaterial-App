@@ -22,9 +22,9 @@ const core_1 = require("@nestjs/core");
 const all_exception_filter_1 = require("./exception-filters/all-exception.filter");
 const timeout_interceptor_1 = require("./interceptors/timeout.interceptor");
 const auth_module_1 = require("./auth/auth.module");
-const pagination_module_1 = require("./pagination/pagination.module");
+const pagination_module_1 = require("./services/pagination/pagination.module");
 const admin_guard_1 = require("./auth/guards/admin.guard");
-const exel_module_1 = require("./exel/exel.module");
+const exel_module_1 = require("./services/exel/exel.module");
 const abrasion_type_module_1 = require("./realizations/abrasion-type/abrasion-type.module");
 const bending_type_module_1 = require("./realizations/bending-type/bending-type.module");
 const condition_module_1 = require("./realizations/condition/condition.module");
@@ -43,6 +43,7 @@ const washing_module_1 = require("./realizations/washing/washing.module");
 const washing_type_module_1 = require("./realizations/washing-type/washing-type.module");
 const waterproof_function_module_1 = require("./realizations/waterproof-function/waterproof-function.module");
 const basic_auth_guard_1 = require("./auth/guards/basic-auth.guard");
+const file_config_1 = require("./config/config-functions/file.config");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(logger_middleware_1.LoggerMiddleware).forRoutes('*');
@@ -56,7 +57,7 @@ exports.AppModule = AppModule = __decorate([
                 isGlobal: true,
                 validate: env_validation_1.validate,
                 expandVariables: true,
-                load: [app_config_1.appConfig, postgres_config_1.postgresConfig],
+                load: [app_config_1.appConfig, postgres_config_1.postgresConfig, file_config_1.fileConfig],
             }),
             typeorm_1.TypeOrmModule.forRootAsync({
                 useClass: type_orm_config_service_1.TypeOrmConfigService,

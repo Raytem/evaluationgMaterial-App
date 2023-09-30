@@ -10,10 +10,10 @@ exports.BendingTypeModule = void 0;
 const common_1 = require("@nestjs/common");
 const bending_type_service_1 = require("./bending-type.service");
 const bending_type_controller_1 = require("./bending-type.controller");
-const pagination_module_1 = require("../../pagination/pagination.module");
+const pagination_module_1 = require("../../services/pagination/pagination.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const bending_type_entity_1 = require("./entities/bending-type.entity");
-const pagination_service_1 = require("../../pagination/pagination.service");
+const pagination_service_1 = require("../../services/pagination/pagination.service");
 let BendingTypeModule = class BendingTypeModule {
 };
 exports.BendingTypeModule = BendingTypeModule;
@@ -22,6 +22,7 @@ exports.BendingTypeModule = BendingTypeModule = __decorate([
         imports: [pagination_module_1.PaginationModule, typeorm_1.TypeOrmModule.forFeature([bending_type_entity_1.BendingTypeEntity])],
         controllers: [bending_type_controller_1.BendingTypeController],
         providers: [bending_type_service_1.BendingTypeService, pagination_service_1.PaginationService],
+        exports: [bending_type_service_1.BendingTypeService],
     })
 ], BendingTypeModule);
 //# sourceMappingURL=bending-type.module.js.map

@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsBoolean, IsNumber, IsOptional } from 'class-validator';
 import { AbrasionTypeEntity } from 'src/realizations/abrasion-type/entities/abrasion-type.entity';
 import { AbstractBaseEntity } from 'src/realizations/abstract-base-entity';
 import { BendingTypeEntity } from 'src/realizations/bending-type/entities/bending-type.entity';
@@ -10,30 +11,39 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 @Entity('Condition')
 export class ConditionEntity extends AbstractBaseEntity {
   @ApiProperty({ type: Boolean })
+  @IsBoolean()
   @Column()
   isPositive: boolean;
 
   @ApiProperty({ type: Number })
+  @IsNumber()
   @Column()
   minAirTemp: number;
 
   @ApiProperty({ type: Number })
+  @IsNumber()
   @Column()
   maxAirHumidity: number;
 
   @ApiProperty({ type: Number })
+  @IsNumber()
   @Column()
   avgAirSpeed: number;
 
   @ApiProperty({ type: Number })
+  @IsNumber()
   @Column()
   residenceTime: number;
 
   @ApiProperty({ type: Number, required: false })
+  @IsOptional()
+  @IsNumber()
   @Column({ nullable: true })
   torsionAngle: number;
 
   @ApiProperty({ type: Number, required: false })
+  @IsOptional()
+  @IsNumber()
   @Column({ nullable: true })
   stretchingCompression: number;
 
@@ -60,6 +70,7 @@ export class ConditionEntity extends AbstractBaseEntity {
   @JoinColumn({ name: 'bendingType_id' })
   bendingType: BendingTypeEntity;
 
+  @ApiProperty({ type: () => PhysicalActivityTypeEntity })
   @ManyToOne(() => PhysicalActivityTypeEntity, {
     eager: true,
   })

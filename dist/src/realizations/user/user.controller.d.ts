@@ -1,6 +1,6 @@
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 import { UserEntity } from './entities/user.entity';
 export declare class UserController {
     private readonly userService;

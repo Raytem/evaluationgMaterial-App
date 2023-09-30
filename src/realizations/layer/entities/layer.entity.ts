@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNumber, IsPositive } from 'class-validator';
 import { AbstractBaseEntity } from 'src/realizations/abstract-base-entity';
 import { LayerTypeEntity } from 'src/realizations/layer-type/entities/layer-type.entity';
 import { MaterialEntity } from 'src/realizations/material/entities/material.entity';
@@ -6,7 +7,9 @@ import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
 @Entity('Layer')
 export class LayerEntity extends AbstractBaseEntity {
-  @ApiProperty({ type: Number })
+  @ApiProperty({ type: Number, minimum: 1 })
+  @IsNumber()
+  @IsPositive()
   @Column()
   indexNum: number;
 

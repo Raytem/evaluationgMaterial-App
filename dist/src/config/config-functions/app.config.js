@@ -5,6 +5,5 @@ const config_1 = require("@nestjs/config");
 exports.appConfig = (0, config_1.registerAs)('app', () => ({
     host: process.env.APP_HOST,
     port: +process.env.APP_PORT,
-    staticDirName: process.env.APP_STATIC_DIR_NAME,
 }));
 //# sourceMappingURL=app.config.js.map

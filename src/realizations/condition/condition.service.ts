@@ -1,26 +1,64 @@
 import { Injectable } from '@nestjs/common';
 import { CreateConditionDto } from './dto/create-condition.dto';
 import { UpdateConditionDto } from './dto/update-condition.dto';
+import { ConditionEntity } from './entities/condition.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { AbrasionTypeService } from '../abrasion-type/abrasion-type.service';
+import { BendingTypeService } from '../bending-type/bending-type.service';
+import { PhysicalActivityTypeService } from '../physical-activity-type/physical-activity-type.service';
+import { WashingTypeService } from '../washing-type/washing-type.service';
+import { WashingService } from '../washing/washing.service';
 
 @Injectable()
 export class ConditionService {
-  create(createConditionDto: CreateConditionDto) {
-    return 'This action adds a new condition';
-  }
+  constructor(
+    @InjectRepository(ConditionEntity)
+    private conditionRepository: Repository<ConditionEntity>,
 
-  findAll() {
-    return `This action returns all condition`;
-  }
+    private washingService: WashingService,
 
-  findOne(id: number) {
-    return `This action returns a #${id} condition`;
-  }
+    private abrasionTypeService: AbrasionTypeService,
 
-  update(id: number, updateConditionDto: UpdateConditionDto) {
-    return `This action updates a #${id} condition`;
-  }
+    private bendingTypeService: BendingTypeService,
 
-  remove(id: number) {
-    return `This action removes a #${id} condition`;
+    private physicalActivityTypeService: PhysicalActivityTypeService,
+
+    private washingTypeService: WashingTypeService,
+  ) {}
+  async create(createConditionDto: CreateConditionDto) {
+    try {
+      const abrasionType = await this.abrasionTypeService.findOne(
+        createConditionDto.abrasionType_id,
+      );
+
+      const bendingType = await this.bendingTypeService.findOne(
+        createConditionDto.bendingType_id,
+      );
+
+      const washingType = await this.washingTypeService.findOne(
+        createConditionDto.washing.washingType_id,
+      );
+
+      const physicalActivityType =
+        await this.physicalActivityTypeService.findOne(
+          createConditionDto.physicalActivityType_id,
+        );
+
+      const washing = await this.washingService.create(
+        createConditionDto.washing,
+        washingType,
+      );
+
+      return await this.conditionRepository.save({
+        ...createConditionDto,
+        washing,
+        abrasionType,
+        bendingType,
+        physicalActivityType,
+      });
+    } catch (e) {
+      throw e;
+    }
   }
 }

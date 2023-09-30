@@ -1,26 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { CreateEstimationDto } from './dto/create-estimation.dto';
-import { UpdateEstimationDto } from './dto/update-estimation.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { EstimationEntity } from './entities/estimation.entity';
 
 @Injectable()
 export class EstimationService {
-  create(createEstimationDto: CreateEstimationDto) {
-    return 'This action adds a new estimation';
-  }
-
-  findAll() {
-    return `This action returns all estimation`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} estimation`;
-  }
-
-  update(id: number, updateEstimationDto: UpdateEstimationDto) {
-    return `This action updates a #${id} estimation`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} estimation`;
+  constructor(
+    @InjectRepository(EstimationEntity)
+    private estimationRepository: Repository<EstimationEntity>,
+  ) {}
+  async create(createEstimationDto: CreateEstimationDto) {
+    return await this.estimationRepository.save(createEstimationDto);
   }
 }

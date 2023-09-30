@@ -3,10 +3,10 @@ import { CreateProductionMethodDto } from './dto/create-production-method.dto';
 import { UpdateProductionMethodDto } from './dto/update-production-method.dto';
 import { ProductionMethodEntity } from './entities/production-method.entity';
 import { NoSuchException } from 'src/exceptions/no-such.exception';
-import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PaginationService } from 'src/pagination/pagination.service';
+import { PaginationService } from 'src/services/pagination/pagination.service';
 import { EntitiesReferException } from 'src/exceptions/entities-refer.exception';
 
 @Injectable()

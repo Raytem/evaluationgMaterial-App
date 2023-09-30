@@ -1,1 +1,1 @@
-export declare const getWebContentLink: (fileName: string) => string;
+export declare const getWebContentLink: (fileName: string, materialFolder: any) => string;

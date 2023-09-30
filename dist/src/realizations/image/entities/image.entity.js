@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImageEntity = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_transformer_1 = require("class-transformer");
 const abstract_base_entity_1 = require("../../abstract-base-entity");
 const material_entity_1 = require("../../material/entities/material.entity");
@@ -17,7 +18,7 @@ const getWebContentLink_1 = require("../../../utils/getWebContentLink");
 const typeorm_1 = require("typeorm");
 let ImageEntity = class ImageEntity extends abstract_base_entity_1.AbstractBaseEntity {
     get webContentLink() {
-        return (0, getWebContentLink_1.getWebContentLink)(this.name);
+        return (0, getWebContentLink_1.getWebContentLink)(this.name, this.folderName);
     }
     constructor(partial) {
         super();
@@ -26,10 +27,17 @@ let ImageEntity = class ImageEntity extends abstract_base_entity_1.AbstractBaseE
 };
 exports.ImageEntity = ImageEntity;
 __decorate([
+    (0, swagger_1.ApiProperty)({ type: String }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], ImageEntity.prototype, "name", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ type: String }),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], ImageEntity.prototype, "folderName", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ name: 'webContentLink', type: String }),
     (0, class_transformer_1.Expose)(),
     __metadata("design:type", Object),
     __metadata("design:paramtypes", [])

@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import { AbstractBaseEntity } from 'src/realizations/abstract-base-entity';
 import { ConditionEntity } from 'src/realizations/condition/entities/condition.entity';
 import { EstimationEntity } from 'src/realizations/estimation/entities/estimation.entity';
@@ -78,8 +79,11 @@ export class MaterialEntity extends AbstractBaseEntity {
   @OneToMany(() => LayerEntity, (layer) => layer.material, { eager: true })
   layers: LayerEntity[];
 
-  @ApiProperty({ type: () => ImageEntity, isArray: true })
+  @ApiProperty({ type: () => String, isArray: true })
   @OneToMany(() => ImageEntity, (image) => image.material, { eager: true })
+  @Transform(({ value }) => {
+    return value.map((imageEntity) => imageEntity.webContentLink);
+  })
   images: ImageEntity[];
 
   @ManyToOne(() => UserEntity, (user) => user.materials)

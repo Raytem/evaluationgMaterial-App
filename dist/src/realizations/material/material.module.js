@@ -10,11 +10,42 @@ exports.MaterialModule = void 0;
 const common_1 = require("@nestjs/common");
 const material_service_1 = require("./material.service");
 const material_controller_1 = require("./material.controller");
+const typeorm_1 = require("@nestjs/typeorm");
+const material_entity_1 = require("./entities/material.entity");
+const glue_type_module_1 = require("../glue-type/glue-type.module");
+const layer_type_module_1 = require("../layer-type/layer-type.module");
+const membrane_layer_polymer_type_module_1 = require("../membrane-layer-polymer-type/membrane-layer-polymer-type.module");
+const production_method_module_1 = require("../production-method/production-method.module");
+const waterproof_function_module_1 = require("../waterproof-function/waterproof-function.module");
+const homeostasis_function_module_1 = require("../homeostasis-function/homeostasis-function.module");
+const estimation_module_1 = require("../estimation/estimation.module");
+const image_module_1 = require("../image/image.module");
+const layer_module_1 = require("../layer/layer.module");
+const reliability_function_module_1 = require("../reliability-function/reliability-function.module");
+const exel_module_1 = require("../../services/exel/exel.module");
+const condition_module_1 = require("../condition/condition.module");
+const pagination_module_1 = require("../../services/pagination/pagination.module");
 let MaterialModule = class MaterialModule {
 };
 exports.MaterialModule = MaterialModule;
 exports.MaterialModule = MaterialModule = __decorate([
     (0, common_1.Module)({
+        imports: [
+            glue_type_module_1.GlueTypeModule,
+            layer_type_module_1.LayerTypeModule,
+            membrane_layer_polymer_type_module_1.MembraneLayerPolymerTypeModule,
+            production_method_module_1.ProductionMethodModule,
+            condition_module_1.ConditionModule,
+            waterproof_function_module_1.WaterproofFunctionModule,
+            homeostasis_function_module_1.HomeostasisFunctionModule,
+            reliability_function_module_1.ReliabilityFunctionModule,
+            estimation_module_1.EstimationModule,
+            image_module_1.ImageModule,
+            layer_module_1.LayerModule,
+            typeorm_1.TypeOrmModule.forFeature([material_entity_1.MaterialEntity]),
+            exel_module_1.ExelModule,
+            pagination_module_1.PaginationModule,
+        ],
         controllers: [material_controller_1.MaterialController],
         providers: [material_service_1.MaterialService],
     })

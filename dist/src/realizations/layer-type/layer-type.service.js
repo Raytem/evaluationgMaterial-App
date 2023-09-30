@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LayerTypeService = void 0;
 const common_1 = require("@nestjs/common");
 const no_such_exception_1 = require("../../exceptions/no-such.exception");
-const pagination_service_1 = require("../../pagination/pagination.service");
+const pagination_service_1 = require("../../services/pagination/pagination.service");
 const typeorm_1 = require("@nestjs/typeorm");
 const layer_type_entity_1 = require("./entities/layer-type.entity");
 const typeorm_2 = require("typeorm");
@@ -43,6 +43,13 @@ let LayerTypeService = class LayerTypeService {
         const pagination = this.paginationService.paginate(paginationDto);
         return await this.layerTypeRepository.find({
             ...pagination,
+        });
+    }
+    async findByIds(layerTypeIds) {
+        return await this.layerTypeRepository.find({
+            where: {
+                id: (0, typeorm_2.In)(layerTypeIds),
+            },
         });
     }
     async findOne(id, name) {

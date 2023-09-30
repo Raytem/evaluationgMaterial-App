@@ -12,7 +12,7 @@ import { PhysicalActivityTypeService } from './physical-activity-type.service';
 import { CreatePhysicalActivityTypeDto } from './dto/create-physical-activity-type.dto';
 import { UpdatePhysicalActivityTypeDto } from './dto/update-physical-activity-type.dto';
 import { Admin } from 'src/decorators/admin.decorator';
-import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 import {
   ApiBasicAuth,
   ApiOperation,

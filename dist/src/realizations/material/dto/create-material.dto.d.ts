@@ -1,17 +1,13 @@
 import { CreateConditionDto } from 'src/realizations/condition/dto/create-condition.dto';
-import { CreateLayerDto } from 'src/realizations/layer/dto/create-layer.dto';
-declare class MaterialDto {
-    name: string;
-    manufacturer: string;
-    description: string;
-    depth: number;
-}
+import { CalculateWaterproofFunctionDto } from 'src/realizations/waterproof-function/dto/calculate-waterproof-function.dto';
+import { CalculateReliabilityFunctionDto } from 'src/realizations/reliability-function/dto/calculate-reliability-function.dto';
+import { CalculateHomeostasisFunctionDto } from 'src/realizations/homeostasis-function/dto/calculate-homeostasis-function.dto';
+import { MaterialInfoDto } from './material-info.dto';
 export declare class CreateMaterialDto {
-    material: MaterialDto;
-    layers: CreateLayerDto[];
+    images: string;
+    material: MaterialInfoDto;
     condition: CreateConditionDto;
-    productionMethod_id: number;
-    membraneLayerPolymer_id: number;
-    glueType_id: number;
+    waterproofFunction: CalculateWaterproofFunctionDto;
+    homeostasisFunction: CalculateHomeostasisFunctionDto;
+    reliabilityFunction: CalculateReliabilityFunctionDto;
 }
-export {};

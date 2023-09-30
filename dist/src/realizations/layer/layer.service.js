@@ -23,19 +23,22 @@ let LayerService = class LayerService {
         this.layerRepository = layerRepository;
         this.layerTypeService = layerTypeService;
     }
-    async create(createLayerDto) {
-        let layerType;
-        try {
-            layerType = await this.layerTypeService.findOne(createLayerDto.layerType_id);
+    async create(createLayerDto, layerType) {
+        if (!layerType) {
+            try {
+                layerType = await this.layerTypeService.findOne(createLayerDto.layerType_id);
+            }
+            catch (e) {
+                throw e;
+            }
         }
-        catch (e) {
-            throw e;
-        }
-        const newLayer = await this.layerRepository.save({
-            indexNum: createLayerDto.indexNum,
-            layerType: layerType,
+        return await this.layerRepository.save({
+            ...createLayerDto,
+            layerType,
         });
-        return newLayer;
+    }
+    async createMany(createLayerDtoList) {
+        return await this.layerRepository.save(createLayerDtoList);
     }
 };
 exports.LayerService = LayerService;

@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConditionEntity = void 0;
 const swagger_1 = require("@nestjs/swagger");
+const class_validator_1 = require("class-validator");
 const abrasion_type_entity_1 = require("../../abrasion-type/entities/abrasion-type.entity");
 const abstract_base_entity_1 = require("../../abstract-base-entity");
 const bending_type_entity_1 = require("../../bending-type/entities/bending-type.entity");
@@ -23,36 +24,45 @@ let ConditionEntity = class ConditionEntity extends abstract_base_entity_1.Abstr
 exports.ConditionEntity = ConditionEntity;
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Boolean }),
+    (0, class_validator_1.IsBoolean)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Boolean)
 ], ConditionEntity.prototype, "isPositive", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], ConditionEntity.prototype, "minAirTemp", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], ConditionEntity.prototype, "maxAirHumidity", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], ConditionEntity.prototype, "avgAirSpeed", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], ConditionEntity.prototype, "residenceTime", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number, required: false }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)
 ], ConditionEntity.prototype, "torsionAngle", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number, required: false }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)
 ], ConditionEntity.prototype, "stretchingCompression", void 0);
@@ -84,6 +94,7 @@ __decorate([
     __metadata("design:type", bending_type_entity_1.BendingTypeEntity)
 ], ConditionEntity.prototype, "bendingType", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ type: () => physical_activity_type_entity_1.PhysicalActivityTypeEntity }),
     (0, typeorm_1.ManyToOne)(() => physical_activity_type_entity_1.PhysicalActivityTypeEntity, {
         eager: true,
     }),

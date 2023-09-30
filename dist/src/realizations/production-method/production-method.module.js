@@ -10,8 +10,8 @@ exports.ProductionMethodModule = void 0;
 const common_1 = require("@nestjs/common");
 const production_method_service_1 = require("./production-method.service");
 const production_method_controller_1 = require("./production-method.controller");
-const pagination_service_1 = require("../../pagination/pagination.service");
-const pagination_module_1 = require("../../pagination/pagination.module");
+const pagination_service_1 = require("../../services/pagination/pagination.service");
+const pagination_module_1 = require("../../services/pagination/pagination.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const production_method_entity_1 = require("./entities/production-method.entity");
 let ProductionMethodModule = class ProductionMethodModule {
@@ -25,6 +25,7 @@ exports.ProductionMethodModule = ProductionMethodModule = __decorate([
         ],
         controllers: [production_method_controller_1.ProductionMethodController],
         providers: [production_method_service_1.ProductionMethodService, pagination_service_1.PaginationService],
+        exports: [production_method_service_1.ProductionMethodService],
     })
 ], ProductionMethodModule);
 //# sourceMappingURL=production-method.module.js.map

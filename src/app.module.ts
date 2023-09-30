@@ -18,9 +18,9 @@ import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { AllExceptionFilter } from './exception-filters/all-exception.filter';
 import { TimeoutInterceptor } from './interceptors/timeout.interceptor';
 import { AuthModule } from './auth/auth.module';
-import { PaginationModule } from './pagination/pagination.module';
+import { PaginationModule } from './services/pagination/pagination.module';
 import { AdminGuard } from './auth/guards/admin.guard';
-import { ExelModule } from './exel/exel.module';
+import { ExelModule } from './services/exel/exel.module';
 import { AbrasionTypeModule } from './realizations/abrasion-type/abrasion-type.module';
 import { BendingTypeModule } from './realizations/bending-type/bending-type.module';
 import { ConditionModule } from './realizations/condition/condition.module';
@@ -39,6 +39,7 @@ import { WashingModule } from './realizations/washing/washing.module';
 import { WashingTypeModule } from './realizations/washing-type/washing-type.module';
 import { WaterproofFunctionModule } from './realizations/waterproof-function/waterproof-function.module';
 import { BasicAuthGuard } from './auth/guards/basic-auth.guard';
+import { fileConfig } from './config/config-functions/file.config';
 
 @Module({
   imports: [
@@ -46,7 +47,7 @@ import { BasicAuthGuard } from './auth/guards/basic-auth.guard';
       isGlobal: true,
       validate,
       expandVariables: true,
-      load: [appConfig, postgresConfig],
+      load: [appConfig, postgresConfig, fileConfig],
     }),
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,

@@ -1,7 +1,7 @@
 import { PhysicalActivityTypeService } from './physical-activity-type.service';
 import { CreatePhysicalActivityTypeDto } from './dto/create-physical-activity-type.dto';
 import { UpdatePhysicalActivityTypeDto } from './dto/update-physical-activity-type.dto';
-import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 import { PhysicalActivityTypeEntity } from './entities/physical-activity-type.entity';
 export declare class PhysicalActivityTypeController {
     private readonly physicalActivityTypeService;

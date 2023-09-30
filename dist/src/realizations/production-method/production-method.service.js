@@ -18,7 +18,7 @@ const production_method_entity_1 = require("./entities/production-method.entity"
 const no_such_exception_1 = require("../../exceptions/no-such.exception");
 const typeorm_1 = require("typeorm");
 const typeorm_2 = require("@nestjs/typeorm");
-const pagination_service_1 = require("../../pagination/pagination.service");
+const pagination_service_1 = require("../../services/pagination/pagination.service");
 const entities_refer_exception_1 = require("../../exceptions/entities-refer.exception");
 let ProductionMethodService = class ProductionMethodService {
     constructor(paginationService, productionMethodRepository) {

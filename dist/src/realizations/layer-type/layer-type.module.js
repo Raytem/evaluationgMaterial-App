@@ -11,9 +11,9 @@ const common_1 = require("@nestjs/common");
 const layer_type_service_1 = require("./layer-type.service");
 const layer_type_controller_1 = require("./layer-type.controller");
 const typeorm_1 = require("@nestjs/typeorm");
-const pagination_module_1 = require("../../pagination/pagination.module");
+const pagination_module_1 = require("../../services/pagination/pagination.module");
 const layer_type_entity_1 = require("./entities/layer-type.entity");
-const pagination_service_1 = require("../../pagination/pagination.service");
+const pagination_service_1 = require("../../services/pagination/pagination.service");
 let LayerTypeModule = class LayerTypeModule {
 };
 exports.LayerTypeModule = LayerTypeModule;

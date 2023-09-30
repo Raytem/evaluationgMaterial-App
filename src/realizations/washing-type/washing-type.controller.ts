@@ -12,7 +12,7 @@ import { WashingTypeService } from './washing-type.service';
 import { CreateWashingTypeDto } from './dto/create-washing-type.dto';
 import { UpdateWashingTypeDto } from './dto/update-washing-type.dto';
 import { Admin } from 'src/decorators/admin.decorator';
-import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 import {
   ApiBasicAuth,
   ApiOperation,

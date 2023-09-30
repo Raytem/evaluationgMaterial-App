@@ -4,9 +4,9 @@ import { UpdateGlueTypeDto } from './dto/update-glue-type.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GlueTypeEntity } from './entities/glue-type.entity';
 import { NoSuchException } from 'src/exceptions/no-such.exception';
-import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 import { Repository } from 'typeorm';
-import { PaginationService } from 'src/pagination/pagination.service';
+import { PaginationService } from 'src/services/pagination/pagination.service';
 import { EntitiesReferException } from 'src/exceptions/entities-refer.exception';
 
 @Injectable()

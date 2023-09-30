@@ -14,7 +14,6 @@ export class UserEntity extends AbstractBaseEntity {
   @Column({ unique: true })
   email: string;
 
-  @ApiProperty({ type: String })
   @Exclude()
   @Column()
   password: string;

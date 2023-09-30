@@ -9,12 +9,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.WaterproofFunctionModule = void 0;
 const common_1 = require("@nestjs/common");
 const waterproof_function_service_1 = require("./waterproof-function.service");
+const typeorm_1 = require("@nestjs/typeorm");
+const waterproof_function_entity_1 = require("./entities/waterproof-function.entity");
 let WaterproofFunctionModule = class WaterproofFunctionModule {
 };
 exports.WaterproofFunctionModule = WaterproofFunctionModule;
 exports.WaterproofFunctionModule = WaterproofFunctionModule = __decorate([
     (0, common_1.Module)({
+        imports: [typeorm_1.TypeOrmModule.forFeature([waterproof_function_entity_1.WaterproofFunctionEntity])],
         providers: [waterproof_function_service_1.WaterproofFunctionService],
+        exports: [waterproof_function_service_1.WaterproofFunctionService],
     })
 ], WaterproofFunctionModule);
 //# sourceMappingURL=waterproof-function.module.js.map

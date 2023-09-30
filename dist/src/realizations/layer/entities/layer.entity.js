@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LayerEntity = void 0;
 const swagger_1 = require("@nestjs/swagger");
+const class_validator_1 = require("class-validator");
 const abstract_base_entity_1 = require("../../abstract-base-entity");
 const layer_type_entity_1 = require("../../layer-type/entities/layer-type.entity");
 const material_entity_1 = require("../../material/entities/material.entity");
@@ -19,7 +20,9 @@ let LayerEntity = class LayerEntity extends abstract_base_entity_1.AbstractBaseE
 };
 exports.LayerEntity = LayerEntity;
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, swagger_1.ApiProperty)({ type: Number, minimum: 1 }),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsPositive)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], LayerEntity.prototype, "indexNum", void 0);

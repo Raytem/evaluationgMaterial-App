@@ -13,6 +13,25 @@ class EnvVariables {
   @IsNumberString()
   APP_PORT: string;
 
+  //file
+  @IsString()
+  FILE_STATIC_DIR_NAME: string;
+
+  @IsString()
+  FILE_MATERIAL_IMAGES_DIR_NAME: string;
+
+  @IsString()
+  FILE_TEMPLATES_DIR_NAME: string;
+
+  @IsNumberString()
+  FILE_RESIZE_SIZE: string;
+
+  @IsNumberString()
+  FILE_MAX_SIZE: string;
+
+  @IsNumberString()
+  FILE_UPLOAD_LIMIT: string;
+
   //db
   @IsString()
   DB_TYPE: string;

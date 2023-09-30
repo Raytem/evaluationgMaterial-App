@@ -12,7 +12,7 @@ import { GlueTypeService } from './glue-type.service';
 import { CreateGlueTypeDto } from './dto/create-glue-type.dto';
 import { UpdateGlueTypeDto } from './dto/update-glue-type.dto';
 import { Admin } from 'src/decorators/admin.decorator';
-import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 import {
   ApiBasicAuth,
   ApiOperation,

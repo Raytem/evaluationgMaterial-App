@@ -7,5 +7,6 @@ import { LayerTypeModule } from '../layer-type/layer-type.module';
 @Module({
   imports: [LayerTypeModule, TypeOrmModule.forFeature([LayerEntity])],
   providers: [LayerService],
+  exports: [LayerService],
 })
 export class LayerModule {}

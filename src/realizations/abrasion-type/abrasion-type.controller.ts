@@ -12,7 +12,7 @@ import { AbrasionTypeService } from './abrasion-type.service';
 import { CreateAbrasionTypeDto } from './dto/create-abrasion-type.dto';
 import { Admin } from 'src/decorators/admin.decorator';
 import { UpdateAbrasionTypeDto } from './dto/update-abrasion-type.dto';
-import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 import {
   ApiBasicAuth,
   ApiOperation,

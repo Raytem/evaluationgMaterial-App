@@ -12,8 +12,8 @@ const abrasion_type_service_1 = require("./abrasion-type.service");
 const abrasion_type_controller_1 = require("./abrasion-type.controller");
 const typeorm_1 = require("@nestjs/typeorm");
 const abrasion_type_entity_1 = require("./entities/abrasion-type.entity");
-const pagination_module_1 = require("../../pagination/pagination.module");
-const pagination_service_1 = require("../../pagination/pagination.service");
+const pagination_module_1 = require("../../services/pagination/pagination.module");
+const pagination_service_1 = require("../../services/pagination/pagination.service");
 let AbrasionTypeModule = class AbrasionTypeModule {
 };
 exports.AbrasionTypeModule = AbrasionTypeModule;
@@ -22,6 +22,7 @@ exports.AbrasionTypeModule = AbrasionTypeModule = __decorate([
         imports: [pagination_module_1.PaginationModule, typeorm_1.TypeOrmModule.forFeature([abrasion_type_entity_1.AbrasionTypeEntity])],
         controllers: [abrasion_type_controller_1.AbrasionTypeController],
         providers: [abrasion_type_service_1.AbrasionTypeService, pagination_service_1.PaginationService],
+        exports: [abrasion_type_service_1.AbrasionTypeService],
     })
 ], AbrasionTypeModule);
 //# sourceMappingURL=abrasion-type.module.js.map

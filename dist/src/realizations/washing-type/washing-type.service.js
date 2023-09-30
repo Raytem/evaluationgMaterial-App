@@ -14,7 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WashingTypeService = void 0;
 const common_1 = require("@nestjs/common");
-const pagination_service_1 = require("../../pagination/pagination.service");
+const pagination_service_1 = require("../../services/pagination/pagination.service");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const washing_type_entity_1 = require("./entities/washing-type.entity");

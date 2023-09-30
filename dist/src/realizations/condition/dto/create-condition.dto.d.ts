@@ -1,9 +1,10 @@
-export declare class CreateConditionDto {
-    isPositive: boolean;
-    minAirTemp: number;
-    maxAirHumidity: number;
-    avgAirSpeed: number;
-    residenceTime: number;
-    torsionAngle: number;
-    stretchingCompression: number;
+import { ConditionEntity } from '../entities/condition.entity';
+import { CreateWashingDto } from 'src/realizations/washing/dto/create-washing.dto';
+declare const CreateConditionDto_base: import("@nestjs/common").Type<Omit<ConditionEntity, "id" | "material" | "abrasionType" | "washing" | "bendingType" | "physicalActivityType">>;
+export declare class CreateConditionDto extends CreateConditionDto_base {
+    washing: CreateWashingDto;
+    bendingType_id: number;
+    abrasionType_id: number;
+    physicalActivityType_id: number;
 }
+export {};

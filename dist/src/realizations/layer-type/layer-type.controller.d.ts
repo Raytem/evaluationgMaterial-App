@@ -1,7 +1,7 @@
 import { LayerTypeService } from './layer-type.service';
 import { CreateLayerTypeDto } from './dto/create-layer-type.dto';
 import { UpdateLayerTypeDto } from './dto/update-layer-type.dto';
-import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 export declare class LayerTypeController {
     private readonly layerTypeService;
     constructor(layerTypeService: LayerTypeService);

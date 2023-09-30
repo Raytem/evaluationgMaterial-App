@@ -1,6 +1,12 @@
 declare class EnvVariables {
     APP_HOST: string;
     APP_PORT: string;
+    FILE_STATIC_DIR_NAME: string;
+    FILE_MATERIAL_IMAGES_DIR_NAME: string;
+    FILE_TEMPLATES_DIR_NAME: string;
+    FILE_RESIZE_SIZE: string;
+    FILE_MAX_SIZE: string;
+    FILE_UPLOAD_LIMIT: string;
     DB_TYPE: string;
     DB_HOST: string;
     DB_PORT: string;

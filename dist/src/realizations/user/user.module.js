@@ -12,8 +12,8 @@ const user_service_1 = require("./user.service");
 const user_controller_1 = require("./user.controller");
 const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("./entities/user.entity");
-const pagination_module_1 = require("../../pagination/pagination.module");
-const pagination_service_1 = require("../../pagination/pagination.service");
+const pagination_module_1 = require("../../services/pagination/pagination.module");
+const pagination_service_1 = require("../../services/pagination/pagination.service");
 let UserModule = class UserModule {
 };
 exports.UserModule = UserModule;

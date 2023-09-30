@@ -10,10 +10,10 @@ exports.WashingTypeModule = void 0;
 const common_1 = require("@nestjs/common");
 const washing_type_service_1 = require("./washing-type.service");
 const washing_type_controller_1 = require("./washing-type.controller");
-const pagination_module_1 = require("../../pagination/pagination.module");
+const pagination_module_1 = require("../../services/pagination/pagination.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const washing_type_entity_1 = require("./entities/washing-type.entity");
-const pagination_service_1 = require("../../pagination/pagination.service");
+const pagination_service_1 = require("../../services/pagination/pagination.service");
 let WashingTypeModule = class WashingTypeModule {
 };
 exports.WashingTypeModule = WashingTypeModule;
@@ -22,6 +22,7 @@ exports.WashingTypeModule = WashingTypeModule = __decorate([
         imports: [pagination_module_1.PaginationModule, typeorm_1.TypeOrmModule.forFeature([washing_type_entity_1.WashingTypeEntity])],
         controllers: [washing_type_controller_1.WashingTypeController],
         providers: [washing_type_service_1.WashingTypeService, pagination_service_1.PaginationService],
+        exports: [washing_type_service_1.WashingTypeService],
     })
 ], WashingTypeModule);
 //# sourceMappingURL=washing-type.module.js.map

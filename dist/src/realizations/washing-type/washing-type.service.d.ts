@@ -1,9 +1,9 @@
 import { CreateWashingTypeDto } from './dto/create-washing-type.dto';
 import { UpdateWashingTypeDto } from './dto/update-washing-type.dto';
-import { PaginationService } from 'src/pagination/pagination.service';
+import { PaginationService } from 'src/services/pagination/pagination.service';
 import { Repository } from 'typeorm';
 import { WashingTypeEntity } from './entities/washing-type.entity';
-import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 export declare class WashingTypeService {
     private paginationService;
     private washingTypeRepository;

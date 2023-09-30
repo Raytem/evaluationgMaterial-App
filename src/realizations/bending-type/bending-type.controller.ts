@@ -12,7 +12,7 @@ import { BendingTypeService } from './bending-type.service';
 import { CreateBendingTypeDto } from './dto/create-bending-type.dto';
 import { UpdateBendingTypeDto } from './dto/update-bending-type.dto';
 import { Admin } from 'src/decorators/admin.decorator';
-import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 import {
   ApiBasicAuth,
   ApiOperation,

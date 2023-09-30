@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { MembraneLayerPolymerTypeService } from './membrane-layer-polymer-type.service';
 import { MembraneLayerPolymerTypeController } from './membrane-layer-polymer-type.controller';
 import { MembraneLayerPolymerTypeEntity } from './entities/membrane-layer-polymer-type.entity';
-import { PaginationModule } from 'src/pagination/pagination.module';
+import { PaginationModule } from 'src/services/pagination/pagination.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PaginationService } from 'src/pagination/pagination.service';
+import { PaginationService } from 'src/services/pagination/pagination.service';
 
 @Module({
   imports: [
@@ -13,5 +13,6 @@ import { PaginationService } from 'src/pagination/pagination.service';
   ],
   controllers: [MembraneLayerPolymerTypeController],
   providers: [MembraneLayerPolymerTypeService, PaginationService],
+  exports: [MembraneLayerPolymerTypeService],
 })
 export class MembraneLayerPolymerTypeModule {}

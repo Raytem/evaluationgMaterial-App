@@ -3,10 +3,10 @@ import { CreateMembraneLayerPolymerTypeDto } from './dto/create-membrane-layer-p
 import { UpdateMembraneLayerPolymerTypeDto } from './dto/update-membrane-layer-polymer-type.dto';
 import { NoSuchException } from 'src/exceptions/no-such.exception';
 import { MembraneLayerPolymerTypeEntity } from './entities/membrane-layer-polymer-type.entity';
-import { PaginationService } from 'src/pagination/pagination.service';
+import { PaginationService } from 'src/services/pagination/pagination.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 import { EntitiesReferException } from 'src/exceptions/entities-refer.exception';
 
 @Injectable()

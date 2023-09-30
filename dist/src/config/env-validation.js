@@ -25,6 +25,30 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
+], EnvVariables.prototype, "FILE_STATIC_DIR_NAME", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], EnvVariables.prototype, "FILE_MATERIAL_IMAGES_DIR_NAME", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], EnvVariables.prototype, "FILE_TEMPLATES_DIR_NAME", void 0);
+__decorate([
+    (0, class_validator_1.IsNumberString)(),
+    __metadata("design:type", String)
+], EnvVariables.prototype, "FILE_RESIZE_SIZE", void 0);
+__decorate([
+    (0, class_validator_1.IsNumberString)(),
+    __metadata("design:type", String)
+], EnvVariables.prototype, "FILE_MAX_SIZE", void 0);
+__decorate([
+    (0, class_validator_1.IsNumberString)(),
+    __metadata("design:type", String)
+], EnvVariables.prototype, "FILE_UPLOAD_LIMIT", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
 ], EnvVariables.prototype, "DB_TYPE", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),

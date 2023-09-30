@@ -1,8 +1,8 @@
 import { CreateAbrasionTypeDto } from './dto/create-abrasion-type.dto';
 import { UpdateAbrasionTypeDto } from './dto/update-abrasion-type.dto';
 import { AbrasionTypeEntity } from './entities/abrasion-type.entity';
-import { PaginationDto } from 'src/pagination/dto/pagination.dto';
-import { PaginationService } from 'src/pagination/pagination.service';
+import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
+import { PaginationService } from 'src/services/pagination/pagination.service';
 import { Repository } from 'typeorm';
 export declare class AbrasionTypeService {
     private paginationService;

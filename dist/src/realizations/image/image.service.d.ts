@@ -1,9 +1,16 @@
-import { CreateImageDto } from './dto/create-image.dto';
-import { UpdateImageDto } from './dto/update-image.dto';
+import { ImageEntity } from './entities/image.entity';
+import { Repository } from 'typeorm';
+import { ConfigType } from '@nestjs/config';
+import { MaterialEntity } from '../material/entities/material.entity';
+import { Multer } from 'multer';
+import { fileConfig } from 'src/config/config-functions/file.config';
 export declare class ImageService {
-    create(createImageDto: CreateImageDto): string;
-    findAll(): string;
-    findOne(id: number): string;
-    update(id: number, updateImageDto: UpdateImageDto): string;
-    remove(id: number): string;
+    private imageRepository;
+    private fileCfg;
+    private baseMaterialsPath;
+    constructor(imageRepository: Repository<ImageEntity>, fileCfg: ConfigType<typeof fileConfig>);
+    private uploadToDisk;
+    createMany(files: Multer.File[], material: MaterialEntity): Promise<ImageEntity[]>;
+    findOne(id: number): Promise<ImageEntity>;
+    removeMaterialImagesFolder(material: MaterialEntity): Promise<ImageEntity[]>;
 }

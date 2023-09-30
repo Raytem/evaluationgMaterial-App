@@ -1,9 +1,8 @@
 import { CreateHomeostasisFunctionDto } from './dto/create-homeostasis-function.dto';
-import { UpdateHomeostasisFunctionDto } from './dto/update-homeostasis-function.dto';
+import { HomeostasisFunctionEntity } from './entities/homeostasis-function.entity';
+import { Repository } from 'typeorm';
 export declare class HomeostasisFunctionService {
-    create(createHomeostasisFunctionDto: CreateHomeostasisFunctionDto): string;
-    findAll(): string;
-    findOne(id: number): string;
-    update(id: number, updateHomeostasisFunctionDto: UpdateHomeostasisFunctionDto): string;
-    remove(id: number): string;
+    private homeostasisFunctionRepository;
+    constructor(homeostasisFunctionRepository: Repository<HomeostasisFunctionEntity>);
+    create(createHomeostasisFunctionDto: CreateHomeostasisFunctionDto): Promise<CreateHomeostasisFunctionDto & HomeostasisFunctionEntity>;
 }

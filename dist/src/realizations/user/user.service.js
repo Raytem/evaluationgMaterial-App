@@ -17,8 +17,9 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("./entities/user.entity");
 const typeorm_2 = require("typeorm");
-const pagination_service_1 = require("../../pagination/pagination.service");
+const pagination_service_1 = require("../../services/pagination/pagination.service");
 const no_such_exception_1 = require("../../exceptions/no-such.exception");
+const entities_refer_exception_1 = require("../../exceptions/entities-refer.exception");
 let UserService = class UserService {
     constructor(paginationService, userRepository) {
         this.paginationService = paginationService;
@@ -84,7 +85,12 @@ let UserService = class UserService {
             throw new common_1.ForbiddenException('You can delete only your account');
         }
         const user = await this.findOne(id);
-        await this.userRepository.remove(user);
+        try {
+            await this.userRepository.remove(user);
+        }
+        catch {
+            throw new entities_refer_exception_1.EntitiesReferException('user');
+        }
         return user;
     }
 };

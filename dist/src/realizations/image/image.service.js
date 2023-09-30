@@ -5,28 +5,98 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImageService = void 0;
 const common_1 = require("@nestjs/common");
+const typeorm_1 = require("@nestjs/typeorm");
+const image_entity_1 = require("./entities/image.entity");
+const typeorm_2 = require("typeorm");
+const no_such_exception_1 = require("../../exceptions/no-such.exception");
+const fspr = require("fs/promises");
+const path = require("path");
+const sharp = require("sharp");
+const uuid_1 = require("uuid");
+const file_config_1 = require("../../config/config-functions/file.config");
 let ImageService = class ImageService {
-    create(createImageDto) {
-        return 'This action adds a new image';
+    constructor(imageRepository, fileCfg) {
+        this.imageRepository = imageRepository;
+        this.fileCfg = fileCfg;
+        this.baseMaterialsPath = path.join(process.cwd(), this.fileCfg.staticDirName, this.fileCfg.materialImagesDirName);
     }
-    findAll() {
-        return `This action returns all image`;
+    async uploadToDisk(files, material) {
+        const curMaterialFolderPath = path.join(this.baseMaterialsPath, material.id.toString());
+        try {
+            await fspr.access(curMaterialFolderPath);
+        }
+        catch {
+            await fspr.mkdir(curMaterialFolderPath);
+        }
+        const fileNames = [];
+        files.forEach(async (file) => {
+            const fileName = `${(0, uuid_1.v4)()}.jpeg`;
+            const filePath = path.join(curMaterialFolderPath, fileName);
+            fileNames.push(fileName);
+            await sharp(file.buffer)
+                .resize({
+                width: this.fileCfg.resizeSize,
+                height: this.fileCfg.resizeSize,
+                fit: 'contain',
+                position: 'centre',
+            })
+                .jpeg({
+                quality: 70,
+            })
+                .toFile(filePath);
+        });
+        return fileNames;
     }
-    findOne(id) {
-        return `This action returns a #${id} image`;
+    async createMany(files, material) {
+        if (!files.length)
+            return;
+        const fileNames = await this.uploadToDisk(files, material);
+        const createImagesList = fileNames.map((fileName) => ({
+            name: fileName,
+            folderName: material.id.toString(),
+            material,
+        }));
+        const images = await this.imageRepository.save(createImagesList);
+        return images;
     }
-    update(id, updateImageDto) {
-        return `This action updates a #${id} image`;
+    async findOne(id) {
+        const material = await this.imageRepository.findOneBy({ id });
+        if (!material) {
+            throw new no_such_exception_1.NoSuchException('material');
+        }
+        return material;
     }
-    remove(id) {
-        return `This action removes a #${id} image`;
+    async removeMaterialImagesFolder(material) {
+        const materialImages = material.images;
+        if (!materialImages.length)
+            return;
+        const curMaterialFolderPath = path.join(this.baseMaterialsPath, material.id.toString());
+        try {
+            await fspr.rm(curMaterialFolderPath, {
+                recursive: true,
+            });
+            await this.imageRepository.remove(materialImages);
+            return materialImages;
+        }
+        catch (e) {
+            throw e;
+        }
     }
 };
 exports.ImageService = ImageService;
 exports.ImageService = ImageService = __decorate([
-    (0, common_1.Injectable)()
+    (0, common_1.Injectable)(),
+    __param(0, (0, typeorm_1.InjectRepository)(image_entity_1.ImageEntity)),
+    __param(1, (0, common_1.Inject)(file_config_1.fileConfig.KEY)),
+    __metadata("design:paramtypes", [typeorm_2.Repository, void 0])
 ], ImageService);
 //# sourceMappingURL=image.service.js.map

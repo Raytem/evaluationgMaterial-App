@@ -10,10 +10,10 @@ exports.PhysicalActivityTypeModule = void 0;
 const common_1 = require("@nestjs/common");
 const physical_activity_type_service_1 = require("./physical-activity-type.service");
 const physical_activity_type_controller_1 = require("./physical-activity-type.controller");
-const pagination_module_1 = require("../../pagination/pagination.module");
+const pagination_module_1 = require("../../services/pagination/pagination.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const physical_activity_type_entity_1 = require("./entities/physical-activity-type.entity");
-const pagination_service_1 = require("../../pagination/pagination.service");
+const pagination_service_1 = require("../../services/pagination/pagination.service");
 let PhysicalActivityTypeModule = class PhysicalActivityTypeModule {
 };
 exports.PhysicalActivityTypeModule = PhysicalActivityTypeModule;
@@ -25,6 +25,7 @@ exports.PhysicalActivityTypeModule = PhysicalActivityTypeModule = __decorate([
         ],
         controllers: [physical_activity_type_controller_1.PhysicalActivityTypeController],
         providers: [physical_activity_type_service_1.PhysicalActivityTypeService, pagination_service_1.PaginationService],
+        exports: [physical_activity_type_service_1.PhysicalActivityTypeService],
     })
 ], PhysicalActivityTypeModule);
 //# sourceMappingURL=physical-activity-type.module.js.map

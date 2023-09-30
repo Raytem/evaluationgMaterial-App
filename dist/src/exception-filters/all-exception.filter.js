@@ -35,6 +35,7 @@ let AllExceptionFilter = AllExceptionFilter_1 = class AllExceptionFilter {
         console.log('');
         this.logger.error('Error');
         console.log(responseBody);
+        console.log(exception);
         httpAdapter.reply(context.getResponse(), responseBody, httpStatus);
     }
 };

@@ -4,8 +4,8 @@ import { UpdatePhysicalActivityTypeDto } from './dto/update-physical-activity-ty
 import { PhysicalActivityTypeEntity } from './entities/physical-activity-type.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PaginationService } from 'src/pagination/pagination.service';
-import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import { PaginationService } from 'src/services/pagination/pagination.service';
+import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 import { NoSuchException } from 'src/exceptions/no-such.exception';
 import { EntitiesReferException } from 'src/exceptions/entities-refer.exception';
 

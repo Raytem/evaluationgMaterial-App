@@ -3,28 +3,64 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   Query,
+  UseInterceptors,
+  UploadedFiles,
+  BadRequestException,
+  Inject,
+  Req,
 } from '@nestjs/common';
 import { MaterialService } from './material.service';
 import { CreateMaterialDto } from './dto/create-material.dto';
-import { UpdateMaterialDto } from './dto/update-material.dto';
-import { ApiBasicAuth, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import {
+  ApiBasicAuth,
+  ApiBody,
+  ApiConsumes,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 import { MaterialEntity } from './entities/material.entity';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { Multer } from 'multer';
+import { ConfigType } from '@nestjs/config';
+import { fileConfig } from 'src/config/config-functions/file.config';
+import { validateImages } from 'src/utils/validate-images';
+import { MultipartMaterialData } from 'src/decorators/multipart-material-data';
+import { User } from 'src/decorators/reqUser.decorator';
+import { UserEntity } from '../user/entities/user.entity';
 
 @ApiBasicAuth()
 @ApiTags('material')
 @Controller('material')
 export class MaterialController {
-  constructor(private readonly materialService: MaterialService) {}
+  constructor(
+    private readonly materialService: MaterialService,
 
+    @Inject(fileConfig.KEY)
+    private fileCfg: ConfigType<typeof fileConfig>,
+  ) {}
+
+  @ApiConsumes('multipart/form-data')
   @ApiResponse({ type: MaterialEntity })
+  @ApiBody({ type: CreateMaterialDto })
+  @UseInterceptors(FilesInterceptor('images'))
   @Post()
-  create(@Body() createMaterialDto: CreateMaterialDto) {
-    return this.materialService.create(createMaterialDto);
+  async create(
+    @UploadedFiles() images: Multer.File[],
+    @MultipartMaterialData() createMaterialDto: CreateMaterialDto,
+    @User() reqUser: UserEntity,
+  ) {
+    validateImages(this.fileCfg, images);
+
+    return await this.materialService.create(
+      createMaterialDto,
+      images,
+      reqUser,
+    );
   }
 
   @ApiQuery({
@@ -39,19 +75,22 @@ export class MaterialController {
   })
   @ApiResponse({ type: MaterialEntity })
   @Get()
-  findAll(@Query() paginationDto: PaginationDto) {
-    return this.materialService.findAll();
+  async findAll(
+    @Query() paginationDto: PaginationDto,
+    @Body() materialFilter: MaterialEntity,
+  ) {
+    return await this.materialService.findAll(paginationDto);
   }
 
   @ApiResponse({ type: MaterialEntity })
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.materialService.findOne(+id);
+  async findOne(@Param('id') id: number) {
+    return this.materialService.findOne(id);
   }
 
   @ApiResponse({ type: MaterialEntity })
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.materialService.remove(+id);
+  async remove(@Param('id') id: number) {
+    return await this.materialService.remove(id);
   }
 }

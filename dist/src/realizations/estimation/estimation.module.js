@@ -9,12 +9,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EstimationModule = void 0;
 const common_1 = require("@nestjs/common");
 const estimation_service_1 = require("./estimation.service");
+const typeorm_1 = require("@nestjs/typeorm");
+const estimation_entity_1 = require("./entities/estimation.entity");
 let EstimationModule = class EstimationModule {
 };
 exports.EstimationModule = EstimationModule;
 exports.EstimationModule = EstimationModule = __decorate([
     (0, common_1.Module)({
+        imports: [typeorm_1.TypeOrmModule.forFeature([estimation_entity_1.EstimationEntity])],
         providers: [estimation_service_1.EstimationService],
+        exports: [estimation_service_1.EstimationService],
     })
 ], EstimationModule);
 //# sourceMappingURL=estimation.module.js.map

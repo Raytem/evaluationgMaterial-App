@@ -9,7 +9,7 @@ function setupSwagger(app) {
         .addSecurity('basic', {
         type: 'http',
         scheme: 'basic',
-        description: 'Enter the email address in the "name" field and the password in the "password" field.',
+        description: 'Enter the email address in the "username" field and the password in the "password" field.',
     })
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, swaggerConfig);

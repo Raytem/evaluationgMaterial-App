@@ -9,12 +9,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImageModule = void 0;
 const common_1 = require("@nestjs/common");
 const image_service_1 = require("./image.service");
+const typeorm_1 = require("@nestjs/typeorm");
+const image_entity_1 = require("./entities/image.entity");
 let ImageModule = class ImageModule {
 };
 exports.ImageModule = ImageModule;
 exports.ImageModule = ImageModule = __decorate([
     (0, common_1.Module)({
+        imports: [typeorm_1.TypeOrmModule.forFeature([image_entity_1.ImageEntity])],
         providers: [image_service_1.ImageService],
+        exports: [image_service_1.ImageService],
     })
 ], ImageModule);
 //# sourceMappingURL=image.module.js.map

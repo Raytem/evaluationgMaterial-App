@@ -10,7 +10,7 @@ export function setupSwagger(app) {
       type: 'http',
       scheme: 'basic',
       description:
-        'Enter the email address in the "name" field and the password in the "password" field.',
+        'Enter the email address in the "username" field and the password in the "password" field.',
     })
     .build();
 

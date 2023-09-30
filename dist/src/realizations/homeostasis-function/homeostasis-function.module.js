@@ -9,12 +9,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.HomeostasisFunctionModule = void 0;
 const common_1 = require("@nestjs/common");
 const homeostasis_function_service_1 = require("./homeostasis-function.service");
+const typeorm_1 = require("@nestjs/typeorm");
+const homeostasis_function_entity_1 = require("./entities/homeostasis-function.entity");
 let HomeostasisFunctionModule = class HomeostasisFunctionModule {
 };
 exports.HomeostasisFunctionModule = HomeostasisFunctionModule;
 exports.HomeostasisFunctionModule = HomeostasisFunctionModule = __decorate([
     (0, common_1.Module)({
+        imports: [typeorm_1.TypeOrmModule.forFeature([homeostasis_function_entity_1.HomeostasisFunctionEntity])],
         providers: [homeostasis_function_service_1.HomeostasisFunctionService],
+        exports: [homeostasis_function_service_1.HomeostasisFunctionService],
     })
 ], HomeostasisFunctionModule);
 //# sourceMappingURL=homeostasis-function.module.js.map

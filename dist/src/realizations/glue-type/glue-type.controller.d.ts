@@ -1,7 +1,7 @@
 import { GlueTypeService } from './glue-type.service';
 import { CreateGlueTypeDto } from './dto/create-glue-type.dto';
 import { UpdateGlueTypeDto } from './dto/update-glue-type.dto';
-import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 import { GlueTypeEntity } from './entities/glue-type.entity';
 export declare class GlueTypeController {
     private readonly glueTypeService;

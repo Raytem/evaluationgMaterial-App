@@ -2,8 +2,8 @@ import { CreatePhysicalActivityTypeDto } from './dto/create-physical-activity-ty
 import { UpdatePhysicalActivityTypeDto } from './dto/update-physical-activity-type.dto';
 import { PhysicalActivityTypeEntity } from './entities/physical-activity-type.entity';
 import { Repository } from 'typeorm';
-import { PaginationService } from 'src/pagination/pagination.service';
-import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import { PaginationService } from 'src/services/pagination/pagination.service';
+import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 export declare class PhysicalActivityTypeService {
     private paginationService;
     private physicalActivityTypeRepository;

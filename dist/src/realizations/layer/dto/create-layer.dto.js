@@ -16,12 +16,13 @@ class CreateLayerDto {
 }
 exports.CreateLayerDto = CreateLayerDto;
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
-    (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiProperty)({ type: Number, minimum: 1 }),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsPositive)(),
     __metadata("design:type", Number)
 ], CreateLayerDto.prototype, "indexNum", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, swagger_1.ApiProperty)({ type: Number, minimum: 1 }),
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsPositive)(),
     __metadata("design:type", Number)

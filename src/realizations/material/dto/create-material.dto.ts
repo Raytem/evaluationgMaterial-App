@@ -1,45 +1,50 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsPositive, IsString } from 'class-validator';
+import { IsString, ValidateNested } from 'class-validator';
 import { CreateConditionDto } from 'src/realizations/condition/dto/create-condition.dto';
-import { CreateLayerDto } from 'src/realizations/layer/dto/create-layer.dto';
-
-class MaterialDto {
-  @ApiProperty({ type: String })
-  @IsString()
-  name: string;
-
-  @ApiProperty({ type: String })
-  @IsString()
-  manufacturer: string;
-
-  @ApiProperty({ type: String })
-  @IsString()
-  description: string;
-
-  @ApiProperty({ type: Number })
-  @IsNumber()
-  depth: number;
-}
+import { CreateHomeostasisFunctionDto } from 'src/realizations/homeostasis-function/dto/create-homeostasis-function.dto';
+import { CalculateWaterproofFunctionDto } from 'src/realizations/waterproof-function/dto/calculate-waterproof-function.dto';
+import { CalculateReliabilityFunctionDto } from 'src/realizations/reliability-function/dto/calculate-reliability-function.dto';
+import { Type } from 'class-transformer';
+import { Multer } from 'multer';
+import { CalculateHomeostasisFunctionDto } from 'src/realizations/homeostasis-function/dto/calculate-homeostasis-function.dto';
+import { MaterialInfoDto } from './material-info.dto';
 
 export class CreateMaterialDto {
-  material: MaterialDto;
+  @ApiProperty({
+    type: String,
+    format: 'binary',
+    isArray: true,
+    required: false,
+    maxItems: 5,
+    description: `Max count of files: 5,
+    File type: image/*,
+    Max file size: 5000000 bytes`,
+  })
+  @IsString()
+  images: string;
 
-  layers: CreateLayerDto[];
+  @ApiProperty({ type: () => MaterialInfoDto })
+  @ValidateNested()
+  @Type(() => MaterialInfoDto)
+  material: MaterialInfoDto;
 
+  @ApiProperty({ type: () => CreateConditionDto })
+  @ValidateNested()
+  @Type(() => CreateConditionDto)
   condition: CreateConditionDto;
 
-  @ApiProperty({ type: Number })
-  @IsNumber()
-  @IsPositive()
-  productionMethod_id: number;
+  @ApiProperty({ type: () => CalculateWaterproofFunctionDto })
+  @ValidateNested()
+  @Type(() => CalculateWaterproofFunctionDto)
+  waterproofFunction: CalculateWaterproofFunctionDto;
 
-  @ApiProperty({ type: Number })
-  @IsNumber()
-  @IsPositive()
-  membraneLayerPolymer_id: number;
+  @ApiProperty({ type: () => CreateHomeostasisFunctionDto })
+  @ValidateNested()
+  @Type(() => CalculateHomeostasisFunctionDto)
+  homeostasisFunction: CalculateHomeostasisFunctionDto;
 
-  @ApiProperty({ type: Number })
-  @IsNumber()
-  @IsPositive()
-  glueType_id: number;
+  @ApiProperty({ type: () => CalculateReliabilityFunctionDto })
+  @ValidateNested()
+  @Type(() => CalculateReliabilityFunctionDto)
+  reliabilityFunction: CalculateReliabilityFunctionDto;
 }

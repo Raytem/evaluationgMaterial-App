@@ -37,6 +37,8 @@ export class AllExceptionFilter implements ExceptionFilter {
     this.logger.error('Error');
     console.log(responseBody);
 
+    console.log(exception);
+
     httpAdapter.reply(context.getResponse(), responseBody, httpStatus);
   }
 }

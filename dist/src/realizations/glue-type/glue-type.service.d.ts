@@ -1,9 +1,9 @@
 import { CreateGlueTypeDto } from './dto/create-glue-type.dto';
 import { UpdateGlueTypeDto } from './dto/update-glue-type.dto';
 import { GlueTypeEntity } from './entities/glue-type.entity';
-import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 import { Repository } from 'typeorm';
-import { PaginationService } from 'src/pagination/pagination.service';
+import { PaginationService } from 'src/services/pagination/pagination.service';
 export declare class GlueTypeService {
     private paginationService;
     private glueTypeRepository;

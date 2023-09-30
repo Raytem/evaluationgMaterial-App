@@ -8,9 +8,10 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
-import { PaginationService } from 'src/pagination/pagination.service';
-import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import { PaginationService } from 'src/services/pagination/pagination.service';
+import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 import { NoSuchException } from 'src/exceptions/no-such.exception';
+import { EntitiesReferException } from 'src/exceptions/entities-refer.exception';
 
 @Injectable()
 export class UserService {
@@ -103,7 +104,11 @@ export class UserService {
 
     const user = await this.findOne(id);
 
-    await this.userRepository.remove(user);
+    try {
+      await this.userRepository.remove(user);
+    } catch {
+      throw new EntitiesReferException('user');
+    }
 
     return user;
   }

@@ -2,8 +2,8 @@ import { CreateBendingTypeDto } from './dto/create-bending-type.dto';
 import { UpdateBendingTypeDto } from './dto/update-bending-type.dto';
 import { Repository } from 'typeorm';
 import { BendingTypeEntity } from './entities/bending-type.entity';
-import { PaginationService } from 'src/pagination/pagination.service';
-import { PaginationDto } from 'src/pagination/dto/pagination.dto';
+import { PaginationService } from 'src/services/pagination/pagination.service';
+import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 export declare class BendingTypeService {
     private paginationService;
     private bendingTypeRepository;

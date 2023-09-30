@@ -11,13 +11,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AbstractBaseEntity = void 0;
 const swagger_1 = require("@nestjs/swagger");
+const class_validator_1 = require("class-validator");
 const typeorm_1 = require("typeorm");
 class AbstractBaseEntity {
 }
 exports.AbstractBaseEntity = AbstractBaseEntity;
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, swagger_1.ApiProperty)({ type: Number, minimum: 1 }),
     (0, typeorm_1.PrimaryGeneratedColumn)(),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsPositive)(),
     __metadata("design:type", Number)
 ], AbstractBaseEntity.prototype, "id", void 0);
 //# sourceMappingURL=abstract-base-entity.js.map

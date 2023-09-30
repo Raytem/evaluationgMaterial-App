@@ -1,26 +1,38 @@
 import { Injectable } from '@nestjs/common';
 import { CreateWashingDto } from './dto/create-washing.dto';
-import { UpdateWashingDto } from './dto/update-washing.dto';
+import { WashingTypeService } from '../washing-type/washing-type.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { WashingEntity } from './entities/washing.entity';
+import { Repository } from 'typeorm';
+import { WashingTypeEntity } from '../washing-type/entities/washing-type.entity';
 
 @Injectable()
 export class WashingService {
-  create(createWashingDto: CreateWashingDto) {
-    return 'This action adds a new washing';
-  }
+  constructor(
+    private washingTypeService: WashingTypeService,
 
-  findAll() {
-    return `This action returns all washing`;
-  }
+    @InjectRepository(WashingEntity)
+    private washingRepository: Repository<WashingEntity>,
+  ) {}
+  async create(
+    createWashingDto: CreateWashingDto,
+    washingType?: WashingTypeEntity,
+  ) {
+    if (!washingType) {
+      try {
+        washingType = await this.washingTypeService.findOne(
+          createWashingDto.washingType_id,
+        );
+      } catch (e) {
+        throw e;
+      }
+    }
 
-  findOne(id: number) {
-    return `This action returns a #${id} washing`;
-  }
+    const washing = await this.washingRepository.save({
+      ...createWashingDto,
+      washingType: washingType,
+    });
 
-  update(id: number, updateWashingDto: UpdateWashingDto) {
-    return `This action updates a #${id} washing`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} washing`;
+    return await this.washingRepository.findOneBy({ id: washing.id });
   }
 }

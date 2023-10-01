@@ -30,6 +30,12 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
+], HomeostasisFunctionEntity.prototype, "sampleSurfaceArea", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
 ], HomeostasisFunctionEntity.prototype, "m1s", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
@@ -138,7 +144,7 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
-], HomeostasisFunctionEntity.prototype, "t0s", void 0);
+], HomeostasisFunctionEntity.prototype, "tos", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
     (0, class_validator_1.IsNumber)(),
@@ -156,19 +162,13 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
-], HomeostasisFunctionEntity.prototype, "totalThermalResistance", void 0);
+], HomeostasisFunctionEntity.prototype, "totalThermalResistance_base", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
     (0, class_validator_1.IsNumber)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], HomeostasisFunctionEntity.prototype, "totalThermalResistance_calculated", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
-    (0, class_validator_1.IsNumber)(),
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], HomeostasisFunctionEntity.prototype, "totalThermalResistance_base", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
     (0, class_validator_1.IsNumber)(),

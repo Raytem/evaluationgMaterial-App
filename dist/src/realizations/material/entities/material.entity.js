@@ -37,12 +37,12 @@ __decorate([
     (0, swagger_1.ApiProperty)({ type: String }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], MaterialEntity.prototype, "manufacturer", void 0);
+], MaterialEntity.prototype, "description", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: String }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], MaterialEntity.prototype, "description", void 0);
+], MaterialEntity.prototype, "manufacturer", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
     (0, typeorm_1.Column)(),

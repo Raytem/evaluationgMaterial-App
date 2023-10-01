@@ -15,6 +15,11 @@ export class HomeostasisFunctionEntity extends AbstractBaseEntity {
   @ApiProperty({ type: Number })
   @IsNumber()
   @Column()
+  sampleSurfaceArea: number;
+
+  @ApiProperty({ type: Number })
+  @IsNumber()
+  @Column()
   m1s: number;
 
   @ApiProperty({ type: Number })
@@ -109,7 +114,7 @@ export class HomeostasisFunctionEntity extends AbstractBaseEntity {
   @ApiProperty({ type: Number })
   @IsNumber()
   @Column()
-  t0s: number;
+  tos: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
@@ -124,17 +129,12 @@ export class HomeostasisFunctionEntity extends AbstractBaseEntity {
   @ApiProperty({ type: Number })
   @IsNumber()
   @Column()
-  totalThermalResistance: number;
+  totalThermalResistance_base: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
   @Column()
   totalThermalResistance_calculated: number;
-
-  @ApiProperty({ type: Number })
-  @IsNumber()
-  @Column()
-  totalThermalResistance_base: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()

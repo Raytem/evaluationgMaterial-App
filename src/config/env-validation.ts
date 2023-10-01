@@ -13,6 +13,10 @@ class EnvVariables {
   @IsNumberString()
   APP_PORT: string;
 
+  //calculations
+  @IsNumberString()
+  CNT_OF_NUMBERS_AFTER_POINT: string;
+
   //file
   @IsString()
   FILE_STATIC_DIR_NAME: string;

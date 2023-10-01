@@ -23,6 +23,10 @@ __decorate([
     __metadata("design:type", String)
 ], EnvVariables.prototype, "APP_PORT", void 0);
 __decorate([
+    (0, class_validator_1.IsNumberString)(),
+    __metadata("design:type", String)
+], EnvVariables.prototype, "CNT_OF_NUMBERS_AFTER_POINT", void 0);
+__decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], EnvVariables.prototype, "FILE_STATIC_DIR_NAME", void 0);

@@ -1,5 +1,5 @@
 import { WaterproofFunctionEntity } from '../entities/waterproof-function.entity';
-declare const CalculateWaterproofFunctionDto_base: import("@nestjs/common").Type<Omit<WaterproofFunctionEntity, "id" | "materialBlottingPressure_base" | "waterproof_base" | "materialBlottingTime_base" | "waterproofRealizationCriteria_calculated" | "waterproofRealizationCriteria_base" | "dynamicWaterproofCriteria_calculated" | "dynamicWaterproofCriteria_base" | "comment" | "avgWeightedEstimate">>;
+declare const CalculateWaterproofFunctionDto_base: import("@nestjs/common").Type<Omit<WaterproofFunctionEntity, "comment" | "avgWeightedEstimate" | "id" | "materialBlottingPressure_relativeValuation" | "waterproof_relativeValuation" | "materialBlottingTime_relativeValuation" | "waterproofRealizationCriteria_calculated" | "waterproofRealizationCriteria_relativeValuation" | "dynamicWaterproofCriteria_calculated" | "dynamicWaterproofCriteria_relativeValuation">>;
 export declare class CalculateWaterproofFunctionDto extends CalculateWaterproofFunctionDto_base {
 }
 export {};

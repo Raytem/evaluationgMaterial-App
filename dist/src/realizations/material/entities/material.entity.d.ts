@@ -12,8 +12,8 @@ import { UserEntity } from 'src/realizations/user/entities/user.entity';
 import { WaterproofFunctionEntity } from 'src/realizations/waterproof-function/entities/waterproof-function.entity';
 export declare class MaterialEntity extends AbstractBaseEntity {
     name: string;
-    manufacturer: string;
     description: string;
+    manufacturer: string;
     depth: number;
     condition: ConditionEntity;
     waterproofFunction: WaterproofFunctionEntity;

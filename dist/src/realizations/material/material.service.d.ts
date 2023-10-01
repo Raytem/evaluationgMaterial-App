@@ -10,15 +10,17 @@ import { EstimationService } from '../estimation/estimation.service';
 import { ImageService } from '../image/image.service';
 import { LayerService } from '../layer/layer.service';
 import { ExelService } from 'src/services/exel/exel.service';
-import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 import { Repository } from 'typeorm';
 import { PaginationService } from 'src/services/pagination/pagination.service';
 import { LayerTypeService } from '../layer-type/layer-type.service';
 import { CreateMaterialDto } from 'src/realizations/material/dto/create-material.dto';
 import { UserEntity } from '../user/entities/user.entity';
 import { Multer } from 'multer';
+import { MaterialFilterDto } from './dto/material-filter.dto';
+import { CalculationService } from 'src/services/calculation/calculation.service';
 export declare class MaterialService {
     private materialRepository;
+    private calculationService;
     private glueTypeService;
     private layerTypeService;
     private membraneLayerPolymerTypeService;
@@ -32,9 +34,9 @@ export declare class MaterialService {
     private layerService;
     private exelService;
     private paginationService;
-    constructor(materialRepository: Repository<MaterialEntity>, glueTypeService: GlueTypeService, layerTypeService: LayerTypeService, membraneLayerPolymerTypeService: MembraneLayerPolymerTypeService, productionMethodService: ProductionMethodService, conditionService: ConditionService, waterproofFunctionService: WaterproofFunctionService, homeostasisFunctionService: HomeostasisFunctionService, reliabilityFunctionService: ReliabilityFunctionService, estimationService: EstimationService, imageService: ImageService, layerService: LayerService, exelService: ExelService, paginationService: PaginationService);
+    constructor(materialRepository: Repository<MaterialEntity>, calculationService: CalculationService, glueTypeService: GlueTypeService, layerTypeService: LayerTypeService, membraneLayerPolymerTypeService: MembraneLayerPolymerTypeService, productionMethodService: ProductionMethodService, conditionService: ConditionService, waterproofFunctionService: WaterproofFunctionService, homeostasisFunctionService: HomeostasisFunctionService, reliabilityFunctionService: ReliabilityFunctionService, estimationService: EstimationService, imageService: ImageService, layerService: LayerService, exelService: ExelService, paginationService: PaginationService);
     create(createMaterialDto: CreateMaterialDto, files: Multer.File[], reqUser: UserEntity): Promise<MaterialEntity>;
-    findAll(paginationDto: PaginationDto): Promise<MaterialEntity[]>;
-    findOne(id: number): Promise<MaterialEntity>;
-    remove(id: number): Promise<MaterialEntity>;
+    findAll(materialFilterDto: MaterialFilterDto): Promise<MaterialEntity[]>;
+    findOne(id: number, withUser?: boolean): Promise<MaterialEntity>;
+    remove(id: number, reqUser: UserEntity): Promise<MaterialEntity>;
 }

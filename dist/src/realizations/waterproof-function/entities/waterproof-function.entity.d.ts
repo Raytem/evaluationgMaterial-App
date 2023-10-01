@@ -31,7 +31,7 @@ export declare class WaterproofFunctionEntity extends AbstractBaseEntity {
     dynamicWaterproofCriteria_base: number;
     dynamicWaterproofCriteria_relativeValuation: number;
     dynamicWaterproofCriteria_weight: number;
-    hydrostaticPressureIncreaseSpeedMin: number;
+    hydrostaticPressureIncreaseSpeed: number;
     hydrostaticPressure: number;
     waterproofTime: number;
     equipment: string;

@@ -170,7 +170,7 @@ export class WaterproofFunctionEntity extends AbstractBaseEntity {
   @ApiProperty({ type: Number })
   @IsNumber()
   @Column()
-  hydrostaticPressureIncreaseSpeedMin: number;
+  hydrostaticPressureIncreaseSpeed: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()

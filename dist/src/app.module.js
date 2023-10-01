@@ -44,6 +44,7 @@ const washing_type_module_1 = require("./realizations/washing-type/washing-type.
 const waterproof_function_module_1 = require("./realizations/waterproof-function/waterproof-function.module");
 const basic_auth_guard_1 = require("./auth/guards/basic-auth.guard");
 const file_config_1 = require("./config/config-functions/file.config");
+const calculations_config_1 = require("./config/config-functions/calculations.config");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(logger_middleware_1.LoggerMiddleware).forRoutes('*');
@@ -57,7 +58,7 @@ exports.AppModule = AppModule = __decorate([
                 isGlobal: true,
                 validate: env_validation_1.validate,
                 expandVariables: true,
-                load: [app_config_1.appConfig, postgres_config_1.postgresConfig, file_config_1.fileConfig],
+                load: [app_config_1.appConfig, calculations_config_1.calculationsConfig, postgres_config_1.postgresConfig, file_config_1.fileConfig],
             }),
             typeorm_1.TypeOrmModule.forRootAsync({
                 useClass: type_orm_config_service_1.TypeOrmConfigService,

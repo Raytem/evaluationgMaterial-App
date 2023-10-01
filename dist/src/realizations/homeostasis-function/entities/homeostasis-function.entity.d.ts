@@ -2,6 +2,7 @@ import { AbstractBaseEntity } from 'src/realizations/abstract-base-entity';
 import { MaterialEntity } from 'src/realizations/material/entities/material.entity';
 export declare class HomeostasisFunctionEntity extends AbstractBaseEntity {
     material: MaterialEntity;
+    sampleSurfaceArea: number;
     m1s: number;
     m2s: number;
     s0_1: number;
@@ -20,12 +21,11 @@ export declare class HomeostasisFunctionEntity extends AbstractBaseEntity {
     waterPermeabilityDynamicCriteria_relativeValuation: number;
     waterPermeabilityDynamicCriteria_base: number;
     waterPermeabilityDynamicCriteria_weight: number;
-    t0s: number;
+    tos: number;
     s: number;
     m: number;
-    totalThermalResistance: number;
-    totalThermalResistance_calculated: number;
     totalThermalResistance_base: number;
+    totalThermalResistance_calculated: number;
     totalThermalResistance_relativeValuation: number;
     totalThermalResistance_weight: number;
     minPressureDiff: number;

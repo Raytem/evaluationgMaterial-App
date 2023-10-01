@@ -17,7 +17,6 @@ const common_1 = require("@nestjs/common");
 const material_service_1 = require("./material.service");
 const create_material_dto_1 = require("./dto/create-material.dto");
 const swagger_1 = require("@nestjs/swagger");
-const pagination_dto_1 = require("../../services/pagination/dto/pagination.dto");
 const material_entity_1 = require("./entities/material.entity");
 const platform_express_1 = require("@nestjs/platform-express");
 const file_config_1 = require("../../config/config-functions/file.config");
@@ -25,6 +24,7 @@ const validate_images_1 = require("../../utils/validate-images");
 const multipart_material_data_1 = require("../../decorators/multipart-material-data");
 const reqUser_decorator_1 = require("../../decorators/reqUser.decorator");
 const user_entity_1 = require("../user/entities/user.entity");
+const material_filter_dto_1 = require("./dto/material-filter.dto");
 let MaterialController = class MaterialController {
     constructor(materialService, fileCfg) {
         this.materialService = materialService;
@@ -34,14 +34,14 @@ let MaterialController = class MaterialController {
         (0, validate_images_1.validateImages)(this.fileCfg, images);
         return await this.materialService.create(createMaterialDto, images, reqUser);
     }
-    async findAll(paginationDto, materialFilter) {
-        return await this.materialService.findAll(paginationDto);
+    async findAll(materialFilterDto) {
+        return await this.materialService.findAll(materialFilterDto);
     }
     async findOne(id) {
         return this.materialService.findOne(id);
     }
-    async remove(id) {
-        return await this.materialService.remove(id);
+    async remove(id, reqUser) {
+        return await this.materialService.remove(id, reqUser);
     }
 };
 exports.MaterialController = MaterialController;
@@ -73,10 +73,8 @@ __decorate([
     (0, swagger_1.ApiResponse)({ type: material_entity_1.MaterialEntity }),
     (0, common_1.Get)(),
     __param(0, (0, common_1.Query)()),
-    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [pagination_dto_1.PaginationDto,
-        material_entity_1.MaterialEntity]),
+    __metadata("design:paramtypes", [material_filter_dto_1.MaterialFilterDto]),
     __metadata("design:returntype", Promise)
 ], MaterialController.prototype, "findAll", null);
 __decorate([
@@ -91,8 +89,9 @@ __decorate([
     (0, swagger_1.ApiResponse)({ type: material_entity_1.MaterialEntity }),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, reqUser_decorator_1.User)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [Number, user_entity_1.UserEntity]),
     __metadata("design:returntype", Promise)
 ], MaterialController.prototype, "remove", null);
 exports.MaterialController = MaterialController = __decorate([

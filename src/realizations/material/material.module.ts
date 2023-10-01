@@ -16,9 +16,11 @@ import { ReliabilityFunctionModule } from '../reliability-function/reliability-f
 import { ExelModule } from 'src/services/exel/exel.module';
 import { ConditionModule } from '../condition/condition.module';
 import { PaginationModule } from 'src/services/pagination/pagination.module';
+import { CalculationModule } from 'src/services/calculation/calculation.module';
 
 @Module({
   imports: [
+    CalculationModule,
     GlueTypeModule,
     LayerTypeModule,
     MembraneLayerPolymerTypeModule,

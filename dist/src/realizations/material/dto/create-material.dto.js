@@ -13,7 +13,6 @@ exports.CreateMaterialDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 const create_condition_dto_1 = require("../../condition/dto/create-condition.dto");
-const create_homeostasis_function_dto_1 = require("../../homeostasis-function/dto/create-homeostasis-function.dto");
 const calculate_waterproof_function_dto_1 = require("../../waterproof-function/dto/calculate-waterproof-function.dto");
 const calculate_reliability_function_dto_1 = require("../../reliability-function/dto/calculate-reliability-function.dto");
 const class_transformer_1 = require("class-transformer");
@@ -55,7 +54,7 @@ __decorate([
     __metadata("design:type", calculate_waterproof_function_dto_1.CalculateWaterproofFunctionDto)
 ], CreateMaterialDto.prototype, "waterproofFunction", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: () => create_homeostasis_function_dto_1.CreateHomeostasisFunctionDto }),
+    (0, swagger_1.ApiProperty)({ type: () => calculate_homeostasis_function_dto_1.CalculateHomeostasisFunctionDto }),
     (0, class_validator_1.ValidateNested)(),
     (0, class_transformer_1.Type)(() => calculate_homeostasis_function_dto_1.CalculateHomeostasisFunctionDto),
     __metadata("design:type", calculate_homeostasis_function_dto_1.CalculateHomeostasisFunctionDto)

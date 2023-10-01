@@ -31,9 +31,12 @@ const typeorm_2 = require("typeorm");
 const pagination_service_1 = require("../../services/pagination/pagination.service");
 const no_such_exception_1 = require("../../exceptions/no-such.exception");
 const layer_type_service_1 = require("../layer-type/layer-type.service");
+const layer_entity_1 = require("../layer/entities/layer.entity");
+const calculation_service_1 = require("../../services/calculation/calculation.service");
 let MaterialService = class MaterialService {
-    constructor(materialRepository, glueTypeService, layerTypeService, membraneLayerPolymerTypeService, productionMethodService, conditionService, waterproofFunctionService, homeostasisFunctionService, reliabilityFunctionService, estimationService, imageService, layerService, exelService, paginationService) {
+    constructor(materialRepository, calculationService, glueTypeService, layerTypeService, membraneLayerPolymerTypeService, productionMethodService, conditionService, waterproofFunctionService, homeostasisFunctionService, reliabilityFunctionService, estimationService, imageService, layerService, exelService, paginationService) {
         this.materialRepository = materialRepository;
+        this.calculationService = calculationService;
         this.glueTypeService = glueTypeService;
         this.layerTypeService = layerTypeService;
         this.membraneLayerPolymerTypeService = membraneLayerPolymerTypeService;
@@ -49,6 +52,11 @@ let MaterialService = class MaterialService {
         this.paginationService = paginationService;
     }
     async create(createMaterialDto, files, reqUser) {
+        if (true) {
+            const calculatedFunctionalIndicators = this.calculationService.calcAll(createMaterialDto, {});
+            console.log(calculatedFunctionalIndicators);
+            return;
+        }
         try {
             const glueType = await this.glueTypeService.findOne(createMaterialDto.material.glueType_id);
             const layerTypeIds = createMaterialDto.material.layers.map((layer) => layer.layerType_id);
@@ -79,25 +87,111 @@ let MaterialService = class MaterialService {
             }));
             const layers = await this.layerService.createMany(createLayersList);
             const images = await this.imageService.createMany(files, material);
+            const calculatedFunctionalIndicators = this.calculationService.calcAll(createMaterialDto, material);
+            const waterproofFunction = await this.waterproofFunctionService.create(calculatedFunctionalIndicators.waterproofFunction);
+            const homeostasisFunction = await this.homeostasisFunctionService.create(calculatedFunctionalIndicators.homeostasisFunction);
+            const reliabilityFunction = await this.reliabilityFunctionService.create(calculatedFunctionalIndicators.reliabilityFunction);
+            const estimation = await this.estimationService.create(calculatedFunctionalIndicators.estimation);
             return await this.findOne(material.id);
         }
         catch (e) {
             throw e;
         }
     }
-    async findAll(paginationDto) {
-        const pagination = this.paginationService.paginate(paginationDto);
-        return await this.materialRepository.find(pagination);
+    async findAll(materialFilterDto) {
+        const pagination = this.paginationService.paginate(materialFilterDto);
+        const queryBuilder = this.materialRepository
+            .createQueryBuilder('material')
+            .leftJoinAndSelect('material.condition', 'condition')
+            .leftJoinAndSelect('condition.abrasionType', 'abrasionType')
+            .leftJoinAndSelect('condition.washing', 'washing')
+            .leftJoinAndSelect('washing.washingType', 'washingType')
+            .leftJoinAndSelect('condition.bendingType', 'bendingType')
+            .leftJoinAndSelect('condition.physicalActivityType', 'physicalActivityType')
+            .leftJoinAndSelect('material.waterproofFunction', 'waterproofFunction')
+            .leftJoinAndSelect('material.homeostasisFunction', 'homeostasisFunction')
+            .leftJoinAndSelect('material.reliabilityFunction', 'reliabilityFunction')
+            .leftJoinAndSelect('material.estimation', 'estimation')
+            .leftJoinAndSelect('material.layers', 'layer')
+            .leftJoinAndSelect('material.images', 'image')
+            .leftJoinAndSelect('material.productionMethod', 'productionMethod')
+            .leftJoinAndSelect('material.membraneLayerPolymerType', 'membraneLayerPolymerType')
+            .leftJoinAndSelect('material.glueType', 'glueType');
+        if (pagination.take) {
+            queryBuilder.take(pagination.take);
+        }
+        if (pagination.skip) {
+            queryBuilder.skip(pagination.skip);
+        }
+        if (materialFilterDto.name) {
+            queryBuilder.andWhere(`material.name ILIKE '%${materialFilterDto.name}%'`);
+        }
+        if (materialFilterDto.depth) {
+            queryBuilder.andWhere('material.depth = :depth', {
+                depth: materialFilterDto.depth,
+            });
+        }
+        if (materialFilterDto.materialBlottingPressure_calculated) {
+            queryBuilder.andWhere('waterproofFunction.materialBlottingPressure_calculated >= :materialBlottingPressure_calculated', {
+                materialBlottingPressure_calculated: materialFilterDto.materialBlottingPressure_calculated,
+            });
+        }
+        if (materialFilterDto.totalThermalResistance_calculated) {
+            queryBuilder.andWhere('homeostasisFunction.totalThermalResistance_calculated >= :totalThermalResistance_calculated', {
+                totalThermalResistance_calculated: materialFilterDto.totalThermalResistance_calculated,
+            });
+        }
+        if (materialFilterDto.totalThermalResistance_calculated) {
+            queryBuilder.andWhere('reliabilityFunction.materialBlottingPressure_relativeValuation >= :materialBlottingPressure_relativeValuation', {
+                materialBlottingPressure_relativeValuation: materialFilterDto.materialBlottingPressure_relativeValuation,
+            });
+        }
+        if (materialFilterDto.depth) {
+            queryBuilder.andWhere('material.depth >= :depth', {
+                depth: materialFilterDto.depth,
+            });
+        }
+        if (materialFilterDto.membraneLayerPolymerType_id) {
+            queryBuilder.andWhere('membraneLayerPolymerType.id = :membraneLayerPolymerType_id', {
+                membraneLayerPolymerType_id: materialFilterDto.membraneLayerPolymerType_id,
+            });
+        }
+        if (materialFilterDto.productionMethod_id) {
+            queryBuilder.andWhere('productionMethod.id = :productionMethod_id', {
+                productionMethod_id: materialFilterDto.productionMethod_id,
+            });
+        }
+        if (materialFilterDto.layersCnt) {
+            queryBuilder.andWhere((qb) => {
+                const subQuery = qb
+                    .subQuery()
+                    .select('COUNT(layer.id)')
+                    .from(layer_entity_1.LayerEntity, 'layer')
+                    .where('layer.material_id = material.id')
+                    .getQuery();
+                console.log(subQuery);
+                return `${subQuery} = ${materialFilterDto.layersCnt}`;
+            });
+        }
+        return await queryBuilder.getMany();
     }
-    async findOne(id) {
-        const material = await this.materialRepository.findOneBy({ id });
+    async findOne(id, withUser = false) {
+        const material = await this.materialRepository.findOne({
+            where: { id },
+            relations: {
+                user: withUser ? true : false,
+            },
+        });
         if (!material) {
             throw new no_such_exception_1.NoSuchException('material');
         }
         return material;
     }
-    async remove(id) {
-        const material = await this.findOne(id);
+    async remove(id, reqUser) {
+        const material = await this.findOne(id, true);
+        if (material.user.id !== reqUser.id) {
+            throw new common_1.ForbiddenException('You can delete only the materials you have created');
+        }
         try {
             await this.imageService.removeMaterialImagesFolder(material);
         }
@@ -113,6 +207,7 @@ exports.MaterialService = MaterialService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(material_entity_1.MaterialEntity)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        calculation_service_1.CalculationService,
         glue_type_service_1.GlueTypeService,
         layer_type_service_1.LayerTypeService,
         membrane_layer_polymer_type_service_1.MembraneLayerPolymerTypeService,

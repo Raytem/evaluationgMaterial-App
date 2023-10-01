@@ -40,6 +40,7 @@ import { WashingTypeModule } from './realizations/washing-type/washing-type.modu
 import { WaterproofFunctionModule } from './realizations/waterproof-function/waterproof-function.module';
 import { BasicAuthGuard } from './auth/guards/basic-auth.guard';
 import { fileConfig } from './config/config-functions/file.config';
+import { calculationsConfig } from './config/config-functions/calculations.config';
 
 @Module({
   imports: [
@@ -47,7 +48,7 @@ import { fileConfig } from './config/config-functions/file.config';
       isGlobal: true,
       validate,
       expandVariables: true,
-      load: [appConfig, postgresConfig, fileConfig],
+      load: [appConfig, calculationsConfig, postgresConfig, fileConfig],
     }),
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,

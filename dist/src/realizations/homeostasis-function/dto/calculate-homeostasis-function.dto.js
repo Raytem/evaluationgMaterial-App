@@ -16,13 +16,6 @@ class CalculateHomeostasisFunctionDto extends (0, swagger_1.OmitType)(homeostasi
     'maxPressureDiff',
     'estimatedPressureDiff',
     'avgRangePressureVal',
-    'comfTempInsideClothes',
-    'comfHumidityInsideClothes',
-    'minOutdoorTemp',
-    'minOutdoorHumidity',
-    'maxOutdoorTemp',
-    'maxOutdoorHumidity',
-    'avgOutdoorAirSpeed',
     'comment',
     'avgWeightedEstimate',
 ]) {

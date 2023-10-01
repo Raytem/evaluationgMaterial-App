@@ -204,7 +204,7 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
-], WaterproofFunctionEntity.prototype, "hydrostaticPressureIncreaseSpeedMin", void 0);
+], WaterproofFunctionEntity.prototype, "hydrostaticPressureIncreaseSpeed", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
     (0, class_validator_1.IsNumber)(),

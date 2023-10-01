@@ -38,7 +38,7 @@ export class CreateMaterialDto {
   @Type(() => CalculateWaterproofFunctionDto)
   waterproofFunction: CalculateWaterproofFunctionDto;
 
-  @ApiProperty({ type: () => CreateHomeostasisFunctionDto })
+  @ApiProperty({ type: () => CalculateHomeostasisFunctionDto })
   @ValidateNested()
   @Type(() => CalculateHomeostasisFunctionDto)
   homeostasisFunction: CalculateHomeostasisFunctionDto;

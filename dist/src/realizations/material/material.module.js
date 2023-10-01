@@ -25,12 +25,14 @@ const reliability_function_module_1 = require("../reliability-function/reliabili
 const exel_module_1 = require("../../services/exel/exel.module");
 const condition_module_1 = require("../condition/condition.module");
 const pagination_module_1 = require("../../services/pagination/pagination.module");
+const calculation_module_1 = require("../../services/calculation/calculation.module");
 let MaterialModule = class MaterialModule {
 };
 exports.MaterialModule = MaterialModule;
 exports.MaterialModule = MaterialModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            calculation_module_1.CalculationModule,
             glue_type_module_1.GlueTypeModule,
             layer_type_module_1.LayerTypeModule,
             membrane_layer_polymer_type_module_1.MembraneLayerPolymerTypeModule,

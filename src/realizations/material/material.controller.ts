@@ -32,6 +32,7 @@ import { validateImages } from 'src/utils/validate-images';
 import { MultipartMaterialData } from 'src/decorators/multipart-material-data';
 import { User } from 'src/decorators/reqUser.decorator';
 import { UserEntity } from '../user/entities/user.entity';
+import { MaterialFilterDto } from './dto/material-filter.dto';
 
 @ApiBasicAuth()
 @ApiTags('material')
@@ -75,11 +76,8 @@ export class MaterialController {
   })
   @ApiResponse({ type: MaterialEntity })
   @Get()
-  async findAll(
-    @Query() paginationDto: PaginationDto,
-    @Body() materialFilter: MaterialEntity,
-  ) {
-    return await this.materialService.findAll(paginationDto);
+  async findAll(@Query() materialFilterDto: MaterialFilterDto) {
+    return await this.materialService.findAll(materialFilterDto);
   }
 
   @ApiResponse({ type: MaterialEntity })
@@ -90,7 +88,7 @@ export class MaterialController {
 
   @ApiResponse({ type: MaterialEntity })
   @Delete(':id')
-  async remove(@Param('id') id: number) {
-    return await this.materialService.remove(id);
+  async remove(@Param('id') id: number, @User() reqUser: UserEntity) {
+    return await this.materialService.remove(id, reqUser);
   }
 }

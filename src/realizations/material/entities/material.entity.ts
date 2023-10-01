@@ -29,11 +29,11 @@ export class MaterialEntity extends AbstractBaseEntity {
 
   @ApiProperty({ type: String })
   @Column()
-  manufacturer: string;
+  description: string;
 
   @ApiProperty({ type: String })
   @Column()
-  description: string;
+  manufacturer: string;
 
   @ApiProperty({ type: Number })
   @Column()

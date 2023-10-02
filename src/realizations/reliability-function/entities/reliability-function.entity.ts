@@ -24,6 +24,6 @@ export class ReliabilityFunctionEntity extends AbstractBaseEntity {
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   avgWeightedEstimate: number;
 }

@@ -11,6 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
@@ -18,7 +21,7 @@ const typeorm_1 = require("typeorm");
 const user_entity_1 = require("../realizations/user/entities/user.entity");
 const typeorm_2 = require("@nestjs/typeorm");
 const user_service_1 = require("../realizations/user/user.service");
-const bcrypt = require("bcrypt");
+const bcrypt_1 = __importDefault(require("bcrypt"));
 let AuthService = class AuthService {
     constructor(userService, userRepository) {
         this.userService = userService;
@@ -27,7 +30,7 @@ let AuthService = class AuthService {
     async validate(loginDto) {
         try {
             const user = await this.userService.findOne(null, loginDto.email);
-            const isEqual = await bcrypt.compare(loginDto.password, user.password);
+            const isEqual = await bcrypt_1.default.compare(loginDto.password, user.password);
             if (!isEqual) {
                 throw new common_1.UnauthorizedException('Invalid password');
             }
@@ -39,7 +42,7 @@ let AuthService = class AuthService {
     }
     async signup(createUserDto) {
         try {
-            const password = await bcrypt.hash(createUserDto.password, 10);
+            const password = await bcrypt_1.default.hash(createUserDto.password, 10);
             const user = await this.userService.create({
                 ...createUserDto,
                 password,

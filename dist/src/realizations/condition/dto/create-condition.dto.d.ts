@@ -1,6 +1,6 @@
 import { ConditionEntity } from '../entities/condition.entity';
 import { CreateWashingDto } from 'src/realizations/washing/dto/create-washing.dto';
-declare const CreateConditionDto_base: import("@nestjs/common").Type<Omit<ConditionEntity, "material" | "id" | "abrasionType" | "washing" | "bendingType" | "physicalActivityType">>;
+declare const CreateConditionDto_base: import("@nestjs/common").Type<Omit<ConditionEntity, "material" | "id" | "washing" | "bendingType" | "abrasionType" | "physicalActivityType">>;
 export declare class CreateConditionDto extends CreateConditionDto_base {
     washing: CreateWashingDto;
     bendingType_id: number;

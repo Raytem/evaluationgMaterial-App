@@ -9,6 +9,10 @@ import { ConfigType } from '@nestjs/config';
 import { calculationsConfig } from 'src/config/config-functions/calculations.config';
 import { CommentService } from '../comment/comment.service';
 import { MaterialEntity } from 'src/realizations/material/entities/material.entity';
+import { CreateWaterproofFunctionDto } from 'src/realizations/waterproof-function/dto/create-waterproof-function.dto';
+import { CreateHomeostasisFunctionDto } from 'src/realizations/homeostasis-function/dto/create-homeostasis-function.dto';
+import { CreateReliabilityFunctionDto } from 'src/realizations/reliability-function/dto/create-reliability-function.dto';
+import { CreateEstimationDto } from 'src/realizations/estimation/dto/create-estimation.dto';
 
 @Injectable()
 export class CalculationService {
@@ -43,7 +47,7 @@ export class CalculationService {
   private calcWaterproofFunction(
     cmd: CreateMaterialDto,
     material: MaterialEntity,
-  ): Omit<WaterproofFunctionEntity, 'id'> {
+  ): CreateWaterproofFunctionDto {
     const wpf = cmd.waterproofFunction;
 
     const waterproofRealizationCriteria_calculated =
@@ -67,7 +71,7 @@ export class CalculationService {
         wpf.materialBlottingPressure_base || 0;
 
     const waterproof_relativeValuation =
-      +(wpf.waterproof_calculated / wpf.waterproof_base) || 0;
+      wpf.waterproof_calculated / wpf.waterproof_base || 0;
 
     const materialBlottingTime_relativeValuation =
       wpf.materialBlottingTime_calculated / wpf.materialBlottingTime_base || 0;
@@ -140,7 +144,7 @@ export class CalculationService {
   private calcHomeostasisFunction(
     cmd: CreateMaterialDto,
     material: MaterialEntity,
-  ): Omit<HomeostasisFunctionEntity, 'id'> {
+  ): CreateHomeostasisFunctionDto {
     const hf = cmd.homeostasisFunction;
 
     const D18 =
@@ -177,7 +181,7 @@ export class CalculationService {
         (hf.s0_2 * hf.t_2 * estimatedPressureDiff) || 0;
 
     const totalThermalResistance_calculated =
-      (hf.sampleSurfaceArea * hf.tos) / (hf.s * hf.m);
+      (hf.sampleSurfaceArea * hf.tos) / (hf.s * hf.m) || 0;
 
     const waterPermeability_relativeValuation =
       waterPermeability_calculated / hf.waterPermeability_base || 0;
@@ -253,14 +257,14 @@ export class CalculationService {
   private calcReliabilityFunction(
     cmd: CreateMaterialDto,
     material: MaterialEntity,
-  ): Omit<ReliabilityFunctionEntity, 'id'> {
+  ): CreateReliabilityFunctionDto {
     return;
   }
 
   private calcEstimation(
     cmd: CreateMaterialDto,
     material: MaterialEntity,
-  ): Omit<EstimationEntity, 'id'> {
+  ): CreateEstimationDto {
     return;
   }
 }

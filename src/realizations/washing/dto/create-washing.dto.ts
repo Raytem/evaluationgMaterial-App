@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsPositive } from 'class-validator';
+import { IsInt, IsNumber, IsPositive } from 'class-validator';
 
 export class CreateWashingDto {
   @ApiProperty({ type: Number })
@@ -15,7 +15,8 @@ export class CreateWashingDto {
   press: number;
 
   @ApiProperty({ type: Number, minimum: 1 })
-  @IsNumber()
   @IsPositive()
+  @IsInt()
+  @IsNumber()
   washingType_id: number;
 }

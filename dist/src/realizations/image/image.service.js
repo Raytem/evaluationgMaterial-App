@@ -11,6 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImageService = void 0;
 const common_1 = require("@nestjs/common");
@@ -18,31 +21,31 @@ const typeorm_1 = require("@nestjs/typeorm");
 const image_entity_1 = require("./entities/image.entity");
 const typeorm_2 = require("typeorm");
 const no_such_exception_1 = require("../../exceptions/no-such.exception");
-const fspr = require("fs/promises");
-const path = require("path");
-const sharp = require("sharp");
+const promises_1 = __importDefault(require("fs/promises"));
+const path_1 = __importDefault(require("path"));
+const sharp_1 = __importDefault(require("sharp"));
 const uuid_1 = require("uuid");
 const file_config_1 = require("../../config/config-functions/file.config");
 let ImageService = class ImageService {
     constructor(imageRepository, fileCfg) {
         this.imageRepository = imageRepository;
         this.fileCfg = fileCfg;
-        this.baseMaterialsPath = path.join(process.cwd(), this.fileCfg.staticDirName, this.fileCfg.materialImagesDirName);
+        this.baseMaterialsPath = path_1.default.join(process.cwd(), this.fileCfg.staticDirName, this.fileCfg.materialImagesDirName);
     }
     async uploadToDisk(files, material) {
-        const curMaterialFolderPath = path.join(this.baseMaterialsPath, material.id.toString());
+        const curMaterialFolderPath = path_1.default.join(this.baseMaterialsPath, material.id.toString());
         try {
-            await fspr.access(curMaterialFolderPath);
+            await promises_1.default.access(curMaterialFolderPath);
         }
         catch {
-            await fspr.mkdir(curMaterialFolderPath);
+            await promises_1.default.mkdir(curMaterialFolderPath);
         }
         const fileNames = [];
         files.forEach(async (file) => {
             const fileName = `${(0, uuid_1.v4)()}.jpeg`;
-            const filePath = path.join(curMaterialFolderPath, fileName);
+            const filePath = path_1.default.join(curMaterialFolderPath, fileName);
             fileNames.push(fileName);
-            await sharp(file.buffer)
+            await (0, sharp_1.default)(file.buffer)
                 .resize({
                 width: this.fileCfg.resizeSize,
                 height: this.fileCfg.resizeSize,
@@ -79,9 +82,9 @@ let ImageService = class ImageService {
         const materialImages = material.images;
         if (!materialImages.length)
             return;
-        const curMaterialFolderPath = path.join(this.baseMaterialsPath, material.id.toString());
+        const curMaterialFolderPath = path_1.default.join(this.baseMaterialsPath, material.id.toString());
         try {
-            await fspr.rm(curMaterialFolderPath, {
+            await promises_1.default.rm(curMaterialFolderPath, {
                 recursive: true,
             });
             await this.imageRepository.remove(materialImages);

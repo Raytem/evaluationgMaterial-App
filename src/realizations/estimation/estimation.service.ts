@@ -10,7 +10,9 @@ export class EstimationService {
     @InjectRepository(EstimationEntity)
     private estimationRepository: Repository<EstimationEntity>,
   ) {}
-  async create(createEstimationDto: CreateEstimationDto) {
+  async create(
+    createEstimationDto: CreateEstimationDto,
+  ): Promise<EstimationEntity> {
     return await this.estimationRepository.save(createEstimationDto);
   }
 }

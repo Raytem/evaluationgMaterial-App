@@ -1,14 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsPositive, IsString } from 'class-validator';
+import { IsInt, IsNumber, IsPositive } from 'class-validator';
 
 export class CreateLayerDto {
   @ApiProperty({ type: Number, minimum: 1 })
-  @IsNumber()
+  @IsInt()
   @IsPositive()
+  @IsNumber()
   indexNum: number;
 
   @ApiProperty({ type: Number, minimum: 1 })
-  @IsNumber()
   @IsPositive()
+  @IsInt()
+  @IsNumber()
   layerType_id: number;
 }

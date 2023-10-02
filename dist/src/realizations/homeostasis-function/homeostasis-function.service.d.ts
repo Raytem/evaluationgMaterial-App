@@ -4,5 +4,5 @@ import { Repository } from 'typeorm';
 export declare class HomeostasisFunctionService {
     private homeostasisFunctionRepository;
     constructor(homeostasisFunctionRepository: Repository<HomeostasisFunctionEntity>);
-    create(createHomeostasisFunctionDto: CreateHomeostasisFunctionDto): Promise<CreateHomeostasisFunctionDto & HomeostasisFunctionEntity>;
+    create(createHomeostasisFunctionDto: CreateHomeostasisFunctionDto): Promise<HomeostasisFunctionEntity>;
 }

@@ -10,7 +10,9 @@ export class HomeostasisFunctionService {
     @InjectRepository(HomeostasisFunctionEntity)
     private homeostasisFunctionRepository: Repository<HomeostasisFunctionEntity>,
   ) {}
-  async create(createHomeostasisFunctionDto: CreateHomeostasisFunctionDto) {
+  async create(
+    createHomeostasisFunctionDto: CreateHomeostasisFunctionDto,
+  ): Promise<HomeostasisFunctionEntity> {
     return await this.homeostasisFunctionRepository.save(
       createHomeostasisFunctionDto,
     );

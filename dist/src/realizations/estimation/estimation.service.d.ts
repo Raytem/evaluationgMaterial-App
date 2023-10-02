@@ -4,5 +4,5 @@ import { EstimationEntity } from './entities/estimation.entity';
 export declare class EstimationService {
     private estimationRepository;
     constructor(estimationRepository: Repository<EstimationEntity>);
-    create(createEstimationDto: CreateEstimationDto): Promise<CreateEstimationDto & EstimationEntity>;
+    create(createEstimationDto: CreateEstimationDto): Promise<EstimationEntity>;
 }

@@ -11,6 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MaterialController = void 0;
 const common_1 = require("@nestjs/common");
@@ -25,10 +28,23 @@ const multipart_material_data_1 = require("../../decorators/multipart-material-d
 const reqUser_decorator_1 = require("../../decorators/reqUser.decorator");
 const user_entity_1 = require("../user/entities/user.entity");
 const material_filter_dto_1 = require("./dto/material-filter.dto");
+const public_decorator_1 = require("../../decorators/public.decorator");
+const cyrillic_to_translit_js_1 = __importDefault(require("cyrillic-to-translit-js"));
 let MaterialController = class MaterialController {
     constructor(materialService, fileCfg) {
         this.materialService = materialService;
         this.fileCfg = fileCfg;
+    }
+    async getReportFromTemplate(material_id, res) {
+        const material = await this.materialService.findOne(material_id, true);
+        const reportBuffer = await this.materialService.getReportFromTemplate(material);
+        const fileName = `Отчет по артикулу(${material.name}).xlsx`;
+        const translitedFileName = (0, cyrillic_to_translit_js_1.default)({ preset: 'ru' }).transform(fileName, '_');
+        res.set({
+            'Content-Type': 'application/octet-stream',
+            'Content-Disposition': `attachment; filename=${translitedFileName}`,
+        });
+        return new common_1.StreamableFile(reportBuffer);
     }
     async create(images, createMaterialDto, reqUser) {
         (0, validate_images_1.validateImages)(this.fileCfg, images);
@@ -45,6 +61,15 @@ let MaterialController = class MaterialController {
     }
 };
 exports.MaterialController = MaterialController;
+__decorate([
+    (0, public_decorator_1.Public)(),
+    (0, common_1.Get)(':id/report'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Res)({ passthrough: true })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:returntype", Promise)
+], MaterialController.prototype, "getReportFromTemplate", null);
 __decorate([
     (0, swagger_1.ApiConsumes)('multipart/form-data'),
     (0, swagger_1.ApiResponse)({ type: material_entity_1.MaterialEntity }),
@@ -70,7 +95,7 @@ __decorate([
         type: Number,
         required: false,
     }),
-    (0, swagger_1.ApiResponse)({ type: material_entity_1.MaterialEntity }),
+    (0, swagger_1.ApiResponse)({ type: material_entity_1.MaterialEntity, isArray: true }),
     (0, common_1.Get)(),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),

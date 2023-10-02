@@ -10,8 +10,10 @@ export class WaterproofFunctionService {
     @InjectRepository(WaterproofFunctionEntity)
     private waterProofFunctionRepository: Repository<WaterproofFunctionEntity>,
   ) {}
-  async create(createWaterproofFunctionDto: CreateWaterproofFunctionDto) {
-    return await this.waterProofFunctionRepository.create(
+  async create(
+    createWaterproofFunctionDto: CreateWaterproofFunctionDto,
+  ): Promise<WaterproofFunctionEntity> {
+    return await this.waterProofFunctionRepository.save(
       createWaterproofFunctionDto,
     );
   }

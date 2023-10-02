@@ -11,7 +11,9 @@ export class ReliabilityFunctionService {
     private reliabilityFunctionRepository: Repository<ReliabilityFunctionEntity>,
   ) {}
 
-  async create(createReliabilityFunctionDto: CreateReliabilityFunctionDto) {
+  async create(
+    createReliabilityFunctionDto: CreateReliabilityFunctionDto,
+  ): Promise<ReliabilityFunctionEntity> {
     return await this.reliabilityFunctionRepository.save(
       createReliabilityFunctionDto,
     );

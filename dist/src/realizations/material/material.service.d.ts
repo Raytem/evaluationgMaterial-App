@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { MaterialEntity } from './entities/material.entity';
 import { ConditionService } from '../condition/condition.service';
 import { GlueTypeService } from '../glue-type/glue-type.service';
@@ -39,4 +40,5 @@ export declare class MaterialService {
     findAll(materialFilterDto: MaterialFilterDto): Promise<MaterialEntity[]>;
     findOne(id: number, withUser?: boolean): Promise<MaterialEntity>;
     remove(id: number, reqUser: UserEntity): Promise<MaterialEntity>;
+    getReportFromTemplate(material: MaterialEntity): Promise<Buffer>;
 }

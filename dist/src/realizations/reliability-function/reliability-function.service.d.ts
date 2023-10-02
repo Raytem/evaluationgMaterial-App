@@ -4,5 +4,5 @@ import { ReliabilityFunctionEntity } from './entities/reliability-function.entit
 export declare class ReliabilityFunctionService {
     private reliabilityFunctionRepository;
     constructor(reliabilityFunctionRepository: Repository<ReliabilityFunctionEntity>);
-    create(createReliabilityFunctionDto: CreateReliabilityFunctionDto): Promise<CreateReliabilityFunctionDto & ReliabilityFunctionEntity>;
+    create(createReliabilityFunctionDto: CreateReliabilityFunctionDto): Promise<ReliabilityFunctionEntity>;
 }

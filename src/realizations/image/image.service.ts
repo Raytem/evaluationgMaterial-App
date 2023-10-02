@@ -7,9 +7,9 @@ import { NoSuchException } from 'src/exceptions/no-such.exception';
 import { ConfigType } from '@nestjs/config';
 import { MaterialEntity } from '../material/entities/material.entity';
 import { Multer } from 'multer';
-import * as fspr from 'fs/promises';
-import * as path from 'path';
-import * as sharp from 'sharp';
+import fspr from 'fs/promises';
+import path from 'path';
+import sharp from 'sharp';
 import { v4 as uuidv4 } from 'uuid';
 import { fileConfig } from 'src/config/config-functions/file.config';
 

@@ -52,11 +52,6 @@ let MaterialService = class MaterialService {
         this.paginationService = paginationService;
     }
     async create(createMaterialDto, files, reqUser) {
-        if (true) {
-            const calculatedFunctionalIndicators = this.calculationService.calcAll(createMaterialDto, {});
-            console.log(calculatedFunctionalIndicators);
-            return;
-        }
         try {
             const glueType = await this.glueTypeService.findOne(createMaterialDto.material.glueType_id);
             const layerTypeIds = createMaterialDto.material.layers.map((layer) => layer.layerType_id);
@@ -90,8 +85,6 @@ let MaterialService = class MaterialService {
             const calculatedFunctionalIndicators = this.calculationService.calcAll(createMaterialDto, material);
             const waterproofFunction = await this.waterproofFunctionService.create(calculatedFunctionalIndicators.waterproofFunction);
             const homeostasisFunction = await this.homeostasisFunctionService.create(calculatedFunctionalIndicators.homeostasisFunction);
-            const reliabilityFunction = await this.reliabilityFunctionService.create(calculatedFunctionalIndicators.reliabilityFunction);
-            const estimation = await this.estimationService.create(calculatedFunctionalIndicators.estimation);
             return await this.findOne(material.id);
         }
         catch (e) {
@@ -169,7 +162,6 @@ let MaterialService = class MaterialService {
                     .from(layer_entity_1.LayerEntity, 'layer')
                     .where('layer.material_id = material.id')
                     .getQuery();
-                console.log(subQuery);
                 return `${subQuery} = ${materialFilterDto.layersCnt}`;
             });
         }
@@ -200,6 +192,9 @@ let MaterialService = class MaterialService {
         }
         await this.materialRepository.remove(material);
         return material;
+    }
+    async getReportFromTemplate(material) {
+        return await this.exelService.generateReport(material);
     }
 };
 exports.MaterialService = MaterialService;

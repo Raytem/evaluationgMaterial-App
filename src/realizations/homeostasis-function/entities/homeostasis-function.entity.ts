@@ -14,193 +14,193 @@ export class HomeostasisFunctionEntity extends AbstractBaseEntity {
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   sampleSurfaceArea: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   m1s: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   m2s: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   s0_1: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   t_1: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   waterPermeability_calculated: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   waterPermeability_relativeValuation: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   waterPermeability_base: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   waterPermeability_weight: number;
 
   //------
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   m1min: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   m2min: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   m1max: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   m2max: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   s0_2: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   t_2: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   waterPermeabilityDynamicCriteria_calculated: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   waterPermeabilityDynamicCriteria_relativeValuation: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   waterPermeabilityDynamicCriteria_base: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   waterPermeabilityDynamicCriteria_weight: number;
 
   //------
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   tos: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   s: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   m: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   totalThermalResistance_base: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   totalThermalResistance_calculated: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   totalThermalResistance_relativeValuation: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   totalThermalResistance_weight: number;
 
   //------
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   minPressureDiff: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   maxPressureDiff: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   estimatedPressureDiff: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   avgRangePressureVal: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   comfTempInsideClothes: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   comfHumidityInsideClothes: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   minOutdoorTemp: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   maxOutdoorTemp: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   minOutdoorHumidity: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   maxOutdoorHumidity: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   avgOutdoorAirSpeed: number;
 
   @ApiProperty({ type: String })
@@ -215,6 +215,6 @@ export class HomeostasisFunctionEntity extends AbstractBaseEntity {
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Column()
+  @Column({ type: 'double precision' })
   avgWeightedEstimate: number;
 }

@@ -12,7 +12,6 @@ import { EstimationService } from '../estimation/estimation.service';
 import { ImageService } from '../image/image.service';
 import { LayerService } from '../layer/layer.service';
 import { ExelService } from 'src/services/exel/exel.service';
-import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 import { Repository } from 'typeorm';
 import { PaginationService } from 'src/services/pagination/pagination.service';
 import { NoSuchException } from 'src/exceptions/no-such.exception';
@@ -64,14 +63,14 @@ export class MaterialService {
     files: Multer.File[],
     reqUser: UserEntity,
   ): Promise<MaterialEntity> {
-    if (true) {
-      const calculatedFunctionalIndicators = this.calculationService.calcAll(
-        createMaterialDto,
-        {} as MaterialEntity,
-      );
-      console.log(calculatedFunctionalIndicators);
-      return;
-    }
+    // if (true) {
+    //   const calculatedFunctionalIndicators = this.calculationService.calcAll(
+    //     createMaterialDto,
+    //     {} as MaterialEntity,
+    //   );
+    //   console.log(calculatedFunctionalIndicators);
+    //   return;
+    // }
 
     try {
       const glueType = await this.glueTypeService.findOne(
@@ -139,13 +138,15 @@ export class MaterialService {
         calculatedFunctionalIndicators.homeostasisFunction,
       );
 
-      const reliabilityFunction = await this.reliabilityFunctionService.create(
-        calculatedFunctionalIndicators.reliabilityFunction,
-      );
+      //FIX
 
-      const estimation = await this.estimationService.create(
-        calculatedFunctionalIndicators.estimation,
-      );
+      // const reliabilityFunction = await this.reliabilityFunctionService.create(
+      //   calculatedFunctionalIndicators.reliabilityFunction,
+      // );
+
+      // const estimation = await this.estimationService.create(
+      //   calculatedFunctionalIndicators.estimation,
+      // );
 
       return await this.findOne(material.id);
     } catch (e) {
@@ -262,7 +263,6 @@ export class MaterialService {
           .where('layer.material_id = material.id')
           .getQuery();
 
-        console.log(subQuery);
         return `${subQuery} = ${materialFilterDto.layersCnt}`;
       });
     }
@@ -302,5 +302,9 @@ export class MaterialService {
     await this.materialRepository.remove(material);
 
     return material;
+  }
+
+  async getReportFromTemplate(material: MaterialEntity): Promise<Buffer> {
+    return await this.exelService.generateReport(material);
   }
 }

@@ -1,6 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsNumber, IsOptional, IsPositive, IsString } from 'class-validator';
+import {
+  IsInt,
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  IsString,
+} from 'class-validator';
 import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 
 export class MaterialFilterDto extends PaginationDto {
@@ -12,6 +18,7 @@ export class MaterialFilterDto extends PaginationDto {
   @ApiProperty({ type: Number, required: false })
   @Type(() => Number)
   @IsOptional()
+  @IsInt()
   @IsNumber()
   layersCnt: number;
 
@@ -53,6 +60,7 @@ export class MaterialFilterDto extends PaginationDto {
   @Type(() => Number)
   @IsOptional()
   @IsPositive()
+  @IsInt()
   @IsNumber()
   membraneLayerPolymerType_id: number;
 
@@ -60,6 +68,7 @@ export class MaterialFilterDto extends PaginationDto {
   @Type(() => Number)
   @IsOptional()
   @IsPositive()
+  @IsInt()
   @IsNumber()
   productionMethod_id: number;
 }

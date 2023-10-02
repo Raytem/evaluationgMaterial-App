@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
+  IsInt,
   IsNumber,
   IsPositive,
   IsString,
@@ -26,18 +27,21 @@ export class MaterialInfoDto {
   depth: number;
 
   @ApiProperty({ type: Number, minimum: 1 })
-  @IsNumber()
   @IsPositive()
+  @IsInt()
+  @IsNumber()
   productionMethod_id: number;
 
   @ApiProperty({ type: Number, minimum: 1 })
-  @IsNumber()
   @IsPositive()
+  @IsInt()
+  @IsNumber()
   membraneLayerPolymerType_id: number;
 
   @ApiProperty({ type: Number, minimum: 1 })
-  @IsNumber()
   @IsPositive()
+  @IsInt()
+  @IsNumber()
   glueType_id: number;
 
   @ApiProperty({ type: () => CreateLayerDto, isArray: true })

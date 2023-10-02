@@ -22,7 +22,7 @@ let WaterproofFunctionService = class WaterproofFunctionService {
         this.waterProofFunctionRepository = waterProofFunctionRepository;
     }
     async create(createWaterproofFunctionDto) {
-        return await this.waterProofFunctionRepository.create(createWaterproofFunctionDto);
+        return await this.waterProofFunctionRepository.save(createWaterproofFunctionDto);
     }
 };
 exports.WaterproofFunctionService = WaterproofFunctionService;

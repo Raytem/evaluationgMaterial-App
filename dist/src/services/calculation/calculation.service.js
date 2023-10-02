@@ -45,7 +45,7 @@ let CalculationService = class CalculationService {
             wpf.waterproofTime || 0;
         const materialBlottingPressure_relativeValuation = wpf.materialBlottingPressure_calculated /
             wpf.materialBlottingPressure_base || 0;
-        const waterproof_relativeValuation = +(wpf.waterproof_calculated / wpf.waterproof_base) || 0;
+        const waterproof_relativeValuation = wpf.waterproof_calculated / wpf.waterproof_base || 0;
         const materialBlottingTime_relativeValuation = wpf.materialBlottingTime_calculated / wpf.materialBlottingTime_base || 0;
         const waterproofRealizationCriteria_relativeValuation = waterproofRealizationCriteria_calculated /
             wpf.waterproofRealizationCriteria_base || 0;
@@ -95,7 +95,7 @@ let CalculationService = class CalculationService {
         const waterPermeability_calculated = 24 * ((hf.m1s - hf.m2s) / (hf.s0_1 * hf.t_1)) || 0;
         const waterPermeabilityDynamicCriteria_calculated = (24 * (hf.m1max - hf.m2max - (hf.m1min - hf.m2min))) /
             (hf.s0_2 * hf.t_2 * estimatedPressureDiff) || 0;
-        const totalThermalResistance_calculated = (hf.sampleSurfaceArea * hf.tos) / (hf.s * hf.m);
+        const totalThermalResistance_calculated = (hf.sampleSurfaceArea * hf.tos) / (hf.s * hf.m) || 0;
         const waterPermeability_relativeValuation = waterPermeability_calculated / hf.waterPermeability_base || 0;
         const waterPermeabilityDynamicCriteria_relativeValuation = waterPermeabilityDynamicCriteria_calculated /
             hf.waterPermeabilityDynamicCriteria_base || 0;

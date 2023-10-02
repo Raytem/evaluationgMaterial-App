@@ -39,20 +39,23 @@ __decorate([
 ], MaterialInfoDto.prototype, "depth", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number, minimum: 1 }),
-    (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsPositive)(),
+    (0, class_validator_1.IsInt)(),
+    (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], MaterialInfoDto.prototype, "productionMethod_id", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number, minimum: 1 }),
-    (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsPositive)(),
+    (0, class_validator_1.IsInt)(),
+    (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], MaterialInfoDto.prototype, "membraneLayerPolymerType_id", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number, minimum: 1 }),
-    (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsPositive)(),
+    (0, class_validator_1.IsInt)(),
+    (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], MaterialInfoDto.prototype, "glueType_id", void 0);
 __decorate([

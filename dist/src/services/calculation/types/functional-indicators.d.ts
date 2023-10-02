@@ -1,10 +1,10 @@
-import { EstimationEntity } from 'src/realizations/estimation/entities/estimation.entity';
-import { HomeostasisFunctionEntity } from 'src/realizations/homeostasis-function/entities/homeostasis-function.entity';
-import { ReliabilityFunctionEntity } from 'src/realizations/reliability-function/entities/reliability-function.entity';
-import { WaterproofFunctionEntity } from 'src/realizations/waterproof-function/entities/waterproof-function.entity';
+import { CreateEstimationDto } from 'src/realizations/estimation/dto/create-estimation.dto';
+import { CreateHomeostasisFunctionDto } from 'src/realizations/homeostasis-function/dto/create-homeostasis-function.dto';
+import { CreateReliabilityFunctionDto } from 'src/realizations/reliability-function/dto/create-reliability-function.dto';
+import { CreateWaterproofFunctionDto } from 'src/realizations/waterproof-function/dto/create-waterproof-function.dto';
 export declare class FunctionalIndicators {
-    waterproofFunction: Omit<WaterproofFunctionEntity, 'id'>;
-    homeostasisFunction: Omit<HomeostasisFunctionEntity, 'id'>;
-    reliabilityFunction: Omit<ReliabilityFunctionEntity, 'id'>;
-    estimation: Omit<EstimationEntity, 'id'>;
+    waterproofFunction: CreateWaterproofFunctionDto;
+    homeostasisFunction: CreateHomeostasisFunctionDto;
+    reliabilityFunction: CreateReliabilityFunctionDto;
+    estimation: CreateEstimationDto;
 }

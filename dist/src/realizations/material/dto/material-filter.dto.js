@@ -27,6 +27,7 @@ __decorate([
     (0, swagger_1.ApiProperty)({ type: Number, required: false }),
     (0, class_transformer_1.Type)(() => Number),
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsInt)(),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], MaterialFilterDto.prototype, "layersCnt", void 0);
@@ -70,6 +71,7 @@ __decorate([
     (0, class_transformer_1.Type)(() => Number),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsPositive)(),
+    (0, class_validator_1.IsInt)(),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], MaterialFilterDto.prototype, "membraneLayerPolymerType_id", void 0);
@@ -78,6 +80,7 @@ __decorate([
     (0, class_transformer_1.Type)(() => Number),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsPositive)(),
+    (0, class_validator_1.IsInt)(),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], MaterialFilterDto.prototype, "productionMethod_id", void 0);

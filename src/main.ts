@@ -3,8 +3,8 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
 import { setupSwagger } from 'swagger.config';
-import * as path from 'path';
-import * as serve from 'express-static';
+import path from 'path';
+import serve from 'express-static';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

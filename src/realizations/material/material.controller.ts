@@ -11,6 +11,8 @@ import {
   BadRequestException,
   Inject,
   Req,
+  Res,
+  StreamableFile,
 } from '@nestjs/common';
 import { MaterialService } from './material.service';
 import { CreateMaterialDto } from './dto/create-material.dto';
@@ -33,6 +35,9 @@ import { MultipartMaterialData } from 'src/decorators/multipart-material-data';
 import { User } from 'src/decorators/reqUser.decorator';
 import { UserEntity } from '../user/entities/user.entity';
 import { MaterialFilterDto } from './dto/material-filter.dto';
+import { Response } from 'express';
+import { Public } from 'src/decorators/public.decorator';
+import CyrillicToTranslit from 'cyrillic-to-translit-js';
 
 @ApiBasicAuth()
 @ApiTags('material')
@@ -44,6 +49,32 @@ export class MaterialController {
     @Inject(fileConfig.KEY)
     private fileCfg: ConfigType<typeof fileConfig>,
   ) {}
+
+  @Public()
+  @Get(':id/report')
+  async getReportFromTemplate(
+    @Param('id') material_id: number,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const material = await this.materialService.findOne(material_id, true);
+
+    const reportBuffer =
+      await this.materialService.getReportFromTemplate(material);
+
+    const fileName = `Отчет по артикулу(${material.name}).xlsx`;
+
+    const translitedFileName = CyrillicToTranslit({ preset: 'ru' }).transform(
+      fileName,
+      '_',
+    );
+
+    res.set({
+      'Content-Type': 'application/octet-stream',
+      'Content-Disposition': `attachment; filename=${translitedFileName}`,
+    });
+
+    return new StreamableFile(reportBuffer);
+  }
 
   @ApiConsumes('multipart/form-data')
   @ApiResponse({ type: MaterialEntity })
@@ -74,7 +105,7 @@ export class MaterialController {
     type: Number,
     required: false,
   })
-  @ApiResponse({ type: MaterialEntity })
+  @ApiResponse({ type: MaterialEntity, isArray: true })
   @Get()
   async findAll(@Query() materialFilterDto: MaterialFilterDto) {
     return await this.materialService.findAll(materialFilterDto);

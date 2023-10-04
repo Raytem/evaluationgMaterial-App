@@ -1,7 +1,13 @@
 export declare const appConfig: (() => {
-    host: string;
+    proxyPort: number;
+    proxyUrl: string;
     port: number;
+    url: string;
+    host: string;
 }) & import("@nestjs/config").ConfigFactoryKeyHost<{
-    host: string;
+    proxyPort: number;
+    proxyUrl: string;
     port: number;
+    url: string;
+    host: string;
 }>;

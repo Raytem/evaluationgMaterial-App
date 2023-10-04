@@ -1,6 +1,9 @@
 declare class EnvVariables {
     APP_HOST: string;
     APP_PORT: string;
+    APP_URL: string;
+    APP_PROXY_PORT: string;
+    APP_PROXY_URL: string;
     CNT_OF_NUMBERS_AFTER_POINT: string;
     FILE_STATIC_DIR_NAME: string;
     FILE_MATERIAL_IMAGES_DIR_NAME: string;

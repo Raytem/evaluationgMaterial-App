@@ -12,6 +12,12 @@ class EnvVariables {
   APP_HOST: string;
   @IsNumberString()
   APP_PORT: string;
+  @IsString()
+  APP_URL: string;
+  @IsNumberString()
+  APP_PROXY_PORT: string;
+  @IsString()
+  APP_PROXY_URL: string;
 
   //calculations
   @IsNumberString()

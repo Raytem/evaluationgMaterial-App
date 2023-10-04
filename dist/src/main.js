@@ -18,6 +18,7 @@ async function bootstrap() {
     const staticDirPath = path_1.default.join(process.cwd(), staticDirName);
     app.use(`/${staticDirName}`, (0, express_static_1.default)(staticDirPath));
     app.useGlobalPipes(new common_1.ValidationPipe({
+        whitelist: true,
         transform: true,
     }));
     (0, swagger_config_1.setupSwagger)(app);

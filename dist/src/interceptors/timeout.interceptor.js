@@ -12,7 +12,7 @@ const rxjs_1 = require("rxjs");
 let TimeoutInterceptor = class TimeoutInterceptor {
     intercept(context, next) {
         const before = Date.now();
-        const timeout_ms = 12000;
+        const timeout_ms = 20000;
         return next.handle().pipe((0, rxjs_1.timeout)(timeout_ms), (0, rxjs_1.tap)(() => console.log(`----Request time: ${Date.now() - before}ms`)), (0, rxjs_1.catchError)((err) => {
             if (err instanceof rxjs_1.TimeoutError) {
                 return (0, rxjs_1.throwError)(() => new common_1.RequestTimeoutException(`Request time limit: ${timeout_ms}ms`));

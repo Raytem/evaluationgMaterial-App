@@ -20,11 +20,12 @@ import {
   ApiBasicAuth,
   ApiBody,
   ApiConsumes,
+  ApiOperation,
+  ApiProduces,
   ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 import { MaterialEntity } from './entities/material.entity';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { Multer } from 'multer';
@@ -36,9 +37,9 @@ import { User } from 'src/decorators/reqUser.decorator';
 import { UserEntity } from '../user/entities/user.entity';
 import { MaterialFilterDto } from './dto/material-filter.dto';
 import { Response } from 'express';
-import { Public } from 'src/decorators/public.decorator';
 import CyrillicToTranslit from 'cyrillic-to-translit-js';
 
+@UseInterceptors()
 @ApiBasicAuth()
 @ApiTags('material')
 @Controller('material')
@@ -50,7 +51,8 @@ export class MaterialController {
     private fileCfg: ConfigType<typeof fileConfig>,
   ) {}
 
-  @Public()
+  @ApiOperation({ summary: 'returns .xlsx file' })
+  @ApiProduces('application/octet-stream')
   @Get(':id/report')
   async getReportFromTemplate(
     @Param('id') material_id: number,

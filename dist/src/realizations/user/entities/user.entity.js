@@ -38,7 +38,7 @@ __decorate([
     __metadata("design:type", String)
 ], UserEntity.prototype, "password", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: Boolean }),
+    (0, swagger_1.ApiProperty)({ type: Boolean, default: 'false' }),
     (0, typeorm_1.Column)({ default: false }),
     __metadata("design:type", Boolean)
 ], UserEntity.prototype, "isAdmin", void 0);

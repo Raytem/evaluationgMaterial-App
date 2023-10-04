@@ -18,7 +18,7 @@ export class UserEntity extends AbstractBaseEntity {
   @Column()
   password: string;
 
-  @ApiProperty({ type: Boolean })
+  @ApiProperty({ type: Boolean, default: 'false' })
   @Column({ default: false })
   isAdmin: boolean;
 

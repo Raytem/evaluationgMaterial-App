@@ -22,7 +22,7 @@ export class TimeoutInterceptor implements NestInterceptor {
   ): Observable<any> | Promise<Observable<any>> {
     const before = Date.now();
 
-    const timeout_ms = 12000;
+    const timeout_ms = 20000;
 
     return next.handle().pipe(
       timeout(timeout_ms),

@@ -28,7 +28,6 @@ const multipart_material_data_1 = require("../../decorators/multipart-material-d
 const reqUser_decorator_1 = require("../../decorators/reqUser.decorator");
 const user_entity_1 = require("../user/entities/user.entity");
 const material_filter_dto_1 = require("./dto/material-filter.dto");
-const public_decorator_1 = require("../../decorators/public.decorator");
 const cyrillic_to_translit_js_1 = __importDefault(require("cyrillic-to-translit-js"));
 let MaterialController = class MaterialController {
     constructor(materialService, fileCfg) {
@@ -62,7 +61,8 @@ let MaterialController = class MaterialController {
 };
 exports.MaterialController = MaterialController;
 __decorate([
-    (0, public_decorator_1.Public)(),
+    (0, swagger_1.ApiOperation)({ summary: 'returns .xlsx file' }),
+    (0, swagger_1.ApiProduces)('application/octet-stream'),
     (0, common_1.Get)(':id/report'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Res)({ passthrough: true })),
@@ -120,6 +120,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], MaterialController.prototype, "remove", null);
 exports.MaterialController = MaterialController = __decorate([
+    (0, common_1.UseInterceptors)(),
     (0, swagger_1.ApiBasicAuth)(),
     (0, swagger_1.ApiTags)('material'),
     (0, common_1.Controller)('material'),

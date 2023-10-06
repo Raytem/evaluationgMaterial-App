@@ -16,5 +16,5 @@ $ docker compose up -d
 ## API
 When application have already started, go to
 
-**localhost:80/api** (if you haven't changed the port)
+**http://localhost:80/api** (if you haven't changed the port)
 

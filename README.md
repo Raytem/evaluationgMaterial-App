@@ -11,7 +11,7 @@ Go to the project directory and than write the following command:
 
 ```bash
 # development
-$ docker compose up
+$ docker compose up -d
 ```
 ## API
 When application have already started, go to

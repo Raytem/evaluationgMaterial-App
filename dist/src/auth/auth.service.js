@@ -37,7 +37,7 @@ let AuthService = class AuthService {
             return user;
         }
         catch (e) {
-            throw e;
+            throw new common_1.UnauthorizedException('There is no user with this email');
         }
     }
     async signup(createUserDto) {

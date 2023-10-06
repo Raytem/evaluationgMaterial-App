@@ -28,7 +28,7 @@ export class AuthService {
 
       return user;
     } catch (e) {
-      throw e;
+      throw new UnauthorizedException('There is no user with this email');
     }
   }
 

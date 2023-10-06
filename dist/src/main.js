@@ -12,6 +12,10 @@ const path_1 = __importDefault(require("path"));
 const express_static_1 = __importDefault(require("express-static"));
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    app.enableCors({
+        origin: '*',
+        exposedHeaders: ['x-total-count'],
+    });
     const configService = app.get(config_1.ConfigService);
     const port = configService.get('app.port') || 3000;
     const staticDirName = configService.get('file.staticDirName');

@@ -9,6 +9,11 @@ import serve from 'express-static';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors({
+    origin: '*',
+    exposedHeaders: ['x-total-count'],
+  });
+
   const configService = app.get(ConfigService);
   const port = configService.get('app.port') || 3000;
 

@@ -162,6 +162,7 @@ export class MaterialService {
     const queryBuilder = this.materialRepository
       .createQueryBuilder('material')
       .leftJoinAndSelect('material.condition', 'condition')
+      .leftJoinAndSelect('material.user', 'user')
       .leftJoinAndSelect('condition.abrasionType', 'abrasionType')
       .leftJoinAndSelect('condition.washing', 'washing')
       .leftJoinAndSelect('washing.washingType', 'washingType')
@@ -175,6 +176,7 @@ export class MaterialService {
       .leftJoinAndSelect('material.reliabilityFunction', 'reliabilityFunction')
       .leftJoinAndSelect('material.estimation', 'estimation')
       .leftJoinAndSelect('material.layers', 'layer')
+      .leftJoinAndSelect('layer.layerType', 'layerType')
       .leftJoinAndSelect('material.images', 'image')
       .leftJoinAndSelect('material.productionMethod', 'productionMethod')
       .leftJoinAndSelect(
@@ -267,14 +269,30 @@ export class MaterialService {
       });
     }
 
-    return await queryBuilder.getMany();
+    const filteredMaterials = await queryBuilder.getMany();
+
+    return filteredMaterials.map((m) => {
+      return new MaterialEntity({
+        ...m,
+        waterproofFunction: undefined,
+        homeostasisFunction: undefined,
+        reliabilityFunction: undefined,
+        estimation: undefined,
+      });
+    });
   }
 
-  async findOne(id: number, withUser = false): Promise<MaterialEntity> {
+  async findOne(
+    id: number,
+    withFunctionalIndicators = false,
+  ): Promise<MaterialEntity> {
     const material = await this.materialRepository.findOne({
       where: { id },
       relations: {
-        user: withUser ? true : false,
+        waterproofFunction: withFunctionalIndicators,
+        homeostasisFunction: withFunctionalIndicators,
+        reliabilityFunction: withFunctionalIndicators,
+        estimation: withFunctionalIndicators,
       },
     });
 
@@ -286,7 +304,7 @@ export class MaterialService {
   }
 
   async remove(id: number, reqUser: UserEntity): Promise<MaterialEntity> {
-    const material = await this.findOne(id, true);
+    const material = await this.findOne(id);
 
     if (material.user.id !== reqUser.id) {
       throw new ForbiddenException(

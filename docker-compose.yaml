@@ -7,12 +7,32 @@ networks:
     driver: bridge
 
 services: 
+  nginx_proxy:
+    image: nginx:1.25.2
+    container_name: nginx_proxy
+    ports: 
+      - 80:80
+    environment: 
+      - 'APP_PROXY_PORT=80'
+      - 'APP_PROXY_HOST=localhost'
+      - 'APP_HOST=app'
+      - 'APP_PORT=9090'
+    volumes: 
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./default.conf.template:/etc/nginx/templates/default.conf.template
+      - ./static:/static:ro
+    depends_on: 
+      - app
+    networks: 
+      - inside_net
+
   app: 
     build: .
     container_name: app
-    ports:
-      - 80:9090
     environment: 
+      - 'NODE_ENV=production'
+      - 'APP_PROXY_HOST=localhost'
+      - 'APP_PROXY_PORT=80'
       - 'APP_PORT=9090'
       - 'DB_HOST=postgres_db'
     depends_on: 
@@ -41,8 +61,8 @@ services:
       - 'PGDATA=/var/lib/postgresql/data/pgdata'
       - 'POSTGRES_DB=evaluating_material_app_db'
     volumes: 
-      - ./evaluating_material_app_db.gz:/var/backups/evaluating_material_app_db.gz
-      - ./init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+      - ./evaluating_material_app_db.gz:/var/backups/evaluating_material_app_db.gz:ro
+      - ./init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh:ro
       - ./postgres_data:/var/lib/postgresql/data
     networks: 
       - inside_net

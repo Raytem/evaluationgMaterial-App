@@ -1,4 +1,6 @@
 declare class EnvVariables {
+    NODE_ENV: string;
+    APP_PROXY_HOST: string;
     APP_HOST: string;
     APP_PORT: string;
     APP_URL: string;

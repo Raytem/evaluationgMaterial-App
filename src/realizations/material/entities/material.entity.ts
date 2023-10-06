@@ -45,34 +45,25 @@ export class MaterialEntity extends AbstractBaseEntity {
   })
   condition: ConditionEntity;
 
-  @ApiProperty({ type: () => WaterproofFunctionEntity })
   @OneToOne(
     () => WaterproofFunctionEntity,
     (waterproofFunction) => waterproofFunction.material,
-    { eager: true },
   )
   waterproofFunction: WaterproofFunctionEntity;
 
-  @ApiProperty({ type: () => HomeostasisFunctionEntity })
   @OneToOne(
     () => HomeostasisFunctionEntity,
     (homeostasisFunction) => homeostasisFunction.material,
-    { eager: true },
   )
   homeostasisFunction: HomeostasisFunctionEntity;
 
-  @ApiProperty({ type: () => ReliabilityFunctionEntity })
   @OneToOne(
     () => ReliabilityFunctionEntity,
     (reliabilityFunction) => reliabilityFunction.material,
-    { eager: true },
   )
   reliabilityFunction: ReliabilityFunctionEntity;
 
-  @ApiProperty({ type: () => EstimationEntity })
-  @OneToOne(() => EstimationEntity, (estimation) => estimation.material, {
-    eager: true,
-  })
+  @OneToOne(() => EstimationEntity, (estimation) => estimation.material)
   estimation: EstimationEntity;
 
   @ApiProperty({ type: () => LayerEntity, isArray: true })
@@ -86,7 +77,8 @@ export class MaterialEntity extends AbstractBaseEntity {
   })
   images: ImageEntity[];
 
-  @ManyToOne(() => UserEntity, (user) => user.materials)
+  @ApiProperty({ type: () => UserEntity })
+  @ManyToOne(() => UserEntity, (user) => user.materials, { eager: true })
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
@@ -104,4 +96,9 @@ export class MaterialEntity extends AbstractBaseEntity {
   @ManyToOne(() => GlueTypeEntity, { eager: true })
   @JoinColumn({ name: 'glueType_id' })
   glueType: GlueTypeEntity;
+
+  constructor(partial: Partial<MaterialEntity>) {
+    super();
+    Object.assign(this, partial);
+  }
 }

@@ -26,4 +26,5 @@ export declare class MaterialEntity extends AbstractBaseEntity {
     productionMethod: ProductionMethodEntity;
     membraneLayerPolymerType: MembraneLayerPolymerTypeEntity;
     glueType: GlueTypeEntity;
+    constructor(partial: Partial<MaterialEntity>);
 }

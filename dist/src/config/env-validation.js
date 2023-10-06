@@ -12,8 +12,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.validate = void 0;
 const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
+const node_env_1 = require("../enums/node-env");
 class EnvVariables {
 }
+__decorate([
+    (0, class_validator_1.IsEnum)(node_env_1.NodeEnv),
+    __metadata("design:type", String)
+], EnvVariables.prototype, "NODE_ENV", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], EnvVariables.prototype, "APP_PROXY_HOST", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)

@@ -26,6 +26,10 @@ const user_entity_1 = require("../../user/entities/user.entity");
 const waterproof_function_entity_1 = require("../../waterproof-function/entities/waterproof-function.entity");
 const typeorm_1 = require("typeorm");
 let MaterialEntity = class MaterialEntity extends abstract_base_entity_1.AbstractBaseEntity {
+    constructor(partial) {
+        super();
+        Object.assign(this, partial);
+    }
 };
 exports.MaterialEntity = MaterialEntity;
 __decorate([
@@ -56,25 +60,19 @@ __decorate([
     __metadata("design:type", condition_entity_1.ConditionEntity)
 ], MaterialEntity.prototype, "condition", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: () => waterproof_function_entity_1.WaterproofFunctionEntity }),
-    (0, typeorm_1.OneToOne)(() => waterproof_function_entity_1.WaterproofFunctionEntity, (waterproofFunction) => waterproofFunction.material, { eager: true }),
+    (0, typeorm_1.OneToOne)(() => waterproof_function_entity_1.WaterproofFunctionEntity, (waterproofFunction) => waterproofFunction.material),
     __metadata("design:type", waterproof_function_entity_1.WaterproofFunctionEntity)
 ], MaterialEntity.prototype, "waterproofFunction", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: () => homeostasis_function_entity_1.HomeostasisFunctionEntity }),
-    (0, typeorm_1.OneToOne)(() => homeostasis_function_entity_1.HomeostasisFunctionEntity, (homeostasisFunction) => homeostasisFunction.material, { eager: true }),
+    (0, typeorm_1.OneToOne)(() => homeostasis_function_entity_1.HomeostasisFunctionEntity, (homeostasisFunction) => homeostasisFunction.material),
     __metadata("design:type", homeostasis_function_entity_1.HomeostasisFunctionEntity)
 ], MaterialEntity.prototype, "homeostasisFunction", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: () => reliability_function_entity_1.ReliabilityFunctionEntity }),
-    (0, typeorm_1.OneToOne)(() => reliability_function_entity_1.ReliabilityFunctionEntity, (reliabilityFunction) => reliabilityFunction.material, { eager: true }),
+    (0, typeorm_1.OneToOne)(() => reliability_function_entity_1.ReliabilityFunctionEntity, (reliabilityFunction) => reliabilityFunction.material),
     __metadata("design:type", reliability_function_entity_1.ReliabilityFunctionEntity)
 ], MaterialEntity.prototype, "reliabilityFunction", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: () => estimation_entity_1.EstimationEntity }),
-    (0, typeorm_1.OneToOne)(() => estimation_entity_1.EstimationEntity, (estimation) => estimation.material, {
-        eager: true,
-    }),
+    (0, typeorm_1.OneToOne)(() => estimation_entity_1.EstimationEntity, (estimation) => estimation.material),
     __metadata("design:type", estimation_entity_1.EstimationEntity)
 ], MaterialEntity.prototype, "estimation", void 0);
 __decorate([
@@ -91,7 +89,8 @@ __decorate([
     __metadata("design:type", Array)
 ], MaterialEntity.prototype, "images", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, (user) => user.materials),
+    (0, swagger_1.ApiProperty)({ type: () => user_entity_1.UserEntity }),
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, (user) => user.materials, { eager: true }),
     (0, typeorm_1.JoinColumn)({ name: 'user_id' }),
     __metadata("design:type", user_entity_1.UserEntity)
 ], MaterialEntity.prototype, "user", void 0);
@@ -114,6 +113,7 @@ __decorate([
     __metadata("design:type", glue_type_entity_1.GlueTypeEntity)
 ], MaterialEntity.prototype, "glueType", void 0);
 exports.MaterialEntity = MaterialEntity = __decorate([
-    (0, typeorm_1.Entity)('Material')
+    (0, typeorm_1.Entity)('Material'),
+    __metadata("design:paramtypes", [Object])
 ], MaterialEntity);
 //# sourceMappingURL=material.entity.js.map

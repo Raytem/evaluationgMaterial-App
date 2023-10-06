@@ -1,13 +1,20 @@
 import { plainToInstance } from 'class-transformer';
 import {
   IsBooleanString,
+  IsEnum,
   IsNumberString,
   IsString,
   validateSync,
 } from 'class-validator';
+import { NodeEnv } from 'src/enums/node-env';
 
 class EnvVariables {
+  @IsEnum(NodeEnv)
+  NODE_ENV: string;
+
   //app
+  @IsString()
+  APP_PROXY_HOST: string;
   @IsString()
   APP_HOST: string;
   @IsNumberString()

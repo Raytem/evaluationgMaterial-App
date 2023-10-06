@@ -96,6 +96,7 @@ let MaterialService = class MaterialService {
         const queryBuilder = this.materialRepository
             .createQueryBuilder('material')
             .leftJoinAndSelect('material.condition', 'condition')
+            .leftJoinAndSelect('material.user', 'user')
             .leftJoinAndSelect('condition.abrasionType', 'abrasionType')
             .leftJoinAndSelect('condition.washing', 'washing')
             .leftJoinAndSelect('washing.washingType', 'washingType')
@@ -106,6 +107,7 @@ let MaterialService = class MaterialService {
             .leftJoinAndSelect('material.reliabilityFunction', 'reliabilityFunction')
             .leftJoinAndSelect('material.estimation', 'estimation')
             .leftJoinAndSelect('material.layers', 'layer')
+            .leftJoinAndSelect('layer.layerType', 'layerType')
             .leftJoinAndSelect('material.images', 'image')
             .leftJoinAndSelect('material.productionMethod', 'productionMethod')
             .leftJoinAndSelect('material.membraneLayerPolymerType', 'membraneLayerPolymerType')
@@ -165,13 +167,25 @@ let MaterialService = class MaterialService {
                 return `${subQuery} = ${materialFilterDto.layersCnt}`;
             });
         }
-        return await queryBuilder.getMany();
+        const filteredMaterials = await queryBuilder.getMany();
+        return filteredMaterials.map((m) => {
+            return new material_entity_1.MaterialEntity({
+                ...m,
+                waterproofFunction: undefined,
+                homeostasisFunction: undefined,
+                reliabilityFunction: undefined,
+                estimation: undefined,
+            });
+        });
     }
-    async findOne(id, withUser = false) {
+    async findOne(id, withFunctionalIndicators = false) {
         const material = await this.materialRepository.findOne({
             where: { id },
             relations: {
-                user: withUser ? true : false,
+                waterproofFunction: withFunctionalIndicators,
+                homeostasisFunction: withFunctionalIndicators,
+                reliabilityFunction: withFunctionalIndicators,
+                estimation: withFunctionalIndicators,
             },
         });
         if (!material) {
@@ -180,7 +194,7 @@ let MaterialService = class MaterialService {
         return material;
     }
     async remove(id, reqUser) {
-        const material = await this.findOne(id, true);
+        const material = await this.findOne(id);
         if (material.user.id !== reqUser.id) {
             throw new common_1.ForbiddenException('You can delete only the materials you have created');
         }

@@ -1,5 +1,11 @@
 import { ApiProperty, OmitType } from '@nestjs/swagger';
-import { IsInt, IsNumber, IsPositive, ValidateNested } from 'class-validator';
+import {
+  IsInt,
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  ValidateNested,
+} from 'class-validator';
 import { ConditionEntity } from '../entities/condition.entity';
 import { CreateWashingDto } from 'src/realizations/washing/dto/create-washing.dto';
 import { Type } from 'class-transformer';
@@ -13,6 +19,7 @@ export class CreateConditionDto extends OmitType(ConditionEntity, [
   'physicalActivityType',
 ]) {
   @ApiProperty({ type: () => CreateWashingDto })
+  @IsOptional()
   @ValidateNested()
   @Type(() => CreateWashingDto)
   washing: CreateWashingDto;

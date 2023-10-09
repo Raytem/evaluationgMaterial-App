@@ -3,8 +3,9 @@ import { ConditionEntity } from 'src/realizations/condition/entities/condition.e
 import { WashingTypeEntity } from 'src/realizations/washing-type/entities/washing-type.entity';
 export declare class WashingEntity extends AbstractBaseEntity {
     temperature: number;
+    cyclesCnt: number;
     duration: number;
-    press: number;
+    press: boolean;
     condition: ConditionEntity;
     washingType: WashingTypeEntity;
 }

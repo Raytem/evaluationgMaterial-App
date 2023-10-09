@@ -12,24 +12,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateWashingDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
-class CreateWashingDto {
+const washing_entity_1 = require("../entities/washing.entity");
+class CreateWashingDto extends (0, swagger_1.PickType)(washing_entity_1.WashingEntity, [
+    'cyclesCnt',
+    'duration',
+    'press',
+    'temperature',
+]) {
 }
 exports.CreateWashingDto = CreateWashingDto;
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], CreateWashingDto.prototype, "temperature", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], CreateWashingDto.prototype, "duration", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], CreateWashingDto.prototype, "press", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number, minimum: 1 }),
     (0, class_validator_1.IsPositive)(),

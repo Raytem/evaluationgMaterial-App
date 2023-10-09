@@ -45,6 +45,7 @@ const waterproof_function_module_1 = require("./realizations/waterproof-function
 const basic_auth_guard_1 = require("./auth/guards/basic-auth.guard");
 const file_config_1 = require("./config/config-functions/file.config");
 const calculations_config_1 = require("./config/config-functions/calculations.config");
+const all_types_module_1 = require("./realizations/all-types/all-types.module");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(logger_middleware_1.LoggerMiddleware).forRoutes('*');
@@ -66,6 +67,7 @@ exports.AppModule = AppModule = __decorate([
             auth_module_1.AuthModule,
             user_module_1.UserModule,
             material_module_1.MaterialModule,
+            all_types_module_1.AllTypesModule,
             pagination_module_1.PaginationModule,
             exel_module_1.ExelModule,
             abrasion_type_module_1.AbrasionTypeModule,

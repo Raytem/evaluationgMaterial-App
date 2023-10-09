@@ -35,7 +35,7 @@ export class GlueTypeService {
     return newGlueType;
   }
 
-  async findAll(paginationDto: PaginationDto): Promise<GlueTypeEntity[]> {
+  async findAll(paginationDto?: PaginationDto): Promise<GlueTypeEntity[]> {
     const pagination = this.paginationService.paginate(paginationDto);
 
     return await this.glueTypeRepository.find({

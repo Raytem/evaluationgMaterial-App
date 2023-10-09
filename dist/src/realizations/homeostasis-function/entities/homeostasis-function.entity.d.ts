@@ -7,6 +7,7 @@ export declare class HomeostasisFunctionEntity extends AbstractBaseEntity {
     m2s: number;
     s0_1: number;
     t_1: number;
+    waterPermeability_recommended: number;
     waterPermeability_calculated: number;
     waterPermeability_relativeValuation: number;
     waterPermeability_base: number;
@@ -17,6 +18,7 @@ export declare class HomeostasisFunctionEntity extends AbstractBaseEntity {
     m2max: number;
     s0_2: number;
     t_2: number;
+    waterPermeabilityDynamicCriteria_recommended: number;
     waterPermeabilityDynamicCriteria_calculated: number;
     waterPermeabilityDynamicCriteria_relativeValuation: number;
     waterPermeabilityDynamicCriteria_base: number;
@@ -24,8 +26,9 @@ export declare class HomeostasisFunctionEntity extends AbstractBaseEntity {
     tos: number;
     s: number;
     m: number;
-    totalThermalResistance_base: number;
+    totalThermalResistance_recommended: number;
     totalThermalResistance_calculated: number;
+    totalThermalResistance_base: number;
     totalThermalResistance_relativeValuation: number;
     totalThermalResistance_weight: number;
     minPressureDiff: number;

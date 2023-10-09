@@ -138,15 +138,13 @@ export class MaterialService {
         calculatedFunctionalIndicators.homeostasisFunction,
       );
 
-      //FIX
+      const reliabilityFunction = await this.reliabilityFunctionService.create(
+        calculatedFunctionalIndicators.reliabilityFunction,
+      );
 
-      // const reliabilityFunction = await this.reliabilityFunctionService.create(
-      //   calculatedFunctionalIndicators.reliabilityFunction,
-      // );
-
-      // const estimation = await this.estimationService.create(
-      //   calculatedFunctionalIndicators.estimation,
-      // );
+      const estimation = await this.estimationService.create(
+        calculatedFunctionalIndicators.estimation,
+      );
 
       return await this.findOne(material.id);
     } catch (e) {

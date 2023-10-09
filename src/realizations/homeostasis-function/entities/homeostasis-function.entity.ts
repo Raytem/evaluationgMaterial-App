@@ -40,6 +40,11 @@ export class HomeostasisFunctionEntity extends AbstractBaseEntity {
   @ApiProperty({ type: Number })
   @IsNumber()
   @Column({ type: 'double precision' })
+  waterPermeability_recommended: number;
+
+  @ApiProperty({ type: Number })
+  @IsNumber()
+  @Column({ type: 'double precision' })
   waterPermeability_calculated: number;
 
   @ApiProperty({ type: Number })
@@ -92,6 +97,11 @@ export class HomeostasisFunctionEntity extends AbstractBaseEntity {
   @ApiProperty({ type: Number })
   @IsNumber()
   @Column({ type: 'double precision' })
+  waterPermeabilityDynamicCriteria_recommended: number;
+
+  @ApiProperty({ type: Number })
+  @IsNumber()
+  @Column({ type: 'double precision' })
   waterPermeabilityDynamicCriteria_calculated: number;
 
   @ApiProperty({ type: Number })
@@ -129,12 +139,17 @@ export class HomeostasisFunctionEntity extends AbstractBaseEntity {
   @ApiProperty({ type: Number })
   @IsNumber()
   @Column({ type: 'double precision' })
-  totalThermalResistance_base: number;
+  totalThermalResistance_recommended: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
   @Column({ type: 'double precision' })
   totalThermalResistance_calculated: number;
+
+  @ApiProperty({ type: Number })
+  @IsNumber()
+  @Column({ type: 'double precision' })
+  totalThermalResistance_base: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()

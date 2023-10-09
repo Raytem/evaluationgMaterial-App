@@ -37,7 +37,7 @@ export class LayerTypeService {
     return newLayerType;
   }
 
-  async findAll(paginationDto: PaginationDto): Promise<LayerTypeEntity[]> {
+  async findAll(paginationDto?: PaginationDto): Promise<LayerTypeEntity[]> {
     const pagination = this.paginationService.paginate(paginationDto);
 
     return await this.layerTypeRepository.find({

@@ -9,7 +9,7 @@ export declare class BendingTypeService {
     private bendingTypeRepository;
     constructor(paginationService: PaginationService, bendingTypeRepository: Repository<BendingTypeEntity>);
     create(createBendingTypeDto: CreateBendingTypeDto): Promise<BendingTypeEntity>;
-    findAll(paginationDto: PaginationDto): Promise<BendingTypeEntity[]>;
+    findAll(paginationDto?: PaginationDto): Promise<BendingTypeEntity[]>;
     findOne(id: number, name?: string): Promise<BendingTypeEntity>;
     update(id: number, updateBendingTypeDto: UpdateBendingTypeDto): Promise<BendingTypeEntity>;
     remove(id: number): Promise<BendingTypeEntity>;

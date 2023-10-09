@@ -10,6 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EstimationEntity = void 0;
+const swagger_1 = require("@nestjs/swagger");
+const class_validator_1 = require("class-validator");
 const abstract_base_entity_1 = require("../../abstract-base-entity");
 const material_entity_1 = require("../../material/entities/material.entity");
 const typeorm_1 = require("typeorm");
@@ -23,6 +25,36 @@ __decorate([
     (0, typeorm_1.JoinColumn)({ name: 'material_id' }),
     __metadata("design:type", material_entity_1.MaterialEntity)
 ], EstimationEntity.prototype, "material", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], EstimationEntity.prototype, "waterproofFunction_weight", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], EstimationEntity.prototype, "homeostasisFunction_weight", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], EstimationEntity.prototype, "reliabilityFunction_weight", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], EstimationEntity.prototype, "avgWeightedArithmetic", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], EstimationEntity.prototype, "avgWeightedGeometric", void 0);
 exports.EstimationEntity = EstimationEntity = __decorate([
     (0, typeorm_1.Entity)('Estimation')
 ], EstimationEntity);

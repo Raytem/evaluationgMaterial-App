@@ -85,6 +85,8 @@ let MaterialService = class MaterialService {
             const calculatedFunctionalIndicators = this.calculationService.calcAll(createMaterialDto, material);
             const waterproofFunction = await this.waterproofFunctionService.create(calculatedFunctionalIndicators.waterproofFunction);
             const homeostasisFunction = await this.homeostasisFunctionService.create(calculatedFunctionalIndicators.homeostasisFunction);
+            const reliabilityFunction = await this.reliabilityFunctionService.create(calculatedFunctionalIndicators.reliabilityFunction);
+            const estimation = await this.estimationService.create(calculatedFunctionalIndicators.estimation);
             return await this.findOne(material.id);
         }
         catch (e) {

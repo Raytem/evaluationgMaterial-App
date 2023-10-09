@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WashingEntity = void 0;
 const swagger_1 = require("@nestjs/swagger");
+const class_validator_1 = require("class-validator");
 const abstract_base_entity_1 = require("../../abstract-base-entity");
 const condition_entity_1 = require("../../condition/entities/condition.entity");
 const washing_type_entity_1 = require("../../washing-type/entities/washing-type.entity");
@@ -20,18 +21,28 @@ let WashingEntity = class WashingEntity extends abstract_base_entity_1.AbstractB
 exports.WashingEntity = WashingEntity;
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], WashingEntity.prototype, "temperature", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsInt)(),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], WashingEntity.prototype, "cyclesCnt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], WashingEntity.prototype, "duration", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, swagger_1.ApiProperty)({ type: Boolean }),
+    (0, class_validator_1.IsBoolean)(),
     (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", Boolean)
 ], WashingEntity.prototype, "press", void 0);
 __decorate([
     (0, typeorm_1.OneToOne)(() => condition_entity_1.ConditionEntity, (condition) => condition.washing, {

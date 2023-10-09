@@ -9,7 +9,7 @@ export declare class WashingTypeService {
     private washingTypeRepository;
     constructor(paginationService: PaginationService, washingTypeRepository: Repository<WashingTypeEntity>);
     create(createWashingTypeDto: CreateWashingTypeDto): Promise<WashingTypeEntity>;
-    findAll(paginationDto: PaginationDto): Promise<WashingTypeEntity[]>;
+    findAll(paginationDto?: PaginationDto): Promise<WashingTypeEntity[]>;
     findOne(id: number, name?: string): Promise<WashingTypeEntity>;
     update(id: number, updateWashingTypeDto: UpdateWashingTypeDto): Promise<WashingTypeEntity>;
     remove(id: number): Promise<WashingTypeEntity>;

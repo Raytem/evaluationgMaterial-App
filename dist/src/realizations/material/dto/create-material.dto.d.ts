@@ -3,6 +3,7 @@ import { CalculateWaterproofFunctionDto } from 'src/realizations/waterproof-func
 import { CalculateReliabilityFunctionDto } from 'src/realizations/reliability-function/dto/calculate-reliability-function.dto';
 import { CalculateHomeostasisFunctionDto } from 'src/realizations/homeostasis-function/dto/calculate-homeostasis-function.dto';
 import { MaterialInfoDto } from './material-info.dto';
+import { CalculateEstimationDto } from 'src/realizations/estimation/dto/calculate-estimation.dto';
 export declare class CreateMaterialDto {
     images: string;
     material: MaterialInfoDto;
@@ -10,4 +11,5 @@ export declare class CreateMaterialDto {
     waterproofFunction: CalculateWaterproofFunctionDto;
     homeostasisFunction: CalculateHomeostasisFunctionDto;
     reliabilityFunction: CalculateReliabilityFunctionDto;
+    estimation: CalculateEstimationDto;
 }

@@ -38,7 +38,7 @@ export class UserService {
     return new UserEntity(newUser);
   }
 
-  async findAll(paginationDto: PaginationDto): Promise<UserEntity[]> {
+  async findAll(paginationDto?: PaginationDto): Promise<UserEntity[]> {
     const pagination = this.paginationService.paginate(paginationDto);
 
     return await this.userRepository.find({

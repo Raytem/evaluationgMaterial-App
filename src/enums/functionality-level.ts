@@ -1,4 +1,6 @@
 export enum FunctionalityLevel {
+  UNDEFINED = 'неопределенный',
+  MIN = 'минимальный',
   INSUFFICIENT = 'недостаточный',
   SUFFICIENT = 'достаточный',
   OVERSUPPLY = 'избыточный',

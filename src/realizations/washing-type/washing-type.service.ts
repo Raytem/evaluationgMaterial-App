@@ -39,7 +39,7 @@ export class WashingTypeService {
     return newWashingType;
   }
 
-  async findAll(paginationDto: PaginationDto): Promise<WashingTypeEntity[]> {
+  async findAll(paginationDto?: PaginationDto): Promise<WashingTypeEntity[]> {
     const pagination = this.paginationService.paginate(paginationDto);
 
     return await this.washingTypeRepository.find({

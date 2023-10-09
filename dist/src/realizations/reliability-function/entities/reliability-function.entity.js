@@ -26,6 +26,199 @@ __decorate([
     __metadata("design:type", material_entity_1.MaterialEntity)
 ], ReliabilityFunctionEntity.prototype, "material", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "relativeBlottingPressureAfterLoad_recommended", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "relativeBlottingPressureAfterLoad_experimental_1", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "relativeBlottingPressureAfterLoad_calculated", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "relativeBlottingPressureAfterLoad_base", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "relativeBlottingPressureAfterLoad_relativeValuation", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "relativeBlottingPressureAfterLoad_weight", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "relativeWaterResistanceAfterLoad_recommended", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "relativeWaterResistanceAfterLoad_experimental_1", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "relativeWaterResistanceAfterLoad_calculated", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "relativeWaterResistanceAfterLoad_base", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "relativeWaterResistanceAfterLoad_relativeValuation", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "relativeWaterResistanceAfterLoad_weight", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "relativeBlottingTimeAfterLoad_recommended", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "relativeBlottingTimeAfterLoad_experimental_1", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "relativeBlottingTimeAfterLoad_calculated", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "relativeBlottingTimeAfterLoad_base", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "relativeBlottingTimeAfterLoad_relativeValuation", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "relativeBlottingTimeAfterLoad_weight", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "waterproofRealizationCriteriaAfterLoad_recommended", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "waterproofRealizationCriteriaAfterLoad_experimental_1", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "waterproofRealizationCriteriaAfterLoad_experimental_2", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "waterproofRealizationCriteriaAfterLoad_calculated", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "waterproofRealizationCriteriaAfterLoad_base", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "waterproofRealizationCriteriaAfterLoad_relativeValuation", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "waterproofRealizationCriteriaAfterLoad_weight", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "waterproofFunctionResource_experimental_1", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "waterproofFunctionResource_experimental_2", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "waterproofFunctionResource_calculated", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "waterproofFunctionResource_base", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "waterproofFunctionResource_relativeValuation", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "waterproofFunctionResource_weight", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsInt)(),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], ReliabilityFunctionEntity.prototype, "impactCyclesCnt", void 0);
+__decorate([
     (0, swagger_1.ApiProperty)({ type: String }),
     (0, class_validator_1.IsString)(),
     (0, typeorm_1.Column)(),

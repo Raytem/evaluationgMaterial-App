@@ -44,7 +44,7 @@ export class MembraneLayerPolymerTypeService {
   }
 
   async findAll(
-    paginationDto: PaginationDto,
+    paginationDto?: PaginationDto,
   ): Promise<MembraneLayerPolymerTypeEntity[]> {
     const pagination = this.paginationService.paginate(paginationDto);
 

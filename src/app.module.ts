@@ -41,6 +41,7 @@ import { WaterproofFunctionModule } from './realizations/waterproof-function/wat
 import { BasicAuthGuard } from './auth/guards/basic-auth.guard';
 import { fileConfig } from './config/config-functions/file.config';
 import { calculationsConfig } from './config/config-functions/calculations.config';
+import { AllTypesModule } from './realizations/all-types/all-types.module';
 
 @Module({
   imports: [
@@ -56,6 +57,7 @@ import { calculationsConfig } from './config/config-functions/calculations.confi
     AuthModule,
     UserModule,
     MaterialModule,
+    AllTypesModule,
     PaginationModule,
     ExelModule,
     AbrasionTypeModule,

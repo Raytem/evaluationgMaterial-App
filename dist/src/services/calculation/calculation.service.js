@@ -16,17 +16,22 @@ exports.CalculationService = void 0;
 const common_1 = require("@nestjs/common");
 const calculations_config_1 = require("../../config/config-functions/calculations.config");
 const comment_service_1 = require("../comment/comment.service");
+const obj_numbers_to_fixed_1 = require("../../utils/obj-numbers-to-fixed");
 let CalculationService = class CalculationService {
     constructor(calcCfg, commentService) {
         this.calcCfg = calcCfg;
         this.commentService = commentService;
     }
     calcAll(createMaterialDto, material) {
+        const waterproofFunction = this.calcWaterproofFunction(createMaterialDto, material);
+        const homeostasisFunction = this.calcHomeostasisFunction(createMaterialDto, material);
+        const reliabilityFunction = this.calcReliabilityFunction(createMaterialDto, material, waterproofFunction);
+        const estimation = this.calcEstimation(createMaterialDto, material, waterproofFunction, homeostasisFunction, reliabilityFunction);
         return {
-            waterproofFunction: this.calcWaterproofFunction(createMaterialDto, material),
-            homeostasisFunction: this.calcHomeostasisFunction(createMaterialDto, material),
-            reliabilityFunction: this.calcReliabilityFunction(createMaterialDto, material),
-            estimation: this.calcEstimation(createMaterialDto, material),
+            waterproofFunction,
+            homeostasisFunction,
+            reliabilityFunction,
+            estimation,
         };
     }
     calcWaterproofFunction(cmd, material) {
@@ -61,18 +66,19 @@ let CalculationService = class CalculationService {
             dynamicWaterproofCriteria_relativeValuation **
                 wpf.dynamicWaterproofCriteria_weight) **
             (1 / 3) || 0;
-        const calculatedWaterproofFunction = {
+        let calculatedWaterproofFunction = {
             ...wpf,
-            waterproofRealizationCriteria_calculated: +waterproofRealizationCriteria_calculated.toFixed(this.calcCfg.cntOfNumbersAfterPoint),
-            dynamicWaterproofCriteria_calculated: +dynamicWaterproofCriteria_calculated.toFixed(this.calcCfg.cntOfNumbersAfterPoint),
-            materialBlottingPressure_relativeValuation: +materialBlottingPressure_relativeValuation.toFixed(this.calcCfg.cntOfNumbersAfterPoint),
-            waterproof_relativeValuation: +waterproof_relativeValuation.toFixed(this.calcCfg.cntOfNumbersAfterPoint),
-            materialBlottingTime_relativeValuation: +materialBlottingTime_relativeValuation.toFixed(this.calcCfg.cntOfNumbersAfterPoint),
-            waterproofRealizationCriteria_relativeValuation: +waterproofRealizationCriteria_relativeValuation.toFixed(this.calcCfg.cntOfNumbersAfterPoint),
-            dynamicWaterproofCriteria_relativeValuation: +dynamicWaterproofCriteria_relativeValuation.toFixed(this.calcCfg.cntOfNumbersAfterPoint),
-            avgWeightedEstimate: +avgWeightedEstimate.toFixed(this.calcCfg.cntOfNumbersAfterPoint),
+            waterproofRealizationCriteria_calculated,
+            dynamicWaterproofCriteria_calculated,
+            materialBlottingPressure_relativeValuation,
+            waterproof_relativeValuation,
+            materialBlottingTime_relativeValuation,
+            waterproofRealizationCriteria_relativeValuation,
+            dynamicWaterproofCriteria_relativeValuation,
+            avgWeightedEstimate,
             material,
         };
+        calculatedWaterproofFunction = (0, obj_numbers_to_fixed_1.objNumbersToFixed)(calculatedWaterproofFunction, this.calcCfg.cntOfNumbersAfterPoint);
         const comment = this.commentService.getWaterproofFunctionComment(calculatedWaterproofFunction);
         return {
             ...calculatedWaterproofFunction,
@@ -106,32 +112,108 @@ let CalculationService = class CalculationService {
             totalThermalResistance_relativeValuation **
                 hf.totalThermalResistance_weight) **
             (1 / 2) || 0;
-        const calculatedHomeostasisFunction = {
+        let calculatedHomeostasisFunction = {
             ...hf,
-            minPressureDiff: +minPressureDiff.toFixed(this.calcCfg.cntOfNumbersAfterPoint),
-            maxPressureDiff: +maxPressureDiff.toFixed(this.calcCfg.cntOfNumbersAfterPoint),
-            estimatedPressureDiff: +estimatedPressureDiff.toFixed(this.calcCfg.cntOfNumbersAfterPoint),
-            avgRangePressureVal: +avgRangePressureVal.toFixed(this.calcCfg.cntOfNumbersAfterPoint),
-            waterPermeability_calculated: +waterPermeability_calculated.toFixed(this.calcCfg.cntOfNumbersAfterPoint),
-            waterPermeabilityDynamicCriteria_calculated: +waterPermeabilityDynamicCriteria_calculated.toFixed(this.calcCfg.cntOfNumbersAfterPoint),
-            totalThermalResistance_calculated: +totalThermalResistance_calculated.toFixed(this.calcCfg.cntOfNumbersAfterPoint),
-            waterPermeability_relativeValuation: +waterPermeability_relativeValuation.toFixed(this.calcCfg.cntOfNumbersAfterPoint),
-            waterPermeabilityDynamicCriteria_relativeValuation: +waterPermeabilityDynamicCriteria_relativeValuation.toFixed(this.calcCfg.cntOfNumbersAfterPoint),
-            totalThermalResistance_relativeValuation: +totalThermalResistance_relativeValuation.toFixed(this.calcCfg.cntOfNumbersAfterPoint),
-            avgWeightedEstimate: +avgWeightedEstimate.toFixed(this.calcCfg.cntOfNumbersAfterPoint),
+            minPressureDiff,
+            maxPressureDiff,
+            estimatedPressureDiff,
+            avgRangePressureVal,
+            waterPermeability_calculated,
+            waterPermeabilityDynamicCriteria_calculated,
+            totalThermalResistance_calculated,
+            waterPermeability_relativeValuation,
+            waterPermeabilityDynamicCriteria_relativeValuation,
+            totalThermalResistance_relativeValuation,
+            avgWeightedEstimate,
             material,
         };
+        calculatedHomeostasisFunction = (0, obj_numbers_to_fixed_1.objNumbersToFixed)(calculatedHomeostasisFunction, this.calcCfg.cntOfNumbersAfterPoint);
         const comment = this.commentService.getHomeostasisFunctionComment(calculatedHomeostasisFunction);
         return {
             ...calculatedHomeostasisFunction,
             comment,
         };
     }
-    calcReliabilityFunction(cmd, material) {
-        return;
+    calcReliabilityFunction(cmd, material, createWaterproofFunction) {
+        const rf = cmd.reliabilityFunction;
+        const relativeBlottingPressureAfterLoad_relativeValuation = rf.relativeBlottingPressureAfterLoad_calculated /
+            rf.relativeBlottingPressureAfterLoad_base || 0;
+        const relativeWaterResistanceAfterLoad_relativeValuation = rf.relativeWaterResistanceAfterLoad_calculated /
+            rf.relativeWaterResistanceAfterLoad_base || 0;
+        const relativeBlottingTimeAfterLoad_relativeValuation = rf.relativeBlottingTimeAfterLoad_calculated /
+            rf.relativeBlottingTimeAfterLoad_base || 0;
+        const waterproofRealizationCriteriaAfterLoad_calculated = 1 -
+            (0.25 *
+                (createWaterproofFunction.waterproofTime -
+                    rf.waterproofRealizationCriteriaAfterLoad_experimental_2) +
+                rf.waterproofRealizationCriteriaAfterLoad_experimental_1) /
+                (0.25 * createWaterproofFunction.waterproofTime) || 0;
+        const waterproofRealizationCriteriaAfterLoad_base = createWaterproofFunction.waterproofRealizationCriteria_calculated || 0;
+        const waterproofRealizationCriteriaAfterLoad_relativeValuation = waterproofRealizationCriteriaAfterLoad_calculated /
+            waterproofRealizationCriteriaAfterLoad_base || 0;
+        const waterproofFunctionResource_experimental_1 = rf.relativeWaterResistanceAfterLoad_experimental_1 || 0;
+        const waterproofFunctionResource_experimental_2 = createWaterproofFunction.waterproof_experimental_1;
+        const waterproofFunctionResource_calculated = (waterproofFunctionResource_experimental_2 -
+            waterproofFunctionResource_experimental_1) /
+            rf.impactCyclesCnt || 0;
+        const waterproofFunctionResource_relativeValuation = waterproofFunctionResource_calculated /
+            rf.waterproofFunctionResource_base || 0;
+        const avgWeightedEstimate = (relativeBlottingPressureAfterLoad_relativeValuation **
+            rf.relativeBlottingPressureAfterLoad_weight *
+            relativeWaterResistanceAfterLoad_relativeValuation **
+                rf.relativeWaterResistanceAfterLoad_weight *
+            relativeBlottingTimeAfterLoad_relativeValuation **
+                rf.relativeBlottingTimeAfterLoad_weight *
+            waterproofRealizationCriteriaAfterLoad_relativeValuation **
+                rf.waterproofRealizationCriteriaAfterLoad_weight *
+            waterproofFunctionResource_relativeValuation **
+                rf.waterproofFunctionResource_weight) **
+            (1 / 2) || 0;
+        let calculatedReliabilityFunction = {
+            ...rf,
+            material,
+            relativeBlottingPressureAfterLoad_relativeValuation,
+            relativeWaterResistanceAfterLoad_relativeValuation,
+            relativeBlottingTimeAfterLoad_relativeValuation,
+            waterproofRealizationCriteriaAfterLoad_calculated,
+            waterproofRealizationCriteriaAfterLoad_base,
+            waterproofRealizationCriteriaAfterLoad_relativeValuation,
+            waterproofFunctionResource_experimental_1,
+            waterproofFunctionResource_experimental_2,
+            waterproofFunctionResource_calculated,
+            waterproofFunctionResource_relativeValuation,
+            avgWeightedEstimate,
+        };
+        calculatedReliabilityFunction = (0, obj_numbers_to_fixed_1.objNumbersToFixed)(calculatedReliabilityFunction, this.calcCfg.cntOfNumbersAfterPoint);
+        const comment = this.commentService.getReliabilityFunctionComment(calculatedReliabilityFunction);
+        return {
+            ...calculatedReliabilityFunction,
+            comment,
+        };
     }
-    calcEstimation(cmd, material) {
-        return;
+    calcEstimation(cmd, material, createWaterproofFunction, createHomeostasisFunction, createReliabilityFunction) {
+        const est = cmd.estimation;
+        const avgWeightedArithmetic = est.waterproofFunction_weight *
+            createWaterproofFunction.avgWeightedEstimate +
+            est.homeostasisFunction_weight *
+                createHomeostasisFunction.avgWeightedEstimate +
+            est.reliabilityFunction_weight *
+                createReliabilityFunction.avgWeightedEstimate || 0;
+        const avgWeightedGeometric = (createWaterproofFunction.avgWeightedEstimate **
+            est.waterproofFunction_weight *
+            createHomeostasisFunction.avgWeightedEstimate **
+                est.homeostasisFunction_weight *
+            createReliabilityFunction.avgWeightedEstimate **
+                est.reliabilityFunction_weight) **
+            (1 / 3) || 0;
+        let calculatedEstimation = {
+            ...est,
+            material,
+            avgWeightedArithmetic,
+            avgWeightedGeometric,
+        };
+        calculatedEstimation = (0, obj_numbers_to_fixed_1.objNumbersToFixed)(calculatedEstimation, this.calcCfg.cntOfNumbersAfterPoint);
+        return calculatedEstimation;
     }
 };
 exports.CalculationService = CalculationService;

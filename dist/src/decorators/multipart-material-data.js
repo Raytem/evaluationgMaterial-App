@@ -14,6 +14,7 @@ exports.MultipartMaterialData = (0, common_1.createParamDecorator)(async (data, 
         waterproofFunction: JSON.parse(req.body.waterproofFunction),
         homeostasisFunction: JSON.parse(req.body.homeostasisFunction),
         reliabilityFunction: JSON.parse(req.body.reliabilityFunction),
+        estimation: JSON.parse(req.body.estimation),
     };
     const validatedCreateMaterialDto = (0, class_transformer_1.plainToInstance)(create_material_dto_1.CreateMaterialDto, createMaterialDto, {
         enableImplicitConversion: false,

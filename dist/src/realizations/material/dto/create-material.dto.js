@@ -18,6 +18,7 @@ const calculate_reliability_function_dto_1 = require("../../reliability-function
 const class_transformer_1 = require("class-transformer");
 const calculate_homeostasis_function_dto_1 = require("../../homeostasis-function/dto/calculate-homeostasis-function.dto");
 const material_info_dto_1 = require("./material-info.dto");
+const calculate_estimation_dto_1 = require("../../estimation/dto/calculate-estimation.dto");
 class CreateMaterialDto {
 }
 exports.CreateMaterialDto = CreateMaterialDto;
@@ -37,32 +38,44 @@ __decorate([
 ], CreateMaterialDto.prototype, "images", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: () => material_info_dto_1.MaterialInfoDto }),
+    (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.ValidateNested)(),
     (0, class_transformer_1.Type)(() => material_info_dto_1.MaterialInfoDto),
     __metadata("design:type", material_info_dto_1.MaterialInfoDto)
 ], CreateMaterialDto.prototype, "material", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: () => create_condition_dto_1.CreateConditionDto }),
+    (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.ValidateNested)(),
     (0, class_transformer_1.Type)(() => create_condition_dto_1.CreateConditionDto),
     __metadata("design:type", create_condition_dto_1.CreateConditionDto)
 ], CreateMaterialDto.prototype, "condition", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: () => calculate_waterproof_function_dto_1.CalculateWaterproofFunctionDto }),
+    (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.ValidateNested)(),
     (0, class_transformer_1.Type)(() => calculate_waterproof_function_dto_1.CalculateWaterproofFunctionDto),
     __metadata("design:type", calculate_waterproof_function_dto_1.CalculateWaterproofFunctionDto)
 ], CreateMaterialDto.prototype, "waterproofFunction", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: () => calculate_homeostasis_function_dto_1.CalculateHomeostasisFunctionDto }),
+    (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.ValidateNested)(),
     (0, class_transformer_1.Type)(() => calculate_homeostasis_function_dto_1.CalculateHomeostasisFunctionDto),
     __metadata("design:type", calculate_homeostasis_function_dto_1.CalculateHomeostasisFunctionDto)
 ], CreateMaterialDto.prototype, "homeostasisFunction", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: () => calculate_reliability_function_dto_1.CalculateReliabilityFunctionDto }),
+    (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.ValidateNested)(),
     (0, class_transformer_1.Type)(() => calculate_reliability_function_dto_1.CalculateReliabilityFunctionDto),
     __metadata("design:type", calculate_reliability_function_dto_1.CalculateReliabilityFunctionDto)
 ], CreateMaterialDto.prototype, "reliabilityFunction", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: () => calculate_estimation_dto_1.CalculateEstimationDto }),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.ValidateNested)(),
+    (0, class_transformer_1.Type)(() => calculate_estimation_dto_1.CalculateEstimationDto),
+    __metadata("design:type", calculate_estimation_dto_1.CalculateEstimationDto)
+], CreateMaterialDto.prototype, "estimation", void 0);
 //# sourceMappingURL=create-material.dto.js.map

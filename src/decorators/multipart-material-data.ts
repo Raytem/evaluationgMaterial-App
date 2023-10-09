@@ -15,6 +15,7 @@ export const MultipartMaterialData = createParamDecorator(
       waterproofFunction: JSON.parse(req.body.waterproofFunction),
       homeostasisFunction: JSON.parse(req.body.homeostasisFunction),
       reliabilityFunction: JSON.parse(req.body.reliabilityFunction),
+      estimation: JSON.parse(req.body.estimation),
     };
 
     const validatedCreateMaterialDto = plainToInstance(

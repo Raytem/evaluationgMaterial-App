@@ -9,7 +9,7 @@ export declare class MembraneLayerPolymerTypeService {
     private membraneLayerPolymerTypeRepository;
     constructor(paginationService: PaginationService, membraneLayerPolymerTypeRepository: Repository<MembraneLayerPolymerTypeEntity>);
     create(createMembraneLayerPolymerTypeDto: CreateMembraneLayerPolymerTypeDto): Promise<MembraneLayerPolymerTypeEntity>;
-    findAll(paginationDto: PaginationDto): Promise<MembraneLayerPolymerTypeEntity[]>;
+    findAll(paginationDto?: PaginationDto): Promise<MembraneLayerPolymerTypeEntity[]>;
     findOne(id: number, name?: string): Promise<MembraneLayerPolymerTypeEntity>;
     update(id: number, updateMembraneLayerPolymerTypeDto: UpdateMembraneLayerPolymerTypeDto): Promise<MembraneLayerPolymerTypeEntity>;
     remove(id: number): Promise<MembraneLayerPolymerTypeEntity>;

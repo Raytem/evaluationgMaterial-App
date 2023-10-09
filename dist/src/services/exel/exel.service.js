@@ -209,8 +209,134 @@ let ExelService = class ExelService {
             .value(homeostasisFunction.totalThermalResistance_weight);
         homeostasisSheet.cell('K27').value(homeostasisFunction.avgWeightedEstimate);
     }
-    fillReliabilitySheet(reliabilitySheet, material) { }
-    fillEstimationSheet(estimationSheet, material) { }
+    fillReliabilitySheet(reliabilitySheet, material) {
+        const waterproofFunction = material.waterproofFunction;
+        const reliabilityFunction = material.reliabilityFunction;
+        const homeostasisFunction = material.homeostasisFunction;
+        reliabilitySheet.cell('A2').value(material.name);
+        reliabilitySheet.cell('A3').value(material.description);
+        reliabilitySheet.cell('A5').value(reliabilityFunction.equipment);
+        reliabilitySheet.cell('A32').value(material.user.fio);
+        reliabilitySheet
+            .cell('B8')
+            .value(reliabilityFunction.relativeBlottingPressureAfterLoad_experimental_1);
+        reliabilitySheet
+            .cell('B9')
+            .value(reliabilityFunction.relativeWaterResistanceAfterLoad_experimental_1);
+        reliabilitySheet
+            .cell('B10')
+            .value(reliabilityFunction.relativeBlottingTimeAfterLoad_experimental_1);
+        reliabilitySheet
+            .cell('B11')
+            .value(reliabilityFunction.waterproofRealizationCriteriaAfterLoad_experimental_1);
+        reliabilitySheet
+            .cell('B12')
+            .value(reliabilityFunction.waterproofFunctionResource_experimental_1);
+        reliabilitySheet
+            .cell('B15')
+            .value(waterproofFunction.hydrostaticPressureIncreaseSpeed);
+        reliabilitySheet.cell('B16').value(waterproofFunction.hydrostaticPressure);
+        reliabilitySheet.cell('B17').value(waterproofFunction.waterproofTime);
+        reliabilitySheet.cell('B18').value(reliabilityFunction.impactCyclesCnt);
+        const bending = material.condition?.bendingType?.name || '-';
+        reliabilitySheet.cell('B20').value(bending);
+        const sign = material.condition.isPositive ? '+' : '-';
+        reliabilitySheet
+            .cell('B21')
+            .value(`${sign}${homeostasisFunction.minOutdoorTemp}`);
+        reliabilitySheet.cell('B22').value(homeostasisFunction.maxOutdoorHumidity);
+        reliabilitySheet.cell('B23').value(homeostasisFunction.comment);
+        reliabilitySheet
+            .cell('C11')
+            .value(reliabilityFunction.waterproofRealizationCriteriaAfterLoad_experimental_2);
+        reliabilitySheet
+            .cell('C12')
+            .value(reliabilityFunction.waterproofFunctionResource_experimental_2);
+        const abrasionType = material.condition?.abrasionType?.name || '-';
+        reliabilitySheet.cell('D20').value(abrasionType);
+        reliabilitySheet
+            .cell('F8')
+            .value(reliabilityFunction.relativeBlottingPressureAfterLoad_calculated);
+        reliabilitySheet
+            .cell('F9')
+            .value(reliabilityFunction.relativeWaterResistanceAfterLoad_calculated);
+        reliabilitySheet
+            .cell('F10')
+            .value(reliabilityFunction.relativeBlottingTimeAfterLoad_calculated);
+        reliabilitySheet
+            .cell('F11')
+            .value(reliabilityFunction.waterproofRealizationCriteriaAfterLoad_calculated);
+        reliabilitySheet
+            .cell('F12')
+            .value(reliabilityFunction.waterproofFunctionResource_calculated);
+        const torsion = `${material.condition?.torsionAngle}°` || '-';
+        reliabilitySheet.cell('F20').value(torsion);
+        reliabilitySheet
+            .cell('G8')
+            .value(reliabilityFunction.relativeBlottingPressureAfterLoad_base);
+        reliabilitySheet
+            .cell('G9')
+            .value(reliabilityFunction.relativeWaterResistanceAfterLoad_base);
+        reliabilitySheet
+            .cell('G10')
+            .value(reliabilityFunction.relativeBlottingTimeAfterLoad_base);
+        reliabilitySheet
+            .cell('G11')
+            .value(reliabilityFunction.waterproofRealizationCriteriaAfterLoad_base);
+        reliabilitySheet
+            .cell('G12')
+            .value(reliabilityFunction.waterproofFunctionResource_base);
+        const stretchingCompression = `${material.condition?.stretchingCompression}%` || '-';
+        reliabilitySheet.cell('G20').value(stretchingCompression);
+        reliabilitySheet
+            .cell('H8')
+            .value(reliabilityFunction.relativeBlottingPressureAfterLoad_relativeValuation);
+        reliabilitySheet
+            .cell('H9')
+            .value(reliabilityFunction.relativeWaterResistanceAfterLoad_relativeValuation);
+        reliabilitySheet
+            .cell('H10')
+            .value(reliabilityFunction.relativeBlottingTimeAfterLoad_relativeValuation);
+        reliabilitySheet
+            .cell('H11')
+            .value(reliabilityFunction.waterproofRealizationCriteriaAfterLoad_relativeValuation);
+        reliabilitySheet
+            .cell('H12')
+            .value(reliabilityFunction.waterproofFunctionResource_relativeValuation);
+        const washing = material.condition?.washing;
+        let washingStr;
+        if (washing) {
+            washingStr = `${washing.cyclesCnt} циклов, ${washing.washingType.name}, ${washing.temperature} °C, ${washing.duration} мин, ${washing.press ? 'c отжимом' : 'без отжима'}`;
+        }
+        else {
+            washingStr = '-';
+        }
+        reliabilitySheet.cell('H20').value(washingStr);
+        reliabilitySheet
+            .cell('I8')
+            .value(reliabilityFunction.relativeBlottingPressureAfterLoad_weight);
+        reliabilitySheet
+            .cell('I9')
+            .value(reliabilityFunction.relativeWaterResistanceAfterLoad_weight);
+        reliabilitySheet
+            .cell('I10')
+            .value(reliabilityFunction.relativeBlottingTimeAfterLoad_weight);
+        reliabilitySheet
+            .cell('I11')
+            .value(reliabilityFunction.waterproofRealizationCriteriaAfterLoad_weight);
+        reliabilitySheet
+            .cell('I12')
+            .value(reliabilityFunction.waterproofFunctionResource_weight);
+        reliabilitySheet.cell('I24').value(reliabilityFunction.avgWeightedEstimate);
+    }
+    fillEstimationSheet(estimationSheet, material) {
+        const estimation = material.estimation;
+        estimationSheet.cell('B1').value(estimation.waterproofFunction_weight);
+        estimationSheet.cell('B2').value(estimation.homeostasisFunction_weight);
+        estimationSheet.cell('B3').value(estimation.reliabilityFunction_weight);
+        estimationSheet.cell('B8').value(estimation.avgWeightedArithmetic);
+        estimationSheet.cell('B10').value(estimation.avgWeightedGeometric);
+    }
 };
 exports.ExelService = ExelService;
 exports.ExelService = ExelService = __decorate([

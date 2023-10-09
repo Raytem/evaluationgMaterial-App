@@ -39,7 +39,7 @@ export class AbrasionTypeService {
     return newAbrasionType;
   }
 
-  async findAll(paginationDto: PaginationDto): Promise<AbrasionTypeEntity[]> {
+  async findAll(paginationDto?: PaginationDto): Promise<AbrasionTypeEntity[]> {
     const pagination = this.paginationService.paginate(paginationDto);
 
     return await this.abrasionTypeRepository.find({

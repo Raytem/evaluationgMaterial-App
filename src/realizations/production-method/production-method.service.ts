@@ -43,7 +43,7 @@ export class ProductionMethodService {
   }
 
   async findAll(
-    paginationDto: PaginationDto,
+    paginationDto?: PaginationDto,
   ): Promise<ProductionMethodEntity[]> {
     const pagination = this.paginationService.paginate(paginationDto);
 

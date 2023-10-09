@@ -9,7 +9,7 @@ export declare class LayerTypeService {
     private layerTypeRepository;
     constructor(paginationService: PaginationService, layerTypeRepository: Repository<LayerTypeEntity>);
     create(createLayerTypeDto: CreateLayerTypeDto): Promise<LayerTypeEntity>;
-    findAll(paginationDto: PaginationDto): Promise<LayerTypeEntity[]>;
+    findAll(paginationDto?: PaginationDto): Promise<LayerTypeEntity[]>;
     findByIds(layerTypeIds: number[]): Promise<LayerTypeEntity[]>;
     findOne(id: number, name?: string): Promise<LayerTypeEntity>;
     update(id: number, updateLayerTypeDto: UpdateLayerTypeDto): Promise<LayerTypeEntity>;

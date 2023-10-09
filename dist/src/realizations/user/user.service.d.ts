@@ -9,7 +9,7 @@ export declare class UserService {
     private userRepository;
     constructor(paginationService: PaginationService, userRepository: Repository<UserEntity>);
     create(createUserDto: CreateUserDto): Promise<UserEntity>;
-    findAll(paginationDto: PaginationDto): Promise<UserEntity[]>;
+    findAll(paginationDto?: PaginationDto): Promise<UserEntity[]>;
     findOne(id: number, email?: string): Promise<UserEntity>;
     update(id: number, updateUserDto: UpdateUserDto, reqUser: UserEntity): Promise<UserEntity>;
     remove(id: number, reqUser: UserEntity): Promise<UserEntity>;

@@ -9,7 +9,7 @@ export declare class GlueTypeService {
     private glueTypeRepository;
     constructor(paginationService: PaginationService, glueTypeRepository: Repository<GlueTypeEntity>);
     create(createGlueTypeDto: CreateGlueTypeDto): Promise<GlueTypeEntity>;
-    findAll(paginationDto: PaginationDto): Promise<GlueTypeEntity[]>;
+    findAll(paginationDto?: PaginationDto): Promise<GlueTypeEntity[]>;
     findOne(id: number, name?: string): Promise<GlueTypeEntity>;
     update(id: number, updateGlueTypeDto: UpdateGlueTypeDto): Promise<GlueTypeEntity>;
     remove(id: number): Promise<GlueTypeEntity>;

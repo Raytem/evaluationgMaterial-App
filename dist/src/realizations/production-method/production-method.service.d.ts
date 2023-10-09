@@ -9,7 +9,7 @@ export declare class ProductionMethodService {
     private productionMethodRepository;
     constructor(paginationService: PaginationService, productionMethodRepository: Repository<ProductionMethodEntity>);
     create(createProductionMethodDto: CreateProductionMethodDto): Promise<ProductionMethodEntity>;
-    findAll(paginationDto: PaginationDto): Promise<ProductionMethodEntity[]>;
+    findAll(paginationDto?: PaginationDto): Promise<ProductionMethodEntity[]>;
     findOne(id: number, name?: string): Promise<ProductionMethodEntity>;
     update(id: number, updateProductionMethodDto: UpdateProductionMethodDto): Promise<ProductionMethodEntity>;
     remove(id: number): Promise<ProductionMethodEntity>;

@@ -9,7 +9,7 @@ export declare class PhysicalActivityTypeService {
     private physicalActivityTypeRepository;
     constructor(paginationService: PaginationService, physicalActivityTypeRepository: Repository<PhysicalActivityTypeEntity>);
     create(createPhysicalActivityTypeDto: CreatePhysicalActivityTypeDto): Promise<PhysicalActivityTypeEntity>;
-    findAll(paginationDto: PaginationDto): Promise<PhysicalActivityTypeEntity[]>;
+    findAll(paginationDto?: PaginationDto): Promise<PhysicalActivityTypeEntity[]>;
     findOne(id: number, name?: string): Promise<PhysicalActivityTypeEntity>;
     update(id: number, updatePhysicalActivityTypeDto: UpdatePhysicalActivityTypeDto): Promise<PhysicalActivityTypeEntity>;
     remove(id: number): Promise<PhysicalActivityTypeEntity>;

@@ -44,7 +44,7 @@ export class PhysicalActivityTypeService {
   }
 
   async findAll(
-    paginationDto: PaginationDto,
+    paginationDto?: PaginationDto,
   ): Promise<PhysicalActivityTypeEntity[]> {
     const pagination = this.paginationService.paginate(paginationDto);
 

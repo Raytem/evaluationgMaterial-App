@@ -56,6 +56,8 @@ __decorate([
     (0, swagger_1.ApiProperty)({ type: Number, required: false }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.Min)(0),
+    (0, class_validator_1.Max)(180),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)
 ], ConditionEntity.prototype, "torsionAngle", void 0);
@@ -63,6 +65,8 @@ __decorate([
     (0, swagger_1.ApiProperty)({ type: Number, required: false }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.Min)(0),
+    (0, class_validator_1.Max)(100),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)
 ], ConditionEntity.prototype, "stretchingCompression", void 0);
@@ -75,11 +79,13 @@ __decorate([
 ], ConditionEntity.prototype, "material", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: () => abrasion_type_entity_1.AbrasionTypeEntity }),
+    (0, class_validator_1.IsOptional)(),
     (0, typeorm_1.ManyToOne)(() => abrasion_type_entity_1.AbrasionTypeEntity, { eager: true }),
     (0, typeorm_1.JoinColumn)({ name: 'abrasionType_id' }),
     __metadata("design:type", abrasion_type_entity_1.AbrasionTypeEntity)
 ], ConditionEntity.prototype, "abrasionType", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ type: () => washing_entity_1.WashingEntity }),
     (0, typeorm_1.OneToOne)(() => washing_entity_1.WashingEntity, (washing) => washing.condition, {
         eager: true,
     }),

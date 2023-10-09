@@ -39,7 +39,7 @@ export class BendingTypeService {
     return newBendingType;
   }
 
-  async findAll(paginationDto: PaginationDto): Promise<BendingTypeEntity[]> {
+  async findAll(paginationDto?: PaginationDto): Promise<BendingTypeEntity[]> {
     const pagination = this.paginationService.paginate(paginationDto);
 
     return await this.bendingTypeRepository.find({

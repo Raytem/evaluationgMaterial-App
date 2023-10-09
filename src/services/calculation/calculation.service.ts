@@ -272,9 +272,10 @@ export class CalculationService {
       createWaterproofFunction.waterproof_experimental_1;
 
     const waterproofFunctionResource_calculated =
-      (waterproofFunctionResource_experimental_2 -
-        waterproofFunctionResource_experimental_1) /
-        rf.impactCyclesCnt || 0;
+      rf.maxWaterResistanceLvl /
+        ((waterproofFunctionResource_experimental_2 -
+          waterproofFunctionResource_experimental_1) /
+          rf.impactCyclesCnt) || 0;
 
     const waterproofFunctionResource_relativeValuation =
       waterproofFunctionResource_calculated /

@@ -15,6 +15,11 @@ export class ReliabilityFunctionEntity extends AbstractBaseEntity {
   @ApiProperty({ type: Number })
   @IsNumber()
   @Column({ type: 'double precision' })
+  maxWaterResistanceLvl: number;
+
+  @ApiProperty({ type: Number })
+  @IsNumber()
+  @Column({ type: 'double precision' })
   relativeBlottingPressureAfterLoad_recommended: number;
 
   @ApiProperty({ type: Number })

@@ -233,6 +233,9 @@ let ExelService = class ExelService {
             .cell('B12')
             .value(reliabilityFunction.waterproofFunctionResource_experimental_1);
         reliabilitySheet
+            .cell('B13')
+            .value(reliabilityFunction.maxWaterResistanceLvl);
+        reliabilitySheet
             .cell('B15')
             .value(waterproofFunction.hydrostaticPressureIncreaseSpeed);
         reliabilitySheet.cell('B16').value(waterproofFunction.hydrostaticPressure);
@@ -245,7 +248,7 @@ let ExelService = class ExelService {
             .cell('B21')
             .value(`${sign}${homeostasisFunction.minOutdoorTemp}`);
         reliabilitySheet.cell('B22').value(homeostasisFunction.maxOutdoorHumidity);
-        reliabilitySheet.cell('B23').value(homeostasisFunction.comment);
+        reliabilitySheet.cell('B23').value(reliabilityFunction.comment);
         reliabilitySheet
             .cell('C11')
             .value(reliabilityFunction.waterproofRealizationCriteriaAfterLoad_experimental_2);

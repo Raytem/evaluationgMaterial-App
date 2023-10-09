@@ -153,9 +153,10 @@ let CalculationService = class CalculationService {
             waterproofRealizationCriteriaAfterLoad_base || 0;
         const waterproofFunctionResource_experimental_1 = rf.relativeWaterResistanceAfterLoad_experimental_1 || 0;
         const waterproofFunctionResource_experimental_2 = createWaterproofFunction.waterproof_experimental_1;
-        const waterproofFunctionResource_calculated = (waterproofFunctionResource_experimental_2 -
-            waterproofFunctionResource_experimental_1) /
-            rf.impactCyclesCnt || 0;
+        const waterproofFunctionResource_calculated = rf.maxWaterResistanceLvl /
+            ((waterproofFunctionResource_experimental_2 -
+                waterproofFunctionResource_experimental_1) /
+                rf.impactCyclesCnt) || 0;
         const waterproofFunctionResource_relativeValuation = waterproofFunctionResource_calculated /
             rf.waterproofFunctionResource_base || 0;
         const avgWeightedEstimate = (relativeBlottingPressureAfterLoad_relativeValuation **

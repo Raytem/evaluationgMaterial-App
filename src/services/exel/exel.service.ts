@@ -298,6 +298,9 @@ export class ExelService {
     reliabilitySheet
       .cell('B12')
       .value(reliabilityFunction.waterproofFunctionResource_experimental_1);
+    reliabilitySheet
+      .cell('B13')
+      .value(reliabilityFunction.maxWaterResistanceLvl);
 
     reliabilitySheet
       .cell('B15')
@@ -314,7 +317,7 @@ export class ExelService {
       .value(`${sign}${homeostasisFunction.minOutdoorTemp}`);
 
     reliabilitySheet.cell('B22').value(homeostasisFunction.maxOutdoorHumidity);
-    reliabilitySheet.cell('B23').value(homeostasisFunction.comment);
+    reliabilitySheet.cell('B23').value(reliabilityFunction.comment);
 
     //C
     reliabilitySheet

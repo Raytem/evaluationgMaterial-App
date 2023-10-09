@@ -139,11 +139,6 @@ export class HomeostasisFunctionEntity extends AbstractBaseEntity {
   @ApiProperty({ type: Number })
   @IsNumber()
   @Column({ type: 'double precision' })
-  totalThermalResistance_recommended: number;
-
-  @ApiProperty({ type: Number })
-  @IsNumber()
-  @Column({ type: 'double precision' })
   totalThermalResistance_calculated: number;
 
   @ApiProperty({ type: Number })

@@ -151,15 +151,28 @@ export class CommentService {
 
     //-----
 
-    const materialBlottingPressure_comment = `- по показателю Рп ${materialBlottingPressure_lvl} уровень водозащиты при гидростатическом давлении ${cwf.hydrostaticPressure} кПа и скорости ${cwf.hydrostaticPressureIncreaseSpeed} кПа/мин\n`;
+    const materialBlottingPressure_comment =
+      cwf.materialBlottingPressure_recommended
+        ? `- по показателю Рп ${materialBlottingPressure_lvl} уровень водозащиты\n`
+        : '';
 
-    const waterproof_comment = `- по показателю В ${waterproof_lvl} уровень водозащиты\n`;
+    const waterproof_comment = cwf.waterproof_recommended
+      ? `- по показателю В ${waterproof_lvl} уровень водозащиты\n`
+      : '';
 
-    const materialBlottingTime_comment = `- по показателю tп ${materialBlottingTime_lvl} уровень водозащиты\n`;
+    const materialBlottingTime_comment = cwf.materialBlottingTime_recommended
+      ? `- по показателю tп ${materialBlottingTime_lvl} уровень водозащиты\n`
+      : '';
 
-    const waterproofRealizationCriteria_comment = `- по показателю Кв ${waterproofRealizationCriteria_lvl} уровень водозащиты при гидростатическом давлении ${cwf.hydrostaticPressure} кПа и времени защиты от воды ${cwf.waterproofTime} минут\n`;
+    const waterproofRealizationCriteria_comment =
+      cwf.waterproofRealizationCriteria_recommended
+        ? `- по показателю Кв ${waterproofRealizationCriteria_lvl} уровень водозащиты\n`
+        : '';
 
-    const dynamicWaterproofCriteria_comment = `- по показателю Квд ${dynamicWaterproofCriteria_lvl} уровень водозащиты при гидростатическом давлении ${cwf.hydrostaticPressure} кПа и времени защиты от воды ${cwf.waterproofTime} минут\n`;
+    const dynamicWaterproofCriteria_comment =
+      cwf.dynamicWaterproofCriteria_recommended
+        ? `- по показателю Квд ${dynamicWaterproofCriteria_lvl} уровень водозащиты\n`
+        : '';
 
     const resComment =
       materialBlottingPressure_comment +
@@ -183,7 +196,7 @@ export class CommentService {
 
     let waterPermeabilityDynamicCriteria_lvl = FunctionalityLevel.UNDEFINED;
 
-    const totalThermalResistance_lvl = FunctionalityLevel.UNDEFINED;
+    let totalThermalResistance_lvl = FunctionalityLevel.UNDEFINED;
 
     if (
       chf.waterPermeability_recommended >= 600 &&
@@ -239,13 +252,32 @@ export class CommentService {
       waterPermeabilityDynamicCriteria_lvl = FunctionalityLevel.EXTRA_HIGH;
     }
 
+    if (chf.totalThermalResistance_relativeValuation < 0.8) {
+      totalThermalResistance_lvl = FunctionalityLevel.INSUFFICIENT;
+    } else if (
+      chf.totalThermalResistance_relativeValuation >= 0.8 &&
+      chf.totalThermalResistance_relativeValuation <= 1.2
+    ) {
+      totalThermalResistance_lvl = FunctionalityLevel.SUFFICIENT;
+    } else if (chf.totalThermalResistance_relativeValuation > 1.2) {
+      totalThermalResistance_lvl = FunctionalityLevel.OVERSUPPLY;
+    }
+
     //----
 
-    const waterPermeability_comment = `- по показателю WVPc ${waterPermeability_lvl} уровень паропроницаемости в середине диапазона носки\n`;
+    const waterPermeability_comment = chf.waterPermeability_recommended
+      ? `- по показателю WVPc ${waterPermeability_lvl} уровень гомеостаза\n`
+      : '';
 
-    const waterPermeabilityDynamicCriteria_comment = `- по показателю Kвпп ${waterPermeabilityDynamicCriteria_lvl} уровень гомеостаза \n`;
+    const waterPermeabilityDynamicCriteria_comment =
+      chf.waterPermeabilityDynamicCriteria_recommended
+        ? `- по показателю Kвпп ${waterPermeabilityDynamicCriteria_lvl} уровень гомеостаза \n`
+        : '';
 
-    const totalThermalResistance_comment = `- ${totalThermalResistance_lvl} уровень суммарного теплового сопротивления при минимальной температуре наружной среды 0 °С и средней физической активности\n`;
+    const totalThermalResistance_comment =
+      chf.totalThermalResistance_relativeValuation
+        ? `- по показателю Rсум ${totalThermalResistance_lvl} уровень теплового сопротивления \n`
+        : '';
 
     const resComment =
       waterPermeability_comment +
@@ -340,13 +372,25 @@ export class CommentService {
       waterproofRealizationCriteriaAfterLoad_lvl = FunctionalityLevel.HIGH;
     }
 
-    const relativeBlottingPressureAfterLoad_comment = `- по показателю Рпо ${relativeBlottingPressureAfterLoad_lvl} уровень функции надежности\n`;
+    const relativeBlottingPressureAfterLoad_comment =
+      crf.relativeBlottingPressureAfterLoad_recommended
+        ? `- по показателю Рпо ${relativeBlottingPressureAfterLoad_lvl} уровень надежности\n`
+        : '';
 
-    const relativeWaterResistanceAfterLoad_comment = `- по показателю Впо ${relativeWaterResistanceAfterLoad_lvl} уровень функции надежности\n`;
+    const relativeWaterResistanceAfterLoad_comment =
+      crf.relativeBlottingTimeAfterLoad_recommended
+        ? `- по показателю Во ${relativeWaterResistanceAfterLoad_lvl} уровень надежности\n`
+        : '';
 
-    const relativeBlottingTimeAfterLoad_comment = `- по показателю tпо ${relativeBlottingTimeAfterLoad_lvl} уровень функции надежности\n`;
+    const relativeBlottingTimeAfterLoad_comment =
+      crf.relativeBlottingTimeAfterLoad_recommended
+        ? `- по показателю tпо ${relativeBlottingTimeAfterLoad_lvl} уровень надежности\n`
+        : '';
 
-    const waterproofRealizationCriteriaAfterLoad_comment = `- по показателю Kво ${waterproofRealizationCriteriaAfterLoad_lvl} уровень функции надежности`;
+    const waterproofRealizationCriteriaAfterLoad_comment =
+      crf.waterproofRealizationCriteriaAfterLoad_recommended
+        ? `- по показателю Kво ${waterproofRealizationCriteriaAfterLoad_lvl} уровень надежности`
+        : '';
 
     const resComment =
       relativeBlottingPressureAfterLoad_comment +

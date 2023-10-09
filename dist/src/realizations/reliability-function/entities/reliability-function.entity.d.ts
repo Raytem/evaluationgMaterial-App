@@ -2,6 +2,7 @@ import { AbstractBaseEntity } from 'src/realizations/abstract-base-entity';
 import { MaterialEntity } from 'src/realizations/material/entities/material.entity';
 export declare class ReliabilityFunctionEntity extends AbstractBaseEntity {
     material: MaterialEntity;
+    maxWaterResistanceLvl: number;
     relativeBlottingPressureAfterLoad_recommended: number;
     relativeBlottingPressureAfterLoad_experimental_1: number;
     relativeBlottingPressureAfterLoad_calculated: number;

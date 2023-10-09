@@ -26,7 +26,6 @@ export declare class HomeostasisFunctionEntity extends AbstractBaseEntity {
     tos: number;
     s: number;
     m: number;
-    totalThermalResistance_recommended: number;
     totalThermalResistance_calculated: number;
     totalThermalResistance_base: number;
     totalThermalResistance_relativeValuation: number;

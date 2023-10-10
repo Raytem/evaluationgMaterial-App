@@ -7,9 +7,13 @@ The program being developed is designed to assess the level of functionality of 
 To run the application you need to have docker installed! 
 
 ## Running the app
-Go to the project directory and than write the following command:
+Go to the project directory and than write the following commands:
 
 ```bash
+#give access to run the script
+$ chmod +x ./init-user-db.sh
+
+#running the app
 $ docker compose up -d
 ```
 ## API

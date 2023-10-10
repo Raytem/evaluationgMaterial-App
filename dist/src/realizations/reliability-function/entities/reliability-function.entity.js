@@ -36,12 +36,6 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, typeorm_1.Column)({ type: 'double precision' }),
     __metadata("design:type", Number)
-], ReliabilityFunctionEntity.prototype, "relativeBlottingPressureAfterLoad_recommended", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
-    (0, class_validator_1.IsNumber)(),
-    (0, typeorm_1.Column)({ type: 'double precision' }),
-    __metadata("design:type", Number)
 ], ReliabilityFunctionEntity.prototype, "relativeBlottingPressureAfterLoad_experimental_1", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
@@ -67,12 +61,6 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'double precision' }),
     __metadata("design:type", Number)
 ], ReliabilityFunctionEntity.prototype, "relativeBlottingPressureAfterLoad_weight", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
-    (0, class_validator_1.IsNumber)(),
-    (0, typeorm_1.Column)({ type: 'double precision' }),
-    __metadata("design:type", Number)
-], ReliabilityFunctionEntity.prototype, "relativeWaterResistanceAfterLoad_recommended", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
     (0, class_validator_1.IsNumber)(),
@@ -108,12 +96,6 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, typeorm_1.Column)({ type: 'double precision' }),
     __metadata("design:type", Number)
-], ReliabilityFunctionEntity.prototype, "relativeBlottingTimeAfterLoad_recommended", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
-    (0, class_validator_1.IsNumber)(),
-    (0, typeorm_1.Column)({ type: 'double precision' }),
-    __metadata("design:type", Number)
 ], ReliabilityFunctionEntity.prototype, "relativeBlottingTimeAfterLoad_experimental_1", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
@@ -139,12 +121,6 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'double precision' }),
     __metadata("design:type", Number)
 ], ReliabilityFunctionEntity.prototype, "relativeBlottingTimeAfterLoad_weight", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
-    (0, class_validator_1.IsNumber)(),
-    (0, typeorm_1.Column)({ type: 'double precision' }),
-    __metadata("design:type", Number)
-], ReliabilityFunctionEntity.prototype, "waterproofRealizationCriteriaAfterLoad_recommended", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
     (0, class_validator_1.IsNumber)(),

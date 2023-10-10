@@ -30,12 +30,6 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, typeorm_1.Column)({ type: 'double precision' }),
     __metadata("design:type", Number)
-], WaterproofFunctionEntity.prototype, "materialBlottingPressure_recommended", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
-    (0, class_validator_1.IsNumber)(),
-    (0, typeorm_1.Column)({ type: 'double precision' }),
-    __metadata("design:type", Number)
 ], WaterproofFunctionEntity.prototype, "materialBlottingPressure_experimental_1", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
@@ -61,12 +55,6 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'double precision' }),
     __metadata("design:type", Number)
 ], WaterproofFunctionEntity.prototype, "materialBlottingPressure_weight", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
-    (0, class_validator_1.IsNumber)(),
-    (0, typeorm_1.Column)({ type: 'double precision' }),
-    __metadata("design:type", Number)
-], WaterproofFunctionEntity.prototype, "waterproof_recommended", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
     (0, class_validator_1.IsNumber)(),
@@ -102,12 +90,6 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, typeorm_1.Column)({ type: 'double precision' }),
     __metadata("design:type", Number)
-], WaterproofFunctionEntity.prototype, "materialBlottingTime_recommended", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
-    (0, class_validator_1.IsNumber)(),
-    (0, typeorm_1.Column)({ type: 'double precision' }),
-    __metadata("design:type", Number)
 ], WaterproofFunctionEntity.prototype, "materialBlottingTime_experimental_1", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
@@ -133,12 +115,6 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'double precision' }),
     __metadata("design:type", Number)
 ], WaterproofFunctionEntity.prototype, "materialBlottingTime_weight", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
-    (0, class_validator_1.IsNumber)(),
-    (0, typeorm_1.Column)({ type: 'double precision' }),
-    __metadata("design:type", Number)
-], WaterproofFunctionEntity.prototype, "waterproofRealizationCriteria_recommended", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
     (0, class_validator_1.IsNumber)(),
@@ -175,12 +151,6 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'double precision' }),
     __metadata("design:type", Number)
 ], WaterproofFunctionEntity.prototype, "waterproofRealizationCriteria_weight", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: Number }),
-    (0, class_validator_1.IsNumber)(),
-    (0, typeorm_1.Column)({ type: 'double precision' }),
-    __metadata("design:type", Number)
-], WaterproofFunctionEntity.prototype, "dynamicWaterproofCriteria_recommended", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
     (0, class_validator_1.IsNumber)(),

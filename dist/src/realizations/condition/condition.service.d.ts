@@ -15,7 +15,7 @@ export declare class ConditionService {
     private washingTypeService;
     constructor(conditionRepository: Repository<ConditionEntity>, washingService: WashingService, abrasionTypeService: AbrasionTypeService, bendingTypeService: BendingTypeService, physicalActivityTypeService: PhysicalActivityTypeService, washingTypeService: WashingTypeService);
     create(createConditionDto: CreateConditionDto): Promise<{
-        washing: import("../washing/entities/washing.entity").WashingEntity;
+        washing: any;
         abrasionType: import("../abrasion-type/entities/abrasion-type.entity").AbrasionTypeEntity;
         bendingType: import("../bending-type/entities/bending-type.entity").BendingTypeEntity;
         physicalActivityType: import("../physical-activity-type/entities/physical-activity-type.entity").PhysicalActivityTypeEntity;

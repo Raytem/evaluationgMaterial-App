@@ -24,6 +24,15 @@ __decorate([
     __metadata("design:type", String)
 ], MaterialFilterDto.prototype, "name", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ type: String, required: false, minimum: 1 }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.IsPositive)(),
+    (0, class_validator_1.IsInt)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], MaterialFilterDto.prototype, "userId", void 0);
+__decorate([
     (0, swagger_1.ApiProperty)({ type: Number, required: false }),
     (0, class_transformer_1.Type)(() => Number),
     (0, class_validator_1.IsOptional)(),
@@ -31,41 +40,6 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], MaterialFilterDto.prototype, "layersCnt", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: Number, required: false }),
-    (0, class_transformer_1.Type)(() => Number),
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], MaterialFilterDto.prototype, "depth", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: Number, required: false }),
-    (0, class_transformer_1.Type)(() => Number),
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], MaterialFilterDto.prototype, "materialBlottingPressure_calculated", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: Number, required: false }),
-    (0, class_transformer_1.Type)(() => Number),
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], MaterialFilterDto.prototype, "waterPermeability_calculated", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: Number, required: false }),
-    (0, class_transformer_1.Type)(() => Number),
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], MaterialFilterDto.prototype, "totalThermalResistance_calculated", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ type: Number, required: false }),
-    (0, class_transformer_1.Type)(() => Number),
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], MaterialFilterDto.prototype, "materialBlottingPressure_relativeValuation", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number, required: false, minimum: 1 }),
     (0, class_transformer_1.Type)(() => Number),
@@ -84,4 +58,74 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], MaterialFilterDto.prototype, "productionMethod_id", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number, required: false }),
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], MaterialFilterDto.prototype, "depth_min", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number, required: false }),
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], MaterialFilterDto.prototype, "depth_max", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number, required: false }),
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], MaterialFilterDto.prototype, "materialBlottingPressure_calculated_min", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number, required: false }),
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], MaterialFilterDto.prototype, "materialBlottingPressure_calculated_max", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number, required: false }),
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], MaterialFilterDto.prototype, "waterPermeability_calculated_min", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number, required: false }),
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], MaterialFilterDto.prototype, "waterPermeability_calculated_max", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number, required: false }),
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], MaterialFilterDto.prototype, "totalThermalResistance_calculated_min", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number, required: false }),
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], MaterialFilterDto.prototype, "totalThermalResistance_calculated_max", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number, required: false }),
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], MaterialFilterDto.prototype, "relativeBlottingPressureAfterLoad_relativeValuation_min", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number, required: false }),
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], MaterialFilterDto.prototype, "relativeBlottingPressureAfterLoad_relativeValuation_max", void 0);
 //# sourceMappingURL=material-filter.dto.js.map

@@ -35,9 +35,12 @@ let ConditionService = class ConditionService {
         try {
             const abrasionType = await this.abrasionTypeService.findOne(createConditionDto.abrasionType_id);
             const bendingType = await this.bendingTypeService.findOne(createConditionDto.bendingType_id);
-            const washingType = await this.washingTypeService.findOne(createConditionDto.washing.washingType_id);
+            let washing;
+            if (createConditionDto.washing) {
+                const washingType = await this.washingTypeService.findOne(createConditionDto.washing.washingType_id);
+                washing = await this.washingService.create(createConditionDto.washing, washingType);
+            }
             const physicalActivityType = await this.physicalActivityTypeService.findOne(createConditionDto.physicalActivityType_id);
-            const washing = await this.washingService.create(createConditionDto.washing, washingType);
             return await this.conditionRepository.save({
                 ...createConditionDto,
                 washing,

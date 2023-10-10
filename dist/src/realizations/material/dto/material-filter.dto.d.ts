@@ -1,12 +1,18 @@
 import { PaginationDto } from 'src/services/pagination/dto/pagination.dto';
 export declare class MaterialFilterDto extends PaginationDto {
     name: string;
+    userId: number;
     layersCnt: number;
-    depth: number;
-    materialBlottingPressure_calculated: number;
-    waterPermeability_calculated: number;
-    totalThermalResistance_calculated: number;
-    materialBlottingPressure_relativeValuation: number;
     membraneLayerPolymerType_id: number;
     productionMethod_id: number;
+    depth_min: number;
+    depth_max: number;
+    materialBlottingPressure_calculated_min: number;
+    materialBlottingPressure_calculated_max: number;
+    waterPermeability_calculated_min: number;
+    waterPermeability_calculated_max: number;
+    totalThermalResistance_calculated_min: number;
+    totalThermalResistance_calculated_max: number;
+    relativeBlottingPressureAfterLoad_relativeValuation_min: number;
+    relativeBlottingPressureAfterLoad_relativeValuation_max: number;
 }

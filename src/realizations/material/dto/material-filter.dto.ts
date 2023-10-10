@@ -15,46 +15,20 @@ export class MaterialFilterDto extends PaginationDto {
   @IsString()
   name: string;
 
+  @ApiProperty({ type: String, required: false, minimum: 1 })
+  @IsOptional()
+  @Type(() => Number)
+  @IsPositive()
+  @IsInt()
+  @IsNumber()
+  userId: number;
+
   @ApiProperty({ type: Number, required: false })
   @Type(() => Number)
   @IsOptional()
   @IsInt()
   @IsNumber()
   layersCnt: number;
-
-  @ApiProperty({ type: Number, required: false })
-  @Type(() => Number)
-  @IsOptional()
-  @IsNumber()
-  depth: number;
-
-  //waterproof-function
-  @ApiProperty({ type: Number, required: false })
-  @Type(() => Number)
-  @IsOptional()
-  @IsNumber()
-  materialBlottingPressure_calculated: number;
-
-  //homeostasis-function
-  @ApiProperty({ type: Number, required: false })
-  @Type(() => Number)
-  @IsOptional()
-  @IsNumber()
-  waterPermeability_calculated: number;
-
-  //homeostasis-function
-  @ApiProperty({ type: Number, required: false })
-  @Type(() => Number)
-  @IsOptional()
-  @IsNumber()
-  totalThermalResistance_calculated: number;
-
-  //reliability-function
-  @ApiProperty({ type: Number, required: false })
-  @Type(() => Number)
-  @IsOptional()
-  @IsNumber()
-  materialBlottingPressure_relativeValuation: number;
 
   @ApiProperty({ type: Number, required: false, minimum: 1 })
   @Type(() => Number)
@@ -71,4 +45,67 @@ export class MaterialFilterDto extends PaginationDto {
   @IsInt()
   @IsNumber()
   productionMethod_id: number;
+
+  @ApiProperty({ type: Number, required: false })
+  @Type(() => Number)
+  @IsOptional()
+  @IsNumber()
+  depth_min: number;
+
+  @ApiProperty({ type: Number, required: false })
+  @Type(() => Number)
+  @IsOptional()
+  @IsNumber()
+  depth_max: number;
+
+  //waterproof-function
+  @ApiProperty({ type: Number, required: false })
+  @Type(() => Number)
+  @IsOptional()
+  @IsNumber()
+  materialBlottingPressure_calculated_min: number;
+
+  @ApiProperty({ type: Number, required: false })
+  @Type(() => Number)
+  @IsOptional()
+  @IsNumber()
+  materialBlottingPressure_calculated_max: number;
+
+  //homeostasis-function
+  @ApiProperty({ type: Number, required: false })
+  @Type(() => Number)
+  @IsOptional()
+  @IsNumber()
+  waterPermeability_calculated_min: number;
+
+  @ApiProperty({ type: Number, required: false })
+  @Type(() => Number)
+  @IsOptional()
+  @IsNumber()
+  waterPermeability_calculated_max: number;
+
+  @ApiProperty({ type: Number, required: false })
+  @Type(() => Number)
+  @IsOptional()
+  @IsNumber()
+  totalThermalResistance_calculated_min: number;
+
+  @ApiProperty({ type: Number, required: false })
+  @Type(() => Number)
+  @IsOptional()
+  @IsNumber()
+  totalThermalResistance_calculated_max: number;
+
+  //reliability-function
+  @ApiProperty({ type: Number, required: false })
+  @Type(() => Number)
+  @IsOptional()
+  @IsNumber()
+  relativeBlottingPressureAfterLoad_relativeValuation_min: number;
+
+  @ApiProperty({ type: Number, required: false })
+  @Type(() => Number)
+  @IsOptional()
+  @IsNumber()
+  relativeBlottingPressureAfterLoad_relativeValuation_max: number;
 }

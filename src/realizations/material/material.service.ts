@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MaterialEntity } from './entities/material.entity';
 import { ConditionService } from '../condition/condition.service';
@@ -71,6 +75,47 @@ export class MaterialService {
     //   console.log(calculatedFunctionalIndicators);
     //   return;
     // }
+
+    const waterproofWeightSum =
+      createMaterialDto.waterproofFunction
+        .waterproofRealizationCriteria_weight +
+      createMaterialDto.waterproofFunction.dynamicWaterproofCriteria_weight +
+      createMaterialDto.waterproofFunction.materialBlottingPressure_weight +
+      createMaterialDto.waterproofFunction.materialBlottingTime_weight +
+      createMaterialDto.waterproofFunction.waterproof_weight;
+
+    const homeostasisWeightSum =
+      createMaterialDto.homeostasisFunction.waterPermeability_weight +
+      createMaterialDto.homeostasisFunction.totalThermalResistance_weight +
+      createMaterialDto.homeostasisFunction
+        .waterPermeabilityDynamicCriteria_weight;
+
+    const reliabilityWeightSum =
+      createMaterialDto.reliabilityFunction.waterproofFunctionResource_weight +
+      createMaterialDto.reliabilityFunction
+        .relativeBlottingTimeAfterLoad_weight +
+      createMaterialDto.reliabilityFunction
+        .relativeWaterResistanceAfterLoad_weight +
+      createMaterialDto.reliabilityFunction
+        .relativeBlottingPressureAfterLoad_weight +
+      createMaterialDto.reliabilityFunction
+        .waterproofRealizationCriteriaAfterLoad_weight;
+
+    if (waterproofWeightSum > 1) {
+      throw new BadRequestException(
+        "The sum of the weights in 'waterproof function' cannot be more than 1",
+      );
+    }
+    if (homeostasisWeightSum > 1) {
+      throw new BadRequestException(
+        "The sum of the weights in 'homeostasis function' cannot be more than 1",
+      );
+    }
+    if (reliabilityWeightSum > 1) {
+      throw new BadRequestException(
+        "The sum of the weights in 'reliability function' cannot be more than 1",
+      );
+    }
 
     try {
       const glueType = await this.glueTypeService.findOne(
@@ -190,52 +235,16 @@ export class MaterialService {
       queryBuilder.skip(pagination.skip);
     }
 
+    if (materialFilterDto.userId) {
+      queryBuilder.andWhere('user.id = :userId', {
+        userId: materialFilterDto.userId,
+      });
+    }
+
     if (materialFilterDto.name) {
       queryBuilder.andWhere(
         `material.name ILIKE '%${materialFilterDto.name}%'`,
       );
-    }
-
-    if (materialFilterDto.depth) {
-      queryBuilder.andWhere('material.depth = :depth', {
-        depth: materialFilterDto.depth,
-      });
-    }
-
-    if (materialFilterDto.materialBlottingPressure_calculated) {
-      queryBuilder.andWhere(
-        'waterproofFunction.materialBlottingPressure_calculated >= :materialBlottingPressure_calculated',
-        {
-          materialBlottingPressure_calculated:
-            materialFilterDto.materialBlottingPressure_calculated,
-        },
-      );
-    }
-
-    if (materialFilterDto.totalThermalResistance_calculated) {
-      queryBuilder.andWhere(
-        'homeostasisFunction.totalThermalResistance_calculated >= :totalThermalResistance_calculated',
-        {
-          totalThermalResistance_calculated:
-            materialFilterDto.totalThermalResistance_calculated,
-        },
-      );
-    }
-
-    if (materialFilterDto.totalThermalResistance_calculated) {
-      queryBuilder.andWhere(
-        'reliabilityFunction.materialBlottingPressure_relativeValuation >= :materialBlottingPressure_relativeValuation',
-        {
-          materialBlottingPressure_relativeValuation:
-            materialFilterDto.materialBlottingPressure_relativeValuation,
-        },
-      );
-    }
-
-    if (materialFilterDto.depth) {
-      queryBuilder.andWhere('material.depth >= :depth', {
-        depth: materialFilterDto.depth,
-      });
     }
 
     if (materialFilterDto.membraneLayerPolymerType_id) {
@@ -265,6 +274,82 @@ export class MaterialService {
 
         return `${subQuery} = ${materialFilterDto.layersCnt}`;
       });
+    }
+
+    if (materialFilterDto.depth_min) {
+      queryBuilder.andWhere('material.depth >= :depth_min', {
+        depth_min: materialFilterDto.depth_min,
+      });
+    }
+
+    if (materialFilterDto.depth_max) {
+      queryBuilder.andWhere('material.depth <= :depth_max', {
+        depth_max: materialFilterDto.depth_max,
+      });
+    }
+
+    if (materialFilterDto.materialBlottingPressure_calculated_min) {
+      queryBuilder.andWhere(
+        'waterproofFunction.materialBlottingPressure_calculated >= :materialBlottingPressure_calculated_min',
+        {
+          materialBlottingPressure_calculated_min:
+            materialFilterDto.materialBlottingPressure_calculated_min,
+        },
+      );
+    }
+
+    if (materialFilterDto.materialBlottingPressure_calculated_max) {
+      queryBuilder.andWhere(
+        'waterproofFunction.materialBlottingPressure_calculated <= :materialBlottingPressure_calculated_max',
+        {
+          materialBlottingPressure_calculated_max:
+            materialFilterDto.materialBlottingPressure_calculated_max,
+        },
+      );
+    }
+
+    if (materialFilterDto.totalThermalResistance_calculated_min) {
+      queryBuilder.andWhere(
+        'homeostasisFunction.totalThermalResistance_calculated >= :totalThermalResistance_calculated_min',
+        {
+          totalThermalResistance_calculated_min:
+            materialFilterDto.totalThermalResistance_calculated_min,
+        },
+      );
+    }
+
+    if (materialFilterDto.totalThermalResistance_calculated_max) {
+      queryBuilder.andWhere(
+        'homeostasisFunction.totalThermalResistance_calculated <= :totalThermalResistance_calculated_max',
+        {
+          totalThermalResistance_calculated_max:
+            materialFilterDto.totalThermalResistance_calculated_max,
+        },
+      );
+    }
+
+    if (
+      materialFilterDto.relativeBlottingPressureAfterLoad_relativeValuation_min
+    ) {
+      queryBuilder.andWhere(
+        'reliabilityFunction.relativeBlottingPressureAfterLoad_relativeValuation >= :relativeBlottingPressureAfterLoad_relativeValuation_min',
+        {
+          relativeBlottingPressureAfterLoad_relativeValuation_min:
+            materialFilterDto.relativeBlottingPressureAfterLoad_relativeValuation_min,
+        },
+      );
+    }
+
+    if (
+      materialFilterDto.relativeBlottingPressureAfterLoad_relativeValuation_max
+    ) {
+      queryBuilder.andWhere(
+        'reliabilityFunction.relativeBlottingPressureAfterLoad_relativeValuation <= :relativeBlottingPressureAfterLoad_relativeValuation_max',
+        {
+          relativeBlottingPressureAfterLoad_relativeValuation_max:
+            materialFilterDto.relativeBlottingPressureAfterLoad_relativeValuation_max,
+        },
+      );
     }
 
     const filteredMaterials = await queryBuilder.getMany();

@@ -20,11 +20,6 @@ export class ReliabilityFunctionEntity extends AbstractBaseEntity {
   @ApiProperty({ type: Number })
   @IsNumber()
   @Column({ type: 'double precision' })
-  relativeBlottingPressureAfterLoad_recommended: number;
-
-  @ApiProperty({ type: Number })
-  @IsNumber()
-  @Column({ type: 'double precision' })
   relativeBlottingPressureAfterLoad_experimental_1: number;
 
   @ApiProperty({ type: Number })
@@ -48,11 +43,6 @@ export class ReliabilityFunctionEntity extends AbstractBaseEntity {
   relativeBlottingPressureAfterLoad_weight: number;
 
   //------
-
-  @ApiProperty({ type: Number })
-  @IsNumber()
-  @Column({ type: 'double precision' })
-  relativeWaterResistanceAfterLoad_recommended: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
@@ -84,11 +74,6 @@ export class ReliabilityFunctionEntity extends AbstractBaseEntity {
   @ApiProperty({ type: Number })
   @IsNumber()
   @Column({ type: 'double precision' })
-  relativeBlottingTimeAfterLoad_recommended: number;
-
-  @ApiProperty({ type: Number })
-  @IsNumber()
-  @Column({ type: 'double precision' })
   relativeBlottingTimeAfterLoad_experimental_1: number;
 
   @ApiProperty({ type: Number })
@@ -112,11 +97,6 @@ export class ReliabilityFunctionEntity extends AbstractBaseEntity {
   relativeBlottingTimeAfterLoad_weight: number;
 
   //------
-
-  @ApiProperty({ type: Number })
-  @IsNumber()
-  @Column({ type: 'double precision' })
-  waterproofRealizationCriteriaAfterLoad_recommended: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()

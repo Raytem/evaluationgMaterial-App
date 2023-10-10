@@ -9,6 +9,9 @@ function objNumbersToFixed(obj, cntOfNumbersAfterPoint) {
         if (typeof obj[key] === 'number') {
             obj[key] = +obj[key].toFixed(cntOfNumbersAfterPoint);
         }
+        if (obj[key] === Infinity) {
+            obj[key] = 0;
+        }
     }
     return obj;
 }

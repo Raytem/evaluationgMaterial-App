@@ -15,11 +15,6 @@ export class WaterproofFunctionEntity extends AbstractBaseEntity {
   @ApiProperty({ type: Number })
   @IsNumber()
   @Column({ type: 'double precision' })
-  materialBlottingPressure_recommended: number;
-
-  @ApiProperty({ type: Number })
-  @IsNumber()
-  @Column({ type: 'double precision' })
   materialBlottingPressure_experimental_1: number;
 
   @ApiProperty({ type: Number })
@@ -43,11 +38,6 @@ export class WaterproofFunctionEntity extends AbstractBaseEntity {
   materialBlottingPressure_weight: number;
 
   //------
-
-  @ApiProperty({ type: Number })
-  @IsNumber()
-  @Column({ type: 'double precision' })
-  waterproof_recommended: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
@@ -79,11 +69,6 @@ export class WaterproofFunctionEntity extends AbstractBaseEntity {
   @ApiProperty({ type: Number })
   @IsNumber()
   @Column({ type: 'double precision' })
-  materialBlottingTime_recommended: number;
-
-  @ApiProperty({ type: Number })
-  @IsNumber()
-  @Column({ type: 'double precision' })
   materialBlottingTime_experimental_1: number;
 
   @ApiProperty({ type: Number })
@@ -107,11 +92,6 @@ export class WaterproofFunctionEntity extends AbstractBaseEntity {
   materialBlottingTime_weight: number;
 
   //------
-
-  @ApiProperty({ type: Number })
-  @IsNumber()
-  @Column({ type: 'double precision' })
-  waterproofRealizationCriteria_recommended: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()
@@ -144,11 +124,6 @@ export class WaterproofFunctionEntity extends AbstractBaseEntity {
   waterproofRealizationCriteria_weight: number;
 
   //------
-
-  @ApiProperty({ type: Number })
-  @IsNumber()
-  @Column({ type: 'double precision' })
-  dynamicWaterproofCriteria_recommended: number;
 
   @ApiProperty({ type: Number })
   @IsNumber()

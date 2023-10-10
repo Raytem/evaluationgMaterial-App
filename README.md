@@ -10,7 +10,6 @@ To run the application you need to have docker installed!
 Go to the project directory and than write the following command:
 
 ```bash
-# development
 $ docker compose up -d
 ```
 ## API

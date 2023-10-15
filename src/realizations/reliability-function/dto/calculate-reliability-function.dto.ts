@@ -14,6 +14,8 @@ export class CalculateReliabilityFunctionDto extends OmitType(
     'waterproofRealizationCriteriaAfterLoad_relativeValuation',
     'waterproofFunctionResource_experimental_1',
     'waterproofFunctionResource_experimental_2',
+    'waterproofFunctionResource_calculated',
+    'waterproofFunctionResource_relativeValuation',
     'comment',
     'avgWeightedEstimate',
   ],

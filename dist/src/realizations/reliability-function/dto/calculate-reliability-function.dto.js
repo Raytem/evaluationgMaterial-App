@@ -14,6 +14,8 @@ class CalculateReliabilityFunctionDto extends (0, swagger_1.OmitType)(reliabilit
     'waterproofRealizationCriteriaAfterLoad_relativeValuation',
     'waterproofFunctionResource_experimental_1',
     'waterproofFunctionResource_experimental_2',
+    'waterproofFunctionResource_calculated',
+    'waterproofFunctionResource_relativeValuation',
     'comment',
     'avgWeightedEstimate',
 ]) {

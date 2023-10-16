@@ -26,21 +26,23 @@ class CreateConditionDto extends (0, swagger_1.OmitType)(condition_entity_1.Cond
 }
 exports.CreateConditionDto = CreateConditionDto;
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: () => create_washing_dto_1.CreateWashingDto }),
+    (0, swagger_1.ApiProperty)({ type: () => create_washing_dto_1.CreateWashingDto, required: false }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.ValidateNested)(),
     (0, class_transformer_1.Type)(() => create_washing_dto_1.CreateWashingDto),
     __metadata("design:type", create_washing_dto_1.CreateWashingDto)
 ], CreateConditionDto.prototype, "washing", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: Number, minimum: 1 }),
+    (0, swagger_1.ApiProperty)({ type: Number, minimum: 1, required: false }),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsPositive)(),
     (0, class_validator_1.IsInt)(),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], CreateConditionDto.prototype, "bendingType_id", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: Number, minimum: 1 }),
+    (0, swagger_1.ApiProperty)({ type: Number, minimum: 1, required: false }),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsPositive)(),
     (0, class_validator_1.IsInt)(),
     (0, class_validator_1.IsNumber)(),

@@ -18,19 +18,21 @@ export class CreateConditionDto extends OmitType(ConditionEntity, [
   'abrasionType',
   'physicalActivityType',
 ]) {
-  @ApiProperty({ type: () => CreateWashingDto })
+  @ApiProperty({ type: () => CreateWashingDto, required: false })
   @IsOptional()
   @ValidateNested()
   @Type(() => CreateWashingDto)
   washing: CreateWashingDto;
 
-  @ApiProperty({ type: Number, minimum: 1 })
+  @ApiProperty({ type: Number, minimum: 1, required: false })
+  @IsOptional()
   @IsPositive()
   @IsInt()
   @IsNumber()
   bendingType_id: number;
 
-  @ApiProperty({ type: Number, minimum: 1 })
+  @ApiProperty({ type: Number, minimum: 1, required: false })
+  @IsOptional()
   @IsPositive()
   @IsInt()
   @IsNumber()

@@ -10,7 +10,7 @@ To run the application you need to have docker installed!
 Go to the project directory and than write the following commands:
 
 ```bash
-#give access to run the script
+#give access to run the script (for mac & linux)
 $ chmod +x ./init-user-db.sh
 
 #running the app

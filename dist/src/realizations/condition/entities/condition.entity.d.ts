@@ -7,6 +7,8 @@ import { WashingEntity } from 'src/realizations/washing/entities/washing.entity'
 export declare class ConditionEntity extends AbstractBaseEntity {
     isPositive: boolean;
     minAirTemp: number;
+    maxAirTemp: number;
+    minAirHumidity: number;
     maxAirHumidity: number;
     avgAirSpeed: number;
     residenceTime: number;

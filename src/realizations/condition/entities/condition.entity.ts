@@ -31,6 +31,16 @@ export class ConditionEntity extends AbstractBaseEntity {
   @ApiProperty({ type: Number })
   @IsNumber()
   @Column()
+  maxAirTemp: number;
+
+  @ApiProperty({ type: Number })
+  @IsNumber()
+  @Column()
+  minAirHumidity: number;
+
+  @ApiProperty({ type: Number })
+  @IsNumber()
+  @Column()
   maxAirHumidity: number;
 
   @ApiProperty({ type: Number })

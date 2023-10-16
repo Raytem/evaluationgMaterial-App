@@ -24,6 +24,8 @@ export declare class ConditionService {
         physicalActivityType_id: number;
         isPositive: boolean;
         minAirTemp: number;
+        maxAirTemp: number;
+        minAirHumidity: number;
         maxAirHumidity: number;
         avgAirSpeed: number;
         residenceTime: number;

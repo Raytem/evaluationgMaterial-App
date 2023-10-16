@@ -39,6 +39,18 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
+], ConditionEntity.prototype, "maxAirTemp", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], ConditionEntity.prototype, "minAirHumidity", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number }),
+    (0, class_validator_1.IsNumber)(),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
 ], ConditionEntity.prototype, "maxAirHumidity", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),

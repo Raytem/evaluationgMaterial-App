@@ -10,6 +10,7 @@ const common_1 = require("@nestjs/common");
 const swagger_config_1 = require("../swagger.config");
 const path_1 = __importDefault(require("path"));
 const express_static_1 = __importDefault(require("express-static"));
+const node_env_1 = require("./enums/node-env");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.enableCors({
@@ -17,7 +18,10 @@ async function bootstrap() {
         exposedHeaders: ['x-total-count'],
     });
     const configService = app.get(config_1.ConfigService);
-    const port = configService.get('app.port') || 3000;
+    let port = configService.get('app.port');
+    if (configService.get('app.nodeEnv') === node_env_1.NodeEnv.PRODUCTION) {
+        port = configService.get('app.proxyPort');
+    }
     const staticDirName = configService.get('file.staticDirName');
     const staticDirPath = path_1.default.join(process.cwd(), staticDirName);
     app.use(`/${staticDirName}`, (0, express_static_1.default)(staticDirPath));

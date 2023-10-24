@@ -5,6 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { setupSwagger } from 'swagger.config';
 import path from 'path';
 import serve from 'express-static';
+import { NodeEnv } from './enums/node-env';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -15,7 +16,10 @@ async function bootstrap() {
   });
 
   const configService = app.get(ConfigService);
-  const port = configService.get('app.port') || 3000;
+  let port = configService.get('app.port');
+  if (configService.get('app.nodeEnv') === NodeEnv.PRODUCTION) {
+    port = configService.get('app.proxyPort');
+  }
 
   const staticDirName = configService.get('file.staticDirName');
   const staticDirPath = path.join(process.cwd(), staticDirName);

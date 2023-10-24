@@ -2,6 +2,7 @@ import {
   BadRequestException,
   ForbiddenException,
   Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -29,7 +30,7 @@ export class UserService {
     } catch {}
 
     if (user) {
-      throw new BadRequestException(
+      throw new UnauthorizedException(
         `User with email '${createUserDto.email}' already exists`,
       );
     }

@@ -32,7 +32,7 @@ let UserService = class UserService {
         }
         catch { }
         if (user) {
-            throw new common_1.BadRequestException(`User with email '${createUserDto.email}' already exists`);
+            throw new common_1.UnauthorizedException(`User with email '${createUserDto.email}' already exists`);
         }
         const newUser = await this.userRepository.save(createUserDto);
         return new user_entity_1.UserEntity(newUser);

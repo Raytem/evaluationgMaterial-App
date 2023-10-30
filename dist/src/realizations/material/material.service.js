@@ -122,7 +122,6 @@ let MaterialService = class MaterialService {
         }
     }
     async findAll(materialFilterDto) {
-        const pagination = this.paginationService.paginate(materialFilterDto);
         const queryBuilder = this.materialRepository
             .createQueryBuilder('material')
             .leftJoinAndSelect('material.condition', 'condition')
@@ -142,12 +141,6 @@ let MaterialService = class MaterialService {
             .leftJoinAndSelect('material.productionMethod', 'productionMethod')
             .leftJoinAndSelect('material.membraneLayerPolymerType', 'membraneLayerPolymerType')
             .leftJoinAndSelect('material.glueType', 'glueType');
-        if (pagination.take) {
-            queryBuilder.take(pagination.take);
-        }
-        if (pagination.skip) {
-            queryBuilder.skip(pagination.skip);
-        }
         if (materialFilterDto.userId) {
             queryBuilder.andWhere('user.id = :userId', {
                 userId: materialFilterDto.userId,
@@ -227,7 +220,15 @@ let MaterialService = class MaterialService {
                 relativeBlottingPressureAfterLoad_relativeValuation_max: materialFilterDto.relativeBlottingPressureAfterLoad_relativeValuation_max,
             });
         }
-        const totalCnt = await queryBuilder.getCount();
+        const queryBuilderWithoutPagination = queryBuilder;
+        const pagination = this.paginationService.paginate(materialFilterDto);
+        if (pagination.take) {
+            queryBuilder.take(pagination.take);
+        }
+        if (pagination.skip) {
+            queryBuilder.skip(pagination.skip);
+        }
+        const totalCnt = await queryBuilderWithoutPagination.getCount();
         const filteredMaterials = await queryBuilder.getMany();
         const resMaterials = filteredMaterials.map((m) => {
             return new material_entity_1.MaterialEntity({

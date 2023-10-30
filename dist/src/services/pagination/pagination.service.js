@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PaginationService = void 0;
 const common_1 = require("@nestjs/common");
 let PaginationService = class PaginationService {
-    paginate(paginationDto, defaultPerPage = 20) {
+    paginate(paginationDto, defaultPerPage = 10) {
         const page = paginationDto?.page || 1;
         const perPage = paginationDto?.perPage || defaultPerPage;
         const skip = (page - 1) * perPage;

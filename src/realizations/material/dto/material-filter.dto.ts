@@ -71,6 +71,18 @@ export class MaterialFilterDto extends PaginationDto {
   @IsNumber()
   materialBlottingPressure_calculated_max: number;
 
+  @ApiProperty({ type: Number, required: false })
+  @Type(() => Number)
+  @IsOptional()
+  @IsNumber()
+  materialBlottingTime_calculated_min: number;
+
+  @ApiProperty({ type: Number, required: false })
+  @Type(() => Number)
+  @IsOptional()
+  @IsNumber()
+  materialBlottingTime_calculated_max: number;
+
   //homeostasis-function
   @ApiProperty({ type: Number, required: false })
   @Type(() => Number)

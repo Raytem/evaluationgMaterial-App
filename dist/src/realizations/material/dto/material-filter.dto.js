@@ -92,6 +92,20 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
+], MaterialFilterDto.prototype, "materialBlottingTime_calculated_min", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number, required: false }),
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], MaterialFilterDto.prototype, "materialBlottingTime_calculated_max", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: Number, required: false }),
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
 ], MaterialFilterDto.prototype, "waterPermeability_calculated_min", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number, required: false }),

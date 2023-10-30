@@ -14,7 +14,7 @@ export declare class MaterialController {
     constructor(materialService: MaterialService, fileCfg: ConfigType<typeof fileConfig>);
     getReportFromTemplate(material_id: number, res: Response): Promise<StreamableFile>;
     create(images: Multer.File[], createMaterialDto: CreateMaterialDto, reqUser: UserEntity): Promise<MaterialEntity>;
-    findAll(materialFilterDto: MaterialFilterDto): Promise<MaterialEntity[]>;
+    findAll(materialFilterDto: MaterialFilterDto, res: Response): Promise<MaterialEntity[]>;
     findOne(id: number): Promise<MaterialEntity>;
     remove(id: number, reqUser: UserEntity): Promise<MaterialEntity>;
 }

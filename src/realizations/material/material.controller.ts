@@ -38,6 +38,7 @@ import { UserEntity } from '../user/entities/user.entity';
 import { MaterialFilterDto } from './dto/material-filter.dto';
 import { Response } from 'express';
 import CyrillicToTranslit from 'cyrillic-to-translit-js';
+import { MaterialsAndCnt } from './dto/materials-and-cnt.dto';
 
 @UseInterceptors()
 @ApiBasicAuth()
@@ -109,8 +110,15 @@ export class MaterialController {
   })
   @ApiResponse({ type: MaterialEntity, isArray: true })
   @Get()
-  async findAll(@Query() materialFilterDto: MaterialFilterDto) {
-    return await this.materialService.findAll(materialFilterDto);
+  async findAll(
+    @Query() materialFilterDto: MaterialFilterDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const materialsAndCnt =
+      await this.materialService.findAll(materialFilterDto);
+
+    res.set('x-total-count', String(materialsAndCnt.totalCnt));
+    return materialsAndCnt.materials;
   }
 
   @ApiResponse({ type: MaterialEntity })

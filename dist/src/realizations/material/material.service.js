@@ -197,6 +197,16 @@ let MaterialService = class MaterialService {
                 materialBlottingPressure_calculated_max: materialFilterDto.materialBlottingPressure_calculated_max,
             });
         }
+        if (materialFilterDto.materialBlottingTime_calculated_min) {
+            queryBuilder.andWhere('waterproofFunction.materialBlottingPressure_calculated >= :materialBlottingTime_calculated_min', {
+                materialBlottingTime_calculated_min: materialFilterDto.materialBlottingTime_calculated_min,
+            });
+        }
+        if (materialFilterDto.materialBlottingTime_calculated_max) {
+            queryBuilder.andWhere('waterproofFunction.materialBlottingTime_calculated <= :materialBlottingTime_calculated_max', {
+                materialBlottingTime_calculated_max: materialFilterDto.materialBlottingTime_calculated_max,
+            });
+        }
         if (materialFilterDto.totalThermalResistance_calculated_min) {
             queryBuilder.andWhere('homeostasisFunction.totalThermalResistance_calculated >= :totalThermalResistance_calculated_min', {
                 totalThermalResistance_calculated_min: materialFilterDto.totalThermalResistance_calculated_min,
@@ -217,8 +227,9 @@ let MaterialService = class MaterialService {
                 relativeBlottingPressureAfterLoad_relativeValuation_max: materialFilterDto.relativeBlottingPressureAfterLoad_relativeValuation_max,
             });
         }
+        const totalCnt = await queryBuilder.getCount();
         const filteredMaterials = await queryBuilder.getMany();
-        return filteredMaterials.map((m) => {
+        const resMaterials = filteredMaterials.map((m) => {
             return new material_entity_1.MaterialEntity({
                 ...m,
                 waterproofFunction: undefined,
@@ -227,6 +238,10 @@ let MaterialService = class MaterialService {
                 estimation: undefined,
             });
         });
+        return {
+            materials: resMaterials,
+            totalCnt,
+        };
     }
     async findOne(id, withFunctionalIndicators = false) {
         const material = await this.materialRepository.findOne({

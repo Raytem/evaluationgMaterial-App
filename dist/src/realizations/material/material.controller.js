@@ -49,8 +49,10 @@ let MaterialController = class MaterialController {
         (0, validate_images_1.validateImages)(this.fileCfg, images);
         return await this.materialService.create(createMaterialDto, images, reqUser);
     }
-    async findAll(materialFilterDto) {
-        return await this.materialService.findAll(materialFilterDto);
+    async findAll(materialFilterDto, res) {
+        const materialsAndCnt = await this.materialService.findAll(materialFilterDto);
+        res.set('x-total-count', String(materialsAndCnt.totalCnt));
+        return materialsAndCnt.materials;
     }
     async findOne(id) {
         return this.materialService.findOne(id);
@@ -98,8 +100,9 @@ __decorate([
     (0, swagger_1.ApiResponse)({ type: material_entity_1.MaterialEntity, isArray: true }),
     (0, common_1.Get)(),
     __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Res)({ passthrough: true })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [material_filter_dto_1.MaterialFilterDto]),
+    __metadata("design:paramtypes", [material_filter_dto_1.MaterialFilterDto, Object]),
     __metadata("design:returntype", Promise)
 ], MaterialController.prototype, "findAll", null);
 __decorate([

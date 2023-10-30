@@ -9,6 +9,8 @@ export declare class MaterialFilterDto extends PaginationDto {
     depth_max: number;
     materialBlottingPressure_calculated_min: number;
     materialBlottingPressure_calculated_max: number;
+    materialBlottingTime_calculated_min: number;
+    materialBlottingTime_calculated_max: number;
     waterPermeability_calculated_min: number;
     waterPermeability_calculated_max: number;
     totalThermalResistance_calculated_min: number;

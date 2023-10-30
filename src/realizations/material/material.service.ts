@@ -26,6 +26,7 @@ import { Multer } from 'multer';
 import { MaterialFilterDto } from './dto/material-filter.dto';
 import { LayerEntity } from '../layer/entities/layer.entity';
 import { CalculationService } from 'src/services/calculation/calculation.service';
+import { MaterialsAndCnt } from './dto/materials-and-cnt.dto';
 
 @Injectable()
 export class MaterialService {
@@ -199,7 +200,7 @@ export class MaterialService {
 
   async findAll(
     materialFilterDto: MaterialFilterDto,
-  ): Promise<MaterialEntity[]> {
+  ): Promise<MaterialsAndCnt> {
     const pagination = this.paginationService.paginate(materialFilterDto);
 
     const queryBuilder = this.materialRepository
@@ -308,6 +309,26 @@ export class MaterialService {
       );
     }
 
+    if (materialFilterDto.materialBlottingTime_calculated_min) {
+      queryBuilder.andWhere(
+        'waterproofFunction.materialBlottingPressure_calculated >= :materialBlottingTime_calculated_min',
+        {
+          materialBlottingTime_calculated_min:
+            materialFilterDto.materialBlottingTime_calculated_min,
+        },
+      );
+    }
+
+    if (materialFilterDto.materialBlottingTime_calculated_max) {
+      queryBuilder.andWhere(
+        'waterproofFunction.materialBlottingTime_calculated <= :materialBlottingTime_calculated_max',
+        {
+          materialBlottingTime_calculated_max:
+            materialFilterDto.materialBlottingTime_calculated_max,
+        },
+      );
+    }
+
     if (materialFilterDto.totalThermalResistance_calculated_min) {
       queryBuilder.andWhere(
         'homeostasisFunction.totalThermalResistance_calculated >= :totalThermalResistance_calculated_min',
@@ -352,9 +373,10 @@ export class MaterialService {
       );
     }
 
+    const totalCnt = await queryBuilder.getCount();
     const filteredMaterials = await queryBuilder.getMany();
 
-    return filteredMaterials.map((m) => {
+    const resMaterials = filteredMaterials.map((m) => {
       return new MaterialEntity({
         ...m,
         waterproofFunction: undefined,
@@ -363,6 +385,11 @@ export class MaterialService {
         estimation: undefined,
       });
     });
+
+    return {
+      materials: resMaterials,
+      totalCnt,
+    };
   }
 
   async findOne(

@@ -6,7 +6,7 @@ import { PostgresPagination } from './dto/postgresPagination';
 export class PaginationService {
   paginate(
     paginationDto: PaginationDto,
-    defaultPerPage = 20,
+    defaultPerPage = 10,
   ): PostgresPagination {
     const page = paginationDto?.page || 1;
     const perPage = paginationDto?.perPage || defaultPerPage;

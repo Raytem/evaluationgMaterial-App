@@ -201,8 +201,6 @@ export class MaterialService {
   async findAll(
     materialFilterDto: MaterialFilterDto,
   ): Promise<MaterialsAndCnt> {
-    const pagination = this.paginationService.paginate(materialFilterDto);
-
     const queryBuilder = this.materialRepository
       .createQueryBuilder('material')
       .leftJoinAndSelect('material.condition', 'condition')
@@ -228,13 +226,6 @@ export class MaterialService {
         'membraneLayerPolymerType',
       )
       .leftJoinAndSelect('material.glueType', 'glueType');
-
-    if (pagination.take) {
-      queryBuilder.take(pagination.take);
-    }
-    if (pagination.skip) {
-      queryBuilder.skip(pagination.skip);
-    }
 
     if (materialFilterDto.userId) {
       queryBuilder.andWhere('user.id = :userId', {
@@ -373,7 +364,17 @@ export class MaterialService {
       );
     }
 
-    const totalCnt = await queryBuilder.getCount();
+    const queryBuilderWithoutPagination = queryBuilder;
+
+    const pagination = this.paginationService.paginate(materialFilterDto);
+    if (pagination.take) {
+      queryBuilder.take(pagination.take);
+    }
+    if (pagination.skip) {
+      queryBuilder.skip(pagination.skip);
+    }
+
+    const totalCnt = await queryBuilderWithoutPagination.getCount();
     const filteredMaterials = await queryBuilder.getMany();
 
     const resMaterials = filteredMaterials.map((m) => {

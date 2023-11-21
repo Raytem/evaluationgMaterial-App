@@ -26,7 +26,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
     - run: npm run build --if-present
     - run: sudo docker rmi evaluating_material_app-app
     - run: docker-compose up --build

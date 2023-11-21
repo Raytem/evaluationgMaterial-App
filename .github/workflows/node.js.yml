@@ -52,5 +52,6 @@ jobs:
 
     - name: Running deployment script with SSH
       run: |
-        chmod u+x deployScript.sh
+        scp deployScript.sh staging:/deployScript.sh
+        ssh staging 'chmod u+x deployScript.sh'
         ssh staging './deployScript.sh'

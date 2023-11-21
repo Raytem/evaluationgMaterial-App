@@ -49,5 +49,5 @@ jobs:
 
     - name: Running deployment script with SSH
       run: |
-        scp -i ~/.ssh/staging.key deployScript.sh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/deployScript.sh
+        scp ${{ secrets.SSH_KEY }} deployScript.sh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/deployScript.sh
         ssh staging './deployScript.sh'

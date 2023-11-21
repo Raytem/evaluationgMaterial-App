@@ -47,6 +47,9 @@ jobs:
     - name: Building project...
       run: npm run build --if-present
 
+    run: pwd
+    run: ls
+
     - name: Running deployment script with SSH
       run: |
         chmod u+x deployScript.sh

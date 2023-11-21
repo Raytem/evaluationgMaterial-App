@@ -40,8 +40,6 @@ jobs:
         SSH_USER: ${{ secrets.SSH_USER }}
         SSH_KEY: ${{ secrets.SSH_KEY }}
         SSH_HOST: ${{ secrets.SSH_HOST }}
-
-    - run: cat ~/.ssh/staging.key
       
     - name: Installing dependencies...
       run: npm i

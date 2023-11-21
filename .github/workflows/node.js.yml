@@ -47,11 +47,7 @@ jobs:
     - name: Building project...
       run: npm run build --if-present
 
-    - run: pwd
-    - run: ls
-
     - name: Running deployment script with SSH
       run: |
-        scp deployScript.sh staging:/deployScript.sh
-        ssh staging 'chmod u+x deployScript.sh'
+        scp -i ~/.ssh/staging.key deployScript.sh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/deployScript.sh
         ssh staging './deployScript.sh'

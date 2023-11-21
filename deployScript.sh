@@ -9,4 +9,6 @@ fi
 cd "$directory"
 git pull
  
+docker-compose down
+docker image ls -q | xargs docker image rm -f
 docker-compose up -d --build

@@ -50,4 +50,4 @@ jobs:
     - name: Running deployment script with SSH
       run: |
         chmod u+x deployScript.sh
-        ssh staging ./deployScript.sh
+        ssh staging './deployScript.sh'

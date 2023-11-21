@@ -16,10 +16,7 @@ async function bootstrap() {
   });
 
   const configService = app.get(ConfigService);
-  let port = configService.get('app.port');
-  if (configService.get('app.nodeEnv') === NodeEnv.PRODUCTION) {
-    port = configService.get('app.proxyPort');
-  }
+  const port = configService.get('app.port');
 
   const staticDirName = configService.get('file.staticDirName');
   const staticDirPath = path.join(process.cwd(), staticDirName);

@@ -40,6 +40,8 @@ jobs:
         SSH_USER: ${{ secrets.SSH_USER }}
         SSH_KEY: ${{ secrets.SSH_KEY }}
         SSH_HOST: ${{ secrets.SSH_HOST }}
+
+    - run: cat ~/.ssh/staging.key
       
     - name: Installing dependencies...
       run: npm i
@@ -49,5 +51,5 @@ jobs:
 
     - name: Running deployment script with SSH
       run: |
-        scp ${{ secrets.SSH_KEY }} deployScript.sh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/deployScript.sh
+        scp -i ~/.ssh/staging.key deployScript.sh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/deployScript.sh
         ssh staging './deployScript.sh'

@@ -29,6 +29,7 @@ const reqUser_decorator_1 = require("../../decorators/reqUser.decorator");
 const user_entity_1 = require("../user/entities/user.entity");
 const material_filter_dto_1 = require("./dto/material-filter.dto");
 const cyrillic_to_translit_js_1 = __importDefault(require("cyrillic-to-translit-js"));
+const update_material_dto_1 = require("./dto/update-material.dto");
 let MaterialController = class MaterialController {
     constructor(materialService, fileCfg) {
         this.materialService = materialService;
@@ -48,6 +49,9 @@ let MaterialController = class MaterialController {
     async create(images, createMaterialDto, reqUser) {
         (0, validate_images_1.validateImages)(this.fileCfg, images);
         return await this.materialService.create(createMaterialDto, images, reqUser);
+    }
+    async update(id, updateMaterialDto, reqUser) {
+        return await this.materialService.update(id, updateMaterialDto, reqUser);
     }
     async findAll(materialFilterDto, res) {
         const materialsAndCnt = await this.materialService.findAll(materialFilterDto);
@@ -86,6 +90,17 @@ __decorate([
         user_entity_1.UserEntity]),
     __metadata("design:returntype", Promise)
 ], MaterialController.prototype, "create", null);
+__decorate([
+    (0, swagger_1.ApiResponse)({ type: material_entity_1.MaterialEntity }),
+    (0, common_1.Patch)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __param(2, (0, reqUser_decorator_1.User)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, update_material_dto_1.UpdateMaterialDto,
+        user_entity_1.UserEntity]),
+    __metadata("design:returntype", Promise)
+], MaterialController.prototype, "update", null);
 __decorate([
     (0, swagger_1.ApiQuery)({
         name: 'page',

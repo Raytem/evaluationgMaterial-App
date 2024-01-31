@@ -36,7 +36,7 @@ export class MaterialEntity extends AbstractBaseEntity {
   manufacturer: string;
 
   @ApiProperty({ type: Number })
-  @Column()
+  @Column({ type: 'double precision' })
   depth: number;
 
   @ApiProperty({ type: () => ConditionEntity })

@@ -49,7 +49,7 @@ __decorate([
 ], MaterialEntity.prototype, "manufacturer", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ type: Number }),
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
     __metadata("design:type", Number)
 ], MaterialEntity.prototype, "depth", void 0);
 __decorate([

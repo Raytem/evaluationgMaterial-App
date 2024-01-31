@@ -121,6 +121,18 @@ let MaterialService = class MaterialService {
             throw e;
         }
     }
+    async update(id, updateMaterialDto, reqUser) {
+        const material = await this.findOne(id);
+        if (material.user.id !== reqUser.id) {
+            throw new common_1.ForbiddenException('You can update only your materials');
+        }
+        const updatedMaterial = await this.materialRepository.save({
+            id,
+            ...material,
+            ...updateMaterialDto,
+        });
+        return updatedMaterial;
+    }
     async findAll(materialFilterDto) {
         const queryBuilder = this.materialRepository
             .createQueryBuilder('material')

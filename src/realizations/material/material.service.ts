@@ -27,6 +27,7 @@ import { MaterialFilterDto } from './dto/material-filter.dto';
 import { LayerEntity } from '../layer/entities/layer.entity';
 import { CalculationService } from 'src/services/calculation/calculation.service';
 import { MaterialsAndCnt } from './dto/materials-and-cnt.dto';
+import { UpdateMaterialDto } from './dto/update-material.dto';
 
 @Injectable()
 export class MaterialService {
@@ -68,15 +69,6 @@ export class MaterialService {
     files: Multer.File[],
     reqUser: UserEntity,
   ): Promise<MaterialEntity> {
-    // if (true) {
-    //   const calculatedFunctionalIndicators = this.calculationService.calcAll(
-    //     createMaterialDto,
-    //     {} as MaterialEntity,
-    //   );
-    //   console.log(calculatedFunctionalIndicators);
-    //   return;
-    // }
-
     const waterproofWeightSum =
       createMaterialDto.waterproofFunction
         .waterproofRealizationCriteria_weight +
@@ -196,6 +188,26 @@ export class MaterialService {
     } catch (e) {
       throw e;
     }
+  }
+
+  async update(
+    id: number,
+    updateMaterialDto: UpdateMaterialDto,
+    reqUser: UserEntity,
+  ): Promise<MaterialEntity> {
+    const material = await this.findOne(id);
+
+    if (material.user.id !== reqUser.id) {
+      throw new ForbiddenException('You can update only your materials');
+    }
+
+    const updatedMaterial = await this.materialRepository.save({
+      id,
+      ...material,
+      ...updateMaterialDto,
+    });
+
+    return updatedMaterial;
   }
 
   async findAll(

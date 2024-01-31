@@ -20,6 +20,7 @@ import { Multer } from 'multer';
 import { MaterialFilterDto } from './dto/material-filter.dto';
 import { CalculationService } from 'src/services/calculation/calculation.service';
 import { MaterialsAndCnt } from './dto/materials-and-cnt.dto';
+import { UpdateMaterialDto } from './dto/update-material.dto';
 export declare class MaterialService {
     private materialRepository;
     private calculationService;
@@ -38,6 +39,7 @@ export declare class MaterialService {
     private paginationService;
     constructor(materialRepository: Repository<MaterialEntity>, calculationService: CalculationService, glueTypeService: GlueTypeService, layerTypeService: LayerTypeService, membraneLayerPolymerTypeService: MembraneLayerPolymerTypeService, productionMethodService: ProductionMethodService, conditionService: ConditionService, waterproofFunctionService: WaterproofFunctionService, homeostasisFunctionService: HomeostasisFunctionService, reliabilityFunctionService: ReliabilityFunctionService, estimationService: EstimationService, imageService: ImageService, layerService: LayerService, exelService: ExelService, paginationService: PaginationService);
     create(createMaterialDto: CreateMaterialDto, files: Multer.File[], reqUser: UserEntity): Promise<MaterialEntity>;
+    update(id: number, updateMaterialDto: UpdateMaterialDto, reqUser: UserEntity): Promise<MaterialEntity>;
     findAll(materialFilterDto: MaterialFilterDto): Promise<MaterialsAndCnt>;
     findOne(id: number, withFunctionalIndicators?: boolean): Promise<MaterialEntity>;
     remove(id: number, reqUser: UserEntity): Promise<MaterialEntity>;

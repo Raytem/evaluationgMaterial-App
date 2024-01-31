@@ -13,6 +13,7 @@ import {
   Req,
   Res,
   StreamableFile,
+  Patch,
 } from '@nestjs/common';
 import { MaterialService } from './material.service';
 import { CreateMaterialDto } from './dto/create-material.dto';
@@ -38,7 +39,7 @@ import { UserEntity } from '../user/entities/user.entity';
 import { MaterialFilterDto } from './dto/material-filter.dto';
 import { Response } from 'express';
 import CyrillicToTranslit from 'cyrillic-to-translit-js';
-import { MaterialsAndCnt } from './dto/materials-and-cnt.dto';
+import { UpdateMaterialDto } from './dto/update-material.dto';
 
 @UseInterceptors()
 @ApiBasicAuth()
@@ -96,6 +97,16 @@ export class MaterialController {
       images,
       reqUser,
     );
+  }
+
+  @ApiResponse({ type: MaterialEntity })
+  @Patch(':id')
+  async update(
+    @Param('id') id: number,
+    @Body() updateMaterialDto: UpdateMaterialDto,
+    @User() reqUser: UserEntity,
+  ) {
+    return await this.materialService.update(id, updateMaterialDto, reqUser);
   }
 
   @ApiQuery({

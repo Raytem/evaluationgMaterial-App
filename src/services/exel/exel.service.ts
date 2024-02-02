@@ -299,7 +299,7 @@ export class ExelService {
       .cell('B12')
       .value(reliabilityFunction.waterproofFunctionResource_experimental_1);
     reliabilitySheet
-      .cell('B13')
+      .cell('B14')
       .value(reliabilityFunction.maxWaterResistanceLvl);
 
     reliabilitySheet

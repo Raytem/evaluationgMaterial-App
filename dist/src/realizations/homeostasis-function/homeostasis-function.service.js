@@ -21,8 +21,15 @@ let HomeostasisFunctionService = class HomeostasisFunctionService {
     constructor(homeostasisFunctionRepository) {
         this.homeostasisFunctionRepository = homeostasisFunctionRepository;
     }
-    async create(createHomeostasisFunctionDto) {
-        return await this.homeostasisFunctionRepository.save(createHomeostasisFunctionDto);
+    async create(createHomeostasisFunctionDto, manager) {
+        if (manager) {
+            return await manager
+                .withRepository(this.homeostasisFunctionRepository)
+                .save(createHomeostasisFunctionDto);
+        }
+        else {
+            return await this.homeostasisFunctionRepository.save(createHomeostasisFunctionDto);
+        }
     }
 };
 exports.HomeostasisFunctionService = HomeostasisFunctionService;

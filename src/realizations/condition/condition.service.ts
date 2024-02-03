@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateConditionDto } from './dto/create-condition.dto';
 import { UpdateConditionDto } from './dto/update-condition.dto';
 import { ConditionEntity } from './entities/condition.entity';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AbrasionTypeService } from '../abrasion-type/abrasion-type.service';
 import { BendingTypeService } from '../bending-type/bending-type.service';
@@ -26,7 +26,8 @@ export class ConditionService {
 
     private washingTypeService: WashingTypeService,
   ) {}
-  async create(createConditionDto: CreateConditionDto) {
+
+  async create(createConditionDto: CreateConditionDto, manager: EntityManager) {
     try {
       const abrasionType = await this.abrasionTypeService.findOne(
         createConditionDto.abrasionType_id,
@@ -45,6 +46,7 @@ export class ConditionService {
         washing = await this.washingService.create(
           createConditionDto.washing,
           washingType,
+          manager,
         );
       }
 
@@ -53,13 +55,21 @@ export class ConditionService {
           createConditionDto.physicalActivityType_id,
         );
 
-      return await this.conditionRepository.save({
+      const partialConditionEntity = this.conditionRepository.create({
         ...createConditionDto,
         washing,
         abrasionType,
         bendingType,
         physicalActivityType,
       });
+
+      if (manager) {
+        return await manager
+          .withRepository(this.conditionRepository)
+          .save(partialConditionEntity);
+      } else {
+        return await this.conditionRepository.save(partialConditionEntity);
+      }
     } catch (e) {
       throw e;
     }

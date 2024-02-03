@@ -46,11 +46,19 @@ export class LayerTypeService {
   }
 
   async findByIds(layerTypeIds: number[]) {
-    return await this.layerTypeRepository.find({
+    const layerTypeIdsSet = Array.from(new Set(layerTypeIds));
+
+    const foundedLayerTypes = await this.layerTypeRepository.find({
       where: {
         id: In(layerTypeIds),
       },
     });
+
+    if (layerTypeIdsSet.length !== foundedLayerTypes.length) {
+      throw new NoSuchException('layer type');
+    }
+
+    return foundedLayerTypes;
   }
 
   async findOne(id: number, name?: string): Promise<LayerTypeEntity> {

@@ -21,8 +21,15 @@ let ReliabilityFunctionService = class ReliabilityFunctionService {
     constructor(reliabilityFunctionRepository) {
         this.reliabilityFunctionRepository = reliabilityFunctionRepository;
     }
-    async create(createReliabilityFunctionDto) {
-        return await this.reliabilityFunctionRepository.save(createReliabilityFunctionDto);
+    async create(createReliabilityFunctionDto, manager) {
+        if (manager) {
+            return await manager
+                .withRepository(this.reliabilityFunctionRepository)
+                .save(createReliabilityFunctionDto);
+        }
+        else {
+            return await this.reliabilityFunctionRepository.save(createReliabilityFunctionDto);
+        }
     }
 };
 exports.ReliabilityFunctionService = ReliabilityFunctionService;

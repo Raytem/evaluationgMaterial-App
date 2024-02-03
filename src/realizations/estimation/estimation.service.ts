@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateEstimationDto } from './dto/create-estimation.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { EstimationEntity } from './entities/estimation.entity';
 
 @Injectable()
@@ -12,7 +12,14 @@ export class EstimationService {
   ) {}
   async create(
     createEstimationDto: CreateEstimationDto,
+    manager?: EntityManager,
   ): Promise<EstimationEntity> {
-    return await this.estimationRepository.save(createEstimationDto);
+    if (manager) {
+      return manager
+        .withRepository(this.estimationRepository)
+        .save(createEstimationDto);
+    } else {
+      return await this.estimationRepository.save(createEstimationDto);
+    }
   }
 }

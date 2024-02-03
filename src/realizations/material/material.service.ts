@@ -16,7 +16,7 @@ import { EstimationService } from '../estimation/estimation.service';
 import { ImageService } from '../image/image.service';
 import { LayerService } from '../layer/layer.service';
 import { ExelService } from 'src/services/exel/exel.service';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { PaginationService } from 'src/services/pagination/pagination.service';
 import { NoSuchException } from 'src/exceptions/no-such.exception';
 import { LayerTypeService } from '../layer-type/layer-type.service';
@@ -62,6 +62,8 @@ export class MaterialService {
     private exelService: ExelService,
 
     private paginationService: PaginationService,
+
+    private dataSource: DataSource,
   ) {}
 
   async create(
@@ -94,41 +96,41 @@ export class MaterialService {
       createMaterialDto.reliabilityFunction
         .waterproofRealizationCriteriaAfterLoad_weight;
 
-    if (waterproofWeightSum > 1) {
+    const estimationWeightSum =
+      createMaterialDto.estimation.homeostasisFunction_weight +
+      createMaterialDto.estimation.waterproofFunction_weight +
+      createMaterialDto.estimation.reliabilityFunction_weight;
+
+    if (waterproofWeightSum > 1 || waterproofWeightSum < 0) {
       throw new BadRequestException(
-        "The sum of the weights in 'waterproof function' cannot be more than 1",
+        "The sum of the weights in 'waterproof function' cannot be more than 1 and less then 0",
       );
     }
-    if (homeostasisWeightSum > 1) {
+    if (homeostasisWeightSum > 1 || homeostasisWeightSum < 0) {
       throw new BadRequestException(
-        "The sum of the weights in 'homeostasis function' cannot be more than 1",
+        "The sum of the weights in 'homeostasis function' cannot be more than 1 and less then 0",
       );
     }
-    if (reliabilityWeightSum > 1) {
+    if (reliabilityWeightSum > 1 || reliabilityWeightSum < 0) {
       throw new BadRequestException(
-        "The sum of the weights in 'reliability function' cannot be more than 1",
+        "The sum of the weights in 'reliability function' cannot be more than 1 and less then 0",
       );
     }
+
+    if (estimationWeightSum > 1 || estimationWeightSum < 0) {
+      throw new BadRequestException(
+        "The sum of the weights in 'estimation' cannot be more than 1 and less then 0",
+      );
+    }
+
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction('READ COMMITTED');
+    const manager = queryRunner.manager;
 
     try {
       const glueType = await this.glueTypeService.findOne(
         createMaterialDto.material.glueType_id,
-      );
-
-      const layerTypeIds = createMaterialDto.material.layers.map(
-        (layer) => layer.layerType_id,
-      );
-      const layerTypes = await this.layerTypeService.findByIds(layerTypeIds);
-      if (layerTypeIds.length !== layerTypes.length) {
-        throw new NoSuchException('layer type');
-      }
-      let createLayersList = createMaterialDto.material.layers.map(
-        (layer, idx) => {
-          return {
-            ...layer,
-            layerType: layerTypes[idx],
-          };
-        },
       );
 
       const membraneLayerPolymerType =
@@ -140,53 +142,63 @@ export class MaterialService {
         createMaterialDto.material.productionMethod_id,
       );
 
+      //material creation
       const condition = await this.conditionService.create(
         createMaterialDto.condition,
+        manager,
       );
 
-      //material creation
-      const material = await this.materialRepository.save({
-        ...createMaterialDto.material,
-        condition,
-        user: reqUser,
-        productionMethod,
-        membraneLayerPolymerType,
-        glueType,
-      });
+      const material = await manager
+        .withRepository(this.materialRepository)
+        .save({
+          ...createMaterialDto.material,
+          condition,
+          user: reqUser,
+          productionMethod,
+          membraneLayerPolymerType,
+          glueType,
+        });
 
-      createLayersList = createLayersList.map((item) => ({
-        ...item,
+      await this.layerService.createMany(
         material,
-      }));
+        createMaterialDto.material.layers,
+        manager,
+      );
 
-      const layers = await this.layerService.createMany(createLayersList);
-
-      const images = await this.imageService.createMany(files, material);
+      await this.imageService.createMany(files, material, manager);
 
       const calculatedFunctionalIndicators = this.calculationService.calcAll(
         createMaterialDto,
         material,
       );
 
-      const waterproofFunction = await this.waterproofFunctionService.create(
+      await this.waterproofFunctionService.create(
         calculatedFunctionalIndicators.waterproofFunction,
+        manager,
       );
 
-      const homeostasisFunction = await this.homeostasisFunctionService.create(
+      await this.homeostasisFunctionService.create(
         calculatedFunctionalIndicators.homeostasisFunction,
+        manager,
       );
 
-      const reliabilityFunction = await this.reliabilityFunctionService.create(
+      await this.reliabilityFunctionService.create(
         calculatedFunctionalIndicators.reliabilityFunction,
+        manager,
       );
 
-      const estimation = await this.estimationService.create(
+      await this.estimationService.create(
         calculatedFunctionalIndicators.estimation,
+        manager,
       );
 
+      await queryRunner.commitTransaction();
       return await this.findOne(material.id);
     } catch (e) {
+      await queryRunner.rollbackTransaction();
       throw e;
+    } finally {
+      await queryRunner.release();
     }
   }
 

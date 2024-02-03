@@ -23,7 +23,7 @@ let WashingService = class WashingService {
         this.washingTypeService = washingTypeService;
         this.washingRepository = washingRepository;
     }
-    async create(createWashingDto, washingType) {
+    async create(createWashingDto, washingType, manager) {
         if (!washingType) {
             try {
                 washingType = await this.washingTypeService.findOne(createWashingDto.washingType_id);
@@ -32,11 +32,20 @@ let WashingService = class WashingService {
                 throw e;
             }
         }
-        const washing = await this.washingRepository.save({
+        const partialWashingEntity = {
             ...createWashingDto,
             washingType: washingType,
-        });
-        return await this.washingRepository.findOneBy({ id: washing.id });
+        };
+        let washing;
+        if (manager) {
+            washing = await manager
+                .withRepository(this.washingRepository)
+                .save(partialWashingEntity);
+        }
+        else {
+            washing = await this.washingRepository.save(partialWashingEntity);
+        }
+        return washing;
     }
 };
 exports.WashingService = WashingService;

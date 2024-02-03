@@ -1,4 +1,4 @@
-import { ExecutionContext, createParamDecorator } from '@nestjs/common';
+import { BadRequestException, ExecutionContext, createParamDecorator } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
 import { Request } from 'express';
@@ -17,6 +17,13 @@ export const MultipartMaterialData = createParamDecorator(
       reliabilityFunction: JSON.parse(req.body.reliabilityFunction),
       estimation: JSON.parse(req.body.estimation),
     };
+
+    console.log('----CreateMaterialBody:');
+    console.log({
+      ...createMaterialDto,
+      images: createMaterialDto.images?.length,
+    });
+    console.log('\n');
 
     const validatedCreateMaterialDto = plainToInstance(
       CreateMaterialDto,

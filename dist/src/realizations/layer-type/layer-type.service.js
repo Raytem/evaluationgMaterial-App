@@ -46,11 +46,16 @@ let LayerTypeService = class LayerTypeService {
         });
     }
     async findByIds(layerTypeIds) {
-        return await this.layerTypeRepository.find({
+        const layerTypeIdsSet = Array.from(new Set(layerTypeIds));
+        const foundedLayerTypes = await this.layerTypeRepository.find({
             where: {
                 id: (0, typeorm_2.In)(layerTypeIds),
             },
         });
+        if (layerTypeIdsSet.length !== foundedLayerTypes.length) {
+            throw new no_such_exception_1.NoSuchException('layer type');
+        }
+        return foundedLayerTypes;
     }
     async findOne(id, name) {
         let layerType;

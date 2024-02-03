@@ -11,7 +11,7 @@ import { EstimationService } from '../estimation/estimation.service';
 import { ImageService } from '../image/image.service';
 import { LayerService } from '../layer/layer.service';
 import { ExelService } from 'src/services/exel/exel.service';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { PaginationService } from 'src/services/pagination/pagination.service';
 import { LayerTypeService } from '../layer-type/layer-type.service';
 import { CreateMaterialDto } from 'src/realizations/material/dto/create-material.dto';
@@ -37,7 +37,8 @@ export declare class MaterialService {
     private layerService;
     private exelService;
     private paginationService;
-    constructor(materialRepository: Repository<MaterialEntity>, calculationService: CalculationService, glueTypeService: GlueTypeService, layerTypeService: LayerTypeService, membraneLayerPolymerTypeService: MembraneLayerPolymerTypeService, productionMethodService: ProductionMethodService, conditionService: ConditionService, waterproofFunctionService: WaterproofFunctionService, homeostasisFunctionService: HomeostasisFunctionService, reliabilityFunctionService: ReliabilityFunctionService, estimationService: EstimationService, imageService: ImageService, layerService: LayerService, exelService: ExelService, paginationService: PaginationService);
+    private dataSource;
+    constructor(materialRepository: Repository<MaterialEntity>, calculationService: CalculationService, glueTypeService: GlueTypeService, layerTypeService: LayerTypeService, membraneLayerPolymerTypeService: MembraneLayerPolymerTypeService, productionMethodService: ProductionMethodService, conditionService: ConditionService, waterproofFunctionService: WaterproofFunctionService, homeostasisFunctionService: HomeostasisFunctionService, reliabilityFunctionService: ReliabilityFunctionService, estimationService: EstimationService, imageService: ImageService, layerService: LayerService, exelService: ExelService, paginationService: PaginationService, dataSource: DataSource);
     create(createMaterialDto: CreateMaterialDto, files: Multer.File[], reqUser: UserEntity): Promise<MaterialEntity>;
     update(id: number, updateMaterialDto: UpdateMaterialDto, reqUser: UserEntity): Promise<MaterialEntity>;
     findAll(materialFilterDto: MaterialFilterDto): Promise<MaterialsAndCnt>;

@@ -34,7 +34,7 @@ const layer_type_service_1 = require("../layer-type/layer-type.service");
 const layer_entity_1 = require("../layer/entities/layer.entity");
 const calculation_service_1 = require("../../services/calculation/calculation.service");
 let MaterialService = class MaterialService {
-    constructor(materialRepository, calculationService, glueTypeService, layerTypeService, membraneLayerPolymerTypeService, productionMethodService, conditionService, waterproofFunctionService, homeostasisFunctionService, reliabilityFunctionService, estimationService, imageService, layerService, exelService, paginationService) {
+    constructor(materialRepository, calculationService, glueTypeService, layerTypeService, membraneLayerPolymerTypeService, productionMethodService, conditionService, waterproofFunctionService, homeostasisFunctionService, reliabilityFunctionService, estimationService, imageService, layerService, exelService, paginationService, dataSource) {
         this.materialRepository = materialRepository;
         this.calculationService = calculationService;
         this.glueTypeService = glueTypeService;
@@ -50,6 +50,7 @@ let MaterialService = class MaterialService {
         this.layerService = layerService;
         this.exelService = exelService;
         this.paginationService = paginationService;
+        this.dataSource = dataSource;
     }
     async create(createMaterialDto, files, reqUser) {
         const waterproofWeightSum = createMaterialDto.waterproofFunction
@@ -71,32 +72,33 @@ let MaterialService = class MaterialService {
                 .relativeBlottingPressureAfterLoad_weight +
             createMaterialDto.reliabilityFunction
                 .waterproofRealizationCriteriaAfterLoad_weight;
-        if (waterproofWeightSum > 1) {
-            throw new common_1.BadRequestException("The sum of the weights in 'waterproof function' cannot be more than 1");
+        const estimationWeightSum = createMaterialDto.estimation.homeostasisFunction_weight +
+            createMaterialDto.estimation.waterproofFunction_weight +
+            createMaterialDto.estimation.reliabilityFunction_weight;
+        if (waterproofWeightSum > 1 || waterproofWeightSum < 0) {
+            throw new common_1.BadRequestException("The sum of the weights in 'waterproof function' cannot be more than 1 and less then 0");
         }
-        if (homeostasisWeightSum > 1) {
-            throw new common_1.BadRequestException("The sum of the weights in 'homeostasis function' cannot be more than 1");
+        if (homeostasisWeightSum > 1 || homeostasisWeightSum < 0) {
+            throw new common_1.BadRequestException("The sum of the weights in 'homeostasis function' cannot be more than 1 and less then 0");
         }
-        if (reliabilityWeightSum > 1) {
-            throw new common_1.BadRequestException("The sum of the weights in 'reliability function' cannot be more than 1");
+        if (reliabilityWeightSum > 1 || reliabilityWeightSum < 0) {
+            throw new common_1.BadRequestException("The sum of the weights in 'reliability function' cannot be more than 1 and less then 0");
         }
+        if (estimationWeightSum > 1 || estimationWeightSum < 0) {
+            throw new common_1.BadRequestException("The sum of the weights in 'estimation' cannot be more than 1 and less then 0");
+        }
+        const queryRunner = this.dataSource.createQueryRunner();
+        await queryRunner.connect();
+        await queryRunner.startTransaction('READ COMMITTED');
+        const manager = queryRunner.manager;
         try {
             const glueType = await this.glueTypeService.findOne(createMaterialDto.material.glueType_id);
-            const layerTypeIds = createMaterialDto.material.layers.map((layer) => layer.layerType_id);
-            const layerTypes = await this.layerTypeService.findByIds(layerTypeIds);
-            if (layerTypeIds.length !== layerTypes.length) {
-                throw new no_such_exception_1.NoSuchException('layer type');
-            }
-            let createLayersList = createMaterialDto.material.layers.map((layer, idx) => {
-                return {
-                    ...layer,
-                    layerType: layerTypes[idx],
-                };
-            });
             const membraneLayerPolymerType = await this.membraneLayerPolymerTypeService.findOne(createMaterialDto.material.membraneLayerPolymerType_id);
             const productionMethod = await this.productionMethodService.findOne(createMaterialDto.material.productionMethod_id);
-            const condition = await this.conditionService.create(createMaterialDto.condition);
-            const material = await this.materialRepository.save({
+            const condition = await this.conditionService.create(createMaterialDto.condition, manager);
+            const material = await manager
+                .withRepository(this.materialRepository)
+                .save({
                 ...createMaterialDto.material,
                 condition,
                 user: reqUser,
@@ -104,21 +106,22 @@ let MaterialService = class MaterialService {
                 membraneLayerPolymerType,
                 glueType,
             });
-            createLayersList = createLayersList.map((item) => ({
-                ...item,
-                material,
-            }));
-            const layers = await this.layerService.createMany(createLayersList);
-            const images = await this.imageService.createMany(files, material);
+            await this.layerService.createMany(material, createMaterialDto.material.layers, manager);
+            await this.imageService.createMany(files, material, manager);
             const calculatedFunctionalIndicators = this.calculationService.calcAll(createMaterialDto, material);
-            const waterproofFunction = await this.waterproofFunctionService.create(calculatedFunctionalIndicators.waterproofFunction);
-            const homeostasisFunction = await this.homeostasisFunctionService.create(calculatedFunctionalIndicators.homeostasisFunction);
-            const reliabilityFunction = await this.reliabilityFunctionService.create(calculatedFunctionalIndicators.reliabilityFunction);
-            const estimation = await this.estimationService.create(calculatedFunctionalIndicators.estimation);
+            await this.waterproofFunctionService.create(calculatedFunctionalIndicators.waterproofFunction, manager);
+            await this.homeostasisFunctionService.create(calculatedFunctionalIndicators.homeostasisFunction, manager);
+            await this.reliabilityFunctionService.create(calculatedFunctionalIndicators.reliabilityFunction, manager);
+            await this.estimationService.create(calculatedFunctionalIndicators.estimation, manager);
+            await queryRunner.commitTransaction();
             return await this.findOne(material.id);
         }
         catch (e) {
+            await queryRunner.rollbackTransaction();
             throw e;
+        }
+        finally {
+            await queryRunner.release();
         }
     }
     async update(id, updateMaterialDto, reqUser) {
@@ -307,6 +310,7 @@ exports.MaterialService = MaterialService = __decorate([
         image_service_1.ImageService,
         layer_service_1.LayerService,
         exel_service_1.ExelService,
-        pagination_service_1.PaginationService])
+        pagination_service_1.PaginationService,
+        typeorm_2.DataSource])
 ], MaterialService);
 //# sourceMappingURL=material.service.js.map

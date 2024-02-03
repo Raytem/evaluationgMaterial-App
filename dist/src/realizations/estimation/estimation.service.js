@@ -21,8 +21,15 @@ let EstimationService = class EstimationService {
     constructor(estimationRepository) {
         this.estimationRepository = estimationRepository;
     }
-    async create(createEstimationDto) {
-        return await this.estimationRepository.save(createEstimationDto);
+    async create(createEstimationDto, manager) {
+        if (manager) {
+            return manager
+                .withRepository(this.estimationRepository)
+                .save(createEstimationDto);
+        }
+        else {
+            return await this.estimationRepository.save(createEstimationDto);
+        }
     }
 };
 exports.EstimationService = EstimationService;

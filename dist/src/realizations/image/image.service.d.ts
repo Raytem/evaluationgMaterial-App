@@ -1,5 +1,5 @@
 import { ImageEntity } from './entities/image.entity';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { ConfigType } from '@nestjs/config';
 import { MaterialEntity } from '../material/entities/material.entity';
 import { Multer } from 'multer';
@@ -10,7 +10,7 @@ export declare class ImageService {
     private baseMaterialsPath;
     constructor(imageRepository: Repository<ImageEntity>, fileCfg: ConfigType<typeof fileConfig>);
     private uploadToDisk;
-    createMany(files: Multer.File[], material: MaterialEntity): Promise<ImageEntity[]>;
+    createMany(files: Multer.File[], material: MaterialEntity, manager?: EntityManager): Promise<ImageEntity[]>;
     findOne(id: number): Promise<ImageEntity>;
     removeMaterialImagesFolder(material: MaterialEntity): Promise<ImageEntity[]>;
 }

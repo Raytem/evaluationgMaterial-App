@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateReliabilityFunctionDto } from './dto/create-reliability-function.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { ReliabilityFunctionEntity } from './entities/reliability-function.entity';
 
 @Injectable()
@@ -13,9 +13,16 @@ export class ReliabilityFunctionService {
 
   async create(
     createReliabilityFunctionDto: CreateReliabilityFunctionDto,
+    manager?: EntityManager,
   ): Promise<ReliabilityFunctionEntity> {
-    return await this.reliabilityFunctionRepository.save(
-      createReliabilityFunctionDto,
-    );
+    if (manager) {
+      return await manager
+        .withRepository(this.reliabilityFunctionRepository)
+        .save(createReliabilityFunctionDto);
+    } else {
+      return await this.reliabilityFunctionRepository.save(
+        createReliabilityFunctionDto,
+      );
+    }
   }
 }

@@ -3,7 +3,7 @@ import { CreateWashingDto } from './dto/create-washing.dto';
 import { WashingTypeService } from '../washing-type/washing-type.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { WashingEntity } from './entities/washing.entity';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { WashingTypeEntity } from '../washing-type/entities/washing-type.entity';
 
 @Injectable()
@@ -17,6 +17,7 @@ export class WashingService {
   async create(
     createWashingDto: CreateWashingDto,
     washingType?: WashingTypeEntity,
+    manager?: EntityManager,
   ) {
     if (!washingType) {
       try {
@@ -28,11 +29,20 @@ export class WashingService {
       }
     }
 
-    const washing = await this.washingRepository.save({
+    const partialWashingEntity = {
       ...createWashingDto,
       washingType: washingType,
-    });
+    };
 
-    return await this.washingRepository.findOneBy({ id: washing.id });
+    let washing;
+    if (manager) {
+      washing = await manager
+        .withRepository(this.washingRepository)
+        .save(partialWashingEntity);
+    } else {
+      washing = await this.washingRepository.save(partialWashingEntity);
+    }
+
+    return washing;
   }
 }

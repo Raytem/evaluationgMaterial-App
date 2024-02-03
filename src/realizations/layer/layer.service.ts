@@ -1,10 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateLayerDto } from './dto/create-layer.dto';
-import { Repository } from 'typeorm';
+import { EntityManager, In, Repository } from 'typeorm';
 import { LayerEntity } from './entities/layer.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LayerTypeService } from '../layer-type/layer-type.service';
 import { LayerTypeEntity } from '../layer-type/entities/layer-type.entity';
+import { MaterialEntity } from '../material/entities/material.entity';
+import { NoSuchException } from 'src/exceptions/no-such.exception';
 
 @Injectable()
 export class LayerService {
@@ -35,8 +37,39 @@ export class LayerService {
   }
 
   async createMany(
+    material: MaterialEntity,
     createLayerDtoList: CreateLayerDto[],
+    manager?: EntityManager,
   ): Promise<LayerEntity[]> {
-    return await this.layerRepository.save(createLayerDtoList);
+    const layerIds = createLayerDtoList.map(
+      (createLayerDto) => createLayerDto.layerType_id,
+    );
+    const layerIndexNums = createLayerDtoList.map((dto) => dto.indexNum);
+    const layerIndexNumsSet = Array.from(new Set(layerIndexNums));
+    if (layerIndexNumsSet.length !== layerIndexNums.length) {
+      throw new BadRequestException('duplicated indexNum property');
+    }
+
+    const layerTypes = await this.layerTypeService.findByIds(layerIds);
+
+    const createLayerList = createLayerDtoList.map((createLayerDto) => {
+      const layerType = layerTypes.find(
+        (layerType) => layerType.id === createLayerDto.layerType_id,
+      );
+
+      return this.layerRepository.create({
+        layerType,
+        indexNum: createLayerDto.indexNum,
+        material,
+      });
+    });
+
+    if (manager) {
+      return await manager
+        .withRepository(this.layerRepository)
+        .save(createLayerList);
+    } else {
+      return await this.layerRepository.save(createLayerList);
+    }
   }
 }

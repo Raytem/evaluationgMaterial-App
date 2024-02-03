@@ -59,7 +59,7 @@ let ImageService = class ImageService {
         });
         return fileNames;
     }
-    async createMany(files, material) {
+    async createMany(files, material, manager) {
         if (!files.length)
             return;
         const fileNames = await this.uploadToDisk(files, material);
@@ -68,7 +68,15 @@ let ImageService = class ImageService {
             folderName: material.id.toString(),
             material,
         }));
-        const images = await this.imageRepository.save(createImagesList);
+        let images;
+        if (manager) {
+            images = await manager
+                .withRepository(this.imageRepository)
+                .save(createImagesList);
+        }
+        else {
+            images = await this.imageRepository.save(createImagesList);
+        }
         return images;
     }
     async findOne(id) {

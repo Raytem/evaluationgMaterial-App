@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { AbstractBaseEntity } from 'src/realizations/abstract-base-entity';
 import { MaterialEntity } from 'src/realizations/material/entities/material.entity';
 import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';

@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CreateImageDto } from './dto/create-image.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ImageEntity } from './entities/image.entity';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { NoSuchException } from 'src/exceptions/no-such.exception';
 import { ConfigType } from '@nestjs/config';
 import { MaterialEntity } from '../material/entities/material.entity';
@@ -72,6 +72,7 @@ export class ImageService {
   async createMany(
     files: Multer.File[],
     material: MaterialEntity,
+    manager?: EntityManager,
   ): Promise<ImageEntity[]> {
     if (!files.length) return;
 
@@ -83,7 +84,15 @@ export class ImageService {
       material,
     }));
 
-    const images = await this.imageRepository.save(createImagesList);
+    let images;
+
+    if (manager) {
+      images = await manager
+        .withRepository(this.imageRepository)
+        .save(createImagesList);
+    } else {
+      images = await this.imageRepository.save(createImagesList);
+    }
 
     return images;
   }

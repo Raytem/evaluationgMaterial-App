@@ -31,23 +31,31 @@ let ConditionService = class ConditionService {
         this.physicalActivityTypeService = physicalActivityTypeService;
         this.washingTypeService = washingTypeService;
     }
-    async create(createConditionDto) {
+    async create(createConditionDto, manager) {
         try {
             const abrasionType = await this.abrasionTypeService.findOne(createConditionDto.abrasionType_id);
             const bendingType = await this.bendingTypeService.findOne(createConditionDto.bendingType_id);
             let washing;
             if (createConditionDto.washing) {
                 const washingType = await this.washingTypeService.findOne(createConditionDto.washing.washingType_id);
-                washing = await this.washingService.create(createConditionDto.washing, washingType);
+                washing = await this.washingService.create(createConditionDto.washing, washingType, manager);
             }
             const physicalActivityType = await this.physicalActivityTypeService.findOne(createConditionDto.physicalActivityType_id);
-            return await this.conditionRepository.save({
+            const partialConditionEntity = this.conditionRepository.create({
                 ...createConditionDto,
                 washing,
                 abrasionType,
                 bendingType,
                 physicalActivityType,
             });
+            if (manager) {
+                return await manager
+                    .withRepository(this.conditionRepository)
+                    .save(partialConditionEntity);
+            }
+            else {
+                return await this.conditionRepository.save(partialConditionEntity);
+            }
         }
         catch (e) {
             throw e;

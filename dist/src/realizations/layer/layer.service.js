@@ -37,8 +37,30 @@ let LayerService = class LayerService {
             layerType,
         });
     }
-    async createMany(createLayerDtoList) {
-        return await this.layerRepository.save(createLayerDtoList);
+    async createMany(material, createLayerDtoList, manager) {
+        const layerIds = createLayerDtoList.map((createLayerDto) => createLayerDto.layerType_id);
+        const layerIndexNums = createLayerDtoList.map((dto) => dto.indexNum);
+        const layerIndexNumsSet = Array.from(new Set(layerIndexNums));
+        if (layerIndexNumsSet.length !== layerIndexNums.length) {
+            throw new common_1.BadRequestException('duplicated indexNum property');
+        }
+        const layerTypes = await this.layerTypeService.findByIds(layerIds);
+        const createLayerList = createLayerDtoList.map((createLayerDto) => {
+            const layerType = layerTypes.find((layerType) => layerType.id === createLayerDto.layerType_id);
+            return this.layerRepository.create({
+                layerType,
+                indexNum: createLayerDto.indexNum,
+                material,
+            });
+        });
+        if (manager) {
+            return await manager
+                .withRepository(this.layerRepository)
+                .save(createLayerList);
+        }
+        else {
+            return await this.layerRepository.save(createLayerList);
+        }
     }
 };
 exports.LayerService = LayerService;

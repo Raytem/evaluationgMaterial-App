@@ -16,6 +16,12 @@ exports.MultipartMaterialData = (0, common_1.createParamDecorator)(async (data, 
         reliabilityFunction: JSON.parse(req.body.reliabilityFunction),
         estimation: JSON.parse(req.body.estimation),
     };
+    console.log('----CreateMaterialBody:');
+    console.log({
+        ...createMaterialDto,
+        images: createMaterialDto.images?.length,
+    });
+    console.log('\n');
     const validatedCreateMaterialDto = (0, class_transformer_1.plainToInstance)(create_material_dto_1.CreateMaterialDto, createMaterialDto, {
         enableImplicitConversion: false,
     });

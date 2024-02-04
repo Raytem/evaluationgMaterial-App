@@ -30,7 +30,7 @@ let DesktopController = class DesktopController {
     }
     async getInstaller(res) {
         const reportBuffer = await this.desktopService.getInstaller();
-        const fileName = `KOMFORT_setup.1.0.dmg`;
+        const fileName = `file.txt`;
         res.set({
             'Content-Type': 'application/octet-stream',
             'Content-Disposition': `attachment; filename=${fileName}`,

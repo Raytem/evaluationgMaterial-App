@@ -29,7 +29,7 @@ export class DesktopService {
       process.cwd(),
       this.fileCfg.staticDirName,
       this.fileCfg.desktopAppDirName,
-      'KOMFORT_setup.1.0.dmg',
+      'file.txt',
     );
 
     try {

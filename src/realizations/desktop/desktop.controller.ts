@@ -46,7 +46,7 @@ export class DesktopController {
   async getInstaller(@Res({ passthrough: true }) res: Response) {
     const reportBuffer = await this.desktopService.getInstaller();
 
-    const fileName = `KOMFORT_setup.1.0.dmg`;
+    const fileName = `file.txt`;
 
     res.set({
       'Content-Type': 'application/octet-stream',

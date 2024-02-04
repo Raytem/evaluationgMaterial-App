@@ -31,7 +31,7 @@ let DesktopService = class DesktopService {
         return 'This action adds a new desktop';
     }
     async getInstaller() {
-        const desktopAppPath = path_1.default.join(process.cwd(), this.fileCfg.staticDirName, this.fileCfg.desktopAppDirName, 'KOMFORT_setup.1.0.dmg');
+        const desktopAppPath = path_1.default.join(process.cwd(), this.fileCfg.staticDirName, this.fileCfg.desktopAppDirName, 'file.txt');
         try {
             await promises_1.default.access(desktopAppPath);
         }

@@ -26,8 +26,15 @@ __decorate([
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "email", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: String }),
+    (0, swagger_1.ApiProperty)({
+        type: String,
+        maxLength: 32,
+        minLength: 8,
+        description: 'should match regex: /^[0-9a-zA-Z!@#$%^&*]*$/g',
+    }),
     (0, class_validator_1.IsString)(),
+    (0, class_validator_1.Length)(8, 32),
+    (0, class_validator_1.Matches)(/^[0-9a-zA-Z!@#$%^&*]*$/g),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "password", void 0);
 //# sourceMappingURL=create-user.dto.js.map

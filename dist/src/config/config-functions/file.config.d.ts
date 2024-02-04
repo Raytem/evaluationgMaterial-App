@@ -2,6 +2,7 @@ export declare const fileConfig: (() => {
     staticDirName: string;
     materialImagesDirName: string;
     templatesDirName: string;
+    desktopAppDirName: string;
     resizeSize: number;
     maxSize: number;
     uploadLimit: number;
@@ -9,6 +10,7 @@ export declare const fileConfig: (() => {
     staticDirName: string;
     materialImagesDirName: string;
     templatesDirName: string;
+    desktopAppDirName: string;
     resizeSize: number;
     maxSize: number;
     uploadLimit: number;

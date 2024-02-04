@@ -46,6 +46,7 @@ const basic_auth_guard_1 = require("./auth/guards/basic-auth.guard");
 const file_config_1 = require("./config/config-functions/file.config");
 const calculations_config_1 = require("./config/config-functions/calculations.config");
 const all_types_module_1 = require("./realizations/all-types/all-types.module");
+const desktop_module_1 = require("./realizations/desktop/desktop.module");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(logger_middleware_1.LoggerMiddleware).forRoutes('*');
@@ -86,6 +87,7 @@ exports.AppModule = AppModule = __decorate([
             washing_module_1.WashingModule,
             washing_type_module_1.WashingTypeModule,
             waterproof_function_module_1.WaterproofFunctionModule,
+            desktop_module_1.DesktopModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [

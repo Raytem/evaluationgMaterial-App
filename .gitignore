@@ -3,7 +3,10 @@ postgres_data/pgdata
 dist
 
 static/desktop/*
-!static/desktop/.gitkeep
+!static/desktop/update/
 
-static/material_images/*
+static/desktop/update/*
+!static/desktop/update/.gitkeep
+
+static/material_images/
 !static/material_images/.gitkeep 

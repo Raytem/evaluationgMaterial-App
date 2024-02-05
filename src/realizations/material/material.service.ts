@@ -219,7 +219,7 @@ export class MaterialService {
       ...updateMaterialDto,
     });
 
-    return updatedMaterial;
+    return await this.findOne(id);
   }
 
   async findAll(

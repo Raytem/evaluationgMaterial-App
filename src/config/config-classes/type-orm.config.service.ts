@@ -20,6 +20,7 @@ import { WaterproofFunctionEntity } from 'src/realizations/waterproof-function/e
 import { HomeostasisFunctionEntity } from 'src/realizations/homeostasis-function/entities/homeostasis-function.entity';
 import { ReliabilityFunctionEntity } from 'src/realizations/reliability-function/entities/reliability-function.entity';
 import { EstimationEntity } from 'src/realizations/estimation/entities/estimation.entity';
+import { DesktopEntity } from 'src/realizations/desktop/entities/desktop.entity';
 
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
   constructor(
@@ -58,6 +59,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
         HomeostasisFunctionEntity,
         ReliabilityFunctionEntity,
         EstimationEntity,
+        DesktopEntity,
       ],
     };
   }

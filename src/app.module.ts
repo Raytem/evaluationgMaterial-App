@@ -43,6 +43,7 @@ import { fileConfig } from './config/config-functions/file.config';
 import { calculationsConfig } from './config/config-functions/calculations.config';
 import { AllTypesModule } from './realizations/all-types/all-types.module';
 import { DesktopModule } from './realizations/desktop/desktop.module';
+import { DeveloperGuard } from './auth/guards/developer.guard';
 
 @Module({
   imports: [
@@ -88,6 +89,10 @@ import { DesktopModule } from './realizations/desktop/desktop.module';
     {
       provide: APP_GUARD,
       useClass: AdminGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: DeveloperGuard,
     },
     {
       provide: APP_FILTER,

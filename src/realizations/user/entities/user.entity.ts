@@ -22,6 +22,10 @@ export class UserEntity extends AbstractBaseEntity {
   @Column({ default: false })
   isAdmin: boolean;
 
+  @ApiProperty({ type: Boolean, default: 'false' })
+  @Column({ default: false })
+  isDeveloper: boolean;
+
   @OneToMany(() => MaterialEntity, (material) => material.user)
   materials: MaterialEntity[];
 

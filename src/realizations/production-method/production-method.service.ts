@@ -76,7 +76,13 @@ export class ProductionMethodService {
     id: number,
     updateProductionMethodDto: UpdateProductionMethodDto,
   ): Promise<ProductionMethodEntity> {
-    await this.findOne(id);
+    const productionMethod = await this.findOne(id);
+
+    if (productionMethod) {
+      throw new BadRequestException(
+        'ProductionMethod with this name already exists',
+      );
+    }
 
     await this.productionMethodRepository.update(
       { id },

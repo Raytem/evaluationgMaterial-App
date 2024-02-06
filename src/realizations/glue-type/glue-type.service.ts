@@ -67,7 +67,11 @@ export class GlueTypeService {
     id: number,
     updateGlueTypeDto: UpdateGlueTypeDto,
   ): Promise<GlueTypeEntity> {
-    await this.findOne(id);
+    const glueType = await this.findOne(id);
+
+    if (glueType) {
+      throw new BadRequestException('GlueType with this name already exists');
+    }
 
     await this.glueTypeRepository.update(
       { id },

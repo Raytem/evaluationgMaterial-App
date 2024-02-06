@@ -71,7 +71,13 @@ export class WashingTypeService {
     id: number,
     updateWashingTypeDto: UpdateWashingTypeDto,
   ): Promise<WashingTypeEntity> {
-    await this.findOne(id);
+    const washingType = await this.findOne(id);
+
+    if (washingType) {
+      throw new BadRequestException(
+        'WashingType with this name already exists',
+      );
+    }
 
     await this.washingTypeRepository.update(
       { id },

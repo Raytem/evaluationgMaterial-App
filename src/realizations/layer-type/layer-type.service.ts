@@ -85,7 +85,11 @@ export class LayerTypeService {
     id: number,
     updateLayerTypeDto: UpdateLayerTypeDto,
   ): Promise<LayerTypeEntity> {
-    await this.findOne(id);
+    const layerType = await this.findOne(id);
+
+    if (layerType) {
+      throw new BadRequestException('LayerType with this name already exists');
+    }
 
     await this.layerTypeRepository.update(
       { id },

@@ -82,7 +82,13 @@ export class MembraneLayerPolymerTypeService {
     id: number,
     updateMembraneLayerPolymerTypeDto: UpdateMembraneLayerPolymerTypeDto,
   ): Promise<MembraneLayerPolymerTypeEntity> {
-    await this.findOne(id);
+    const membraneLayerPolymerType = await this.findOne(id);
+
+    if (membraneLayerPolymerType) {
+      throw new BadRequestException(
+        'MembraneLayerPolymerType with this name already exists',
+      );
+    }
 
     await this.membraneLayerPolymerTypeRepository.update(
       { id },

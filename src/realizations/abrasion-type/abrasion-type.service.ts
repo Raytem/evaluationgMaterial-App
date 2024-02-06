@@ -71,7 +71,13 @@ export class AbrasionTypeService {
     id: number,
     updateAbrasionTypeDto: UpdateAbrasionTypeDto,
   ): Promise<AbrasionTypeEntity> {
-    await this.findOne(id);
+    const abrasionType = await this.findOne(id);
+
+    if (abrasionType) {
+      throw new BadRequestException(
+        'AbrasionType with this name already exists',
+      );
+    }
 
     await this.abrasionTypeRepository.update(
       { id },

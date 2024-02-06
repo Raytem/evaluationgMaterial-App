@@ -82,7 +82,13 @@ export class PhysicalActivityTypeService {
     id: number,
     updatePhysicalActivityTypeDto: UpdatePhysicalActivityTypeDto,
   ): Promise<PhysicalActivityTypeEntity> {
-    await this.findOne(id);
+    const physicalActivityType = await this.findOne(id);
+
+    if (physicalActivityType) {
+      throw new BadRequestException(
+        'PhysicalActivityType with this name already exists',
+      );
+    }
 
     await this.physicalActivityTypeRepository.update(
       { id },

@@ -73,7 +73,11 @@ export class BendingTypeService {
   ): Promise<BendingTypeEntity> {
     const bendingType = await this.findOne(id);
 
-    if (bendingType) {
+    const bendingTypeByName = await this.bendingTypeRepository.findOneBy({
+      name: updateBendingTypeDto.name,
+    });
+
+    if (bendingTypeByName && bendingType.id !== bendingTypeByName.id) {
       throw new BadRequestException(
         'BendingType with this name already exists',
       );

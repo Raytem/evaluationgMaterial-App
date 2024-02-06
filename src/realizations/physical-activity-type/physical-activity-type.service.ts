@@ -84,7 +84,15 @@ export class PhysicalActivityTypeService {
   ): Promise<PhysicalActivityTypeEntity> {
     const physicalActivityType = await this.findOne(id);
 
-    if (physicalActivityType) {
+    const physicalActivityTypeByName =
+      await this.physicalActivityTypeRepository.findOneBy({
+        name: updatePhysicalActivityTypeDto.name,
+      });
+
+    if (
+      physicalActivityTypeByName &&
+      physicalActivityType.id !== physicalActivityTypeByName.id
+    ) {
       throw new BadRequestException(
         'PhysicalActivityType with this name already exists',
       );

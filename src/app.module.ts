@@ -44,6 +44,7 @@ import { calculationsConfig } from './config/config-functions/calculations.confi
 import { AllTypesModule } from './realizations/all-types/all-types.module';
 import { DesktopModule } from './realizations/desktop/desktop.module';
 import { DeveloperGuard } from './auth/guards/developer.guard';
+import { setupExtensionConfig } from './config/config-functions/setupExtension.config';
 
 @Module({
   imports: [
@@ -51,7 +52,13 @@ import { DeveloperGuard } from './auth/guards/developer.guard';
       isGlobal: true,
       validate,
       expandVariables: true,
-      load: [appConfig, calculationsConfig, postgresConfig, fileConfig],
+      load: [
+        appConfig,
+        calculationsConfig,
+        postgresConfig,
+        fileConfig,
+        setupExtensionConfig,
+      ],
     }),
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,

@@ -13,6 +13,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { NewDesktopVersionFilesDto } from './dto/new-desktop-version-files.dto';
 import { FileNameAndBuffer } from './types/file-name-and-buffer';
+import { DesktopPlatform } from 'src/enums/desktop-platform.enum';
+import { setupExtensionConfig } from 'src/config/config-functions/setupExtension.config';
 
 @Injectable()
 export class DesktopService {
@@ -22,6 +24,9 @@ export class DesktopService {
 
     @Inject(fileConfig.KEY)
     private fileCfg: ConfigType<typeof fileConfig>,
+
+    @Inject(setupExtensionConfig.KEY)
+    private setupExtensionCfg: ConfigType<typeof setupExtensionConfig>,
 
     private dataSource: DataSource,
   ) {}
@@ -55,8 +60,19 @@ export class DesktopService {
       desktopEntity = await this.getLatestVersion();
 
       try {
-        await fspr.unlink(this.getDesktopSetupFilePath(desktopEntity.version));
-        await fspr.unlink(this.getDesktopUpdateFilePath(desktopEntity.version));
+        await fspr.unlink(
+          this.getDesktopSetupFilePath(
+            desktopEntity.version,
+            DesktopPlatform.MAC,
+          ),
+        );
+        await fspr.unlink(
+          this.getDesktopSetupFilePath(
+            desktopEntity.version,
+            DesktopPlatform.WIN,
+          ),
+        );
+        // await fspr.unlink(this.getDesktopUpdateFilePath(desktopEntity.version));
       } catch (e) {
         console.log(e);
         throw new InternalServerErrorException(
@@ -78,13 +94,23 @@ export class DesktopService {
 
     try {
       await fspr.writeFile(
-        this.getDesktopSetupFilePath(desktopEntity.version),
-        files.setup[0].buffer,
+        this.getDesktopSetupFilePath(
+          desktopEntity.version,
+          DesktopPlatform.MAC,
+        ),
+        files.macSetup[0].buffer,
       );
       await fspr.writeFile(
-        this.getDesktopUpdateFilePath(desktopEntity.version),
-        files.update[0].buffer,
+        this.getDesktopSetupFilePath(
+          desktopEntity.version,
+          DesktopPlatform.WIN,
+        ),
+        files.winSetup[0].buffer,
       );
+      // await fspr.writeFile(
+      //   this.getDesktopUpdateFilePath(desktopEntity.version),
+      //   files.update[0].buffer,
+      // );
     } catch (e) {
       await queryRunner.rollbackTransaction();
 
@@ -117,15 +143,15 @@ export class DesktopService {
     }
   }
 
-  async getInstaller(): Promise<FileNameAndBuffer> {
+  async getInstaller(platform: DesktopPlatform): Promise<FileNameAndBuffer> {
     const desktopEntity = await this.getLatestVersion();
 
     try {
       const fileBuffer = await fspr.readFile(
-        this.getDesktopSetupFilePath(desktopEntity.version),
+        this.getDesktopSetupFilePath(desktopEntity.version, platform),
       );
       return {
-        fileName: this.getDesktopSetupFileName(desktopEntity.version),
+        fileName: this.getDesktopSetupFileName(desktopEntity.version, platform),
         buffer: fileBuffer,
       };
     } catch (e) {
@@ -134,18 +160,26 @@ export class DesktopService {
     }
   }
 
-  private getDesktopSetupFileName(version: string) {
-    return `${this.fileCfg.desktopSetupName}-${version}.dmg`;
+  private getDesktopSetupFileName(version: string, platform: DesktopPlatform) {
+    switch (platform) {
+      case DesktopPlatform.MAC:
+        return `${this.fileCfg.desktopSetupName}-${version}.${this.setupExtensionCfg.mac}`;
+      case DesktopPlatform.WIN:
+        return `${this.fileCfg.desktopSetupName}-${version}.${this.setupExtensionCfg.win}`;
+    }
   }
 
   private getDesktopUpdateFileName(version: string) {
     return `${this.fileCfg.desktopUpdateName}-${version}.dmg`;
   }
 
-  private getDesktopSetupFilePath(version: string): string {
+  private getDesktopSetupFilePath(
+    version: string,
+    platform: DesktopPlatform,
+  ): string {
     return path.join(
       this.fileCfg.desktopSetupDirPath,
-      this.getDesktopSetupFileName(version),
+      this.getDesktopSetupFileName(version, platform),
     );
   }
 

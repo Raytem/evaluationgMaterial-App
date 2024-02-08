@@ -61,6 +61,12 @@ class EnvVariables {
   @IsNumberString()
   FILE_UPLOAD_LIMIT: string;
 
+  //setup-extension
+  @IsString()
+  SETUP_EXTENSION_MAC: string;
+  @IsString()
+  SETUP_EXTENSION_WIN: string;
+
   //db
   @IsString()
   DB_TYPE: string;

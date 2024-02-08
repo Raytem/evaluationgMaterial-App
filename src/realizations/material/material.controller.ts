@@ -14,6 +14,8 @@ import {
   Res,
   StreamableFile,
   Patch,
+  ParseFilePipeBuilder,
+  HttpStatus,
 } from '@nestjs/common';
 import { MaterialService } from './material.service';
 import { CreateMaterialDto } from './dto/create-material.dto';
@@ -32,7 +34,6 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { Multer } from 'multer';
 import { ConfigType } from '@nestjs/config';
 import { fileConfig } from 'src/config/config-functions/file.config';
-import { validateImages } from 'src/utils/validate-images';
 import { MultipartMaterialData } from 'src/decorators/multipart-material-data';
 import { User } from 'src/decorators/reqUser.decorator';
 import { UserEntity } from '../user/entities/user.entity';
@@ -83,15 +84,21 @@ export class MaterialController {
   @ApiConsumes('multipart/form-data')
   @ApiResponse({ type: MaterialEntity })
   @ApiBody({ type: CreateMaterialDto })
-  @UseInterceptors(FilesInterceptor('images'))
+  @UseInterceptors(FilesInterceptor('images', 5))
   @Post()
   async create(
-    @UploadedFiles() images: Multer.File[],
+    @UploadedFiles(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({ fileType: 'image/*' })
+        .addMaxSizeValidator({ maxSize: 5e6 })
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+        }),
+    )
+    images: Multer.File[],
     @MultipartMaterialData() createMaterialDto: CreateMaterialDto,
     @User() reqUser: UserEntity,
   ) {
-    validateImages(this.fileCfg, images);
-
     return await this.materialService.create(
       createMaterialDto,
       images,

@@ -17,7 +17,7 @@ export class CreateMaterialDto {
     maxItems: 5,
     description: `Max count of files: 5,
     File type: image/*,
-    Max file size: 5000000 bytes`,
+    Max file size: 5 mb`,
   })
   @IsString()
   images: string;

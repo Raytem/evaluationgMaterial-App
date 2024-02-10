@@ -10,6 +10,5 @@ cd "$directory"
 git pull
 
 sudo docker-compose down
-sudo docker image ls -q | xargs docker image rm -f
-docker system prune --force
+docker system prune -a --force
 sudo docker-compose up -d --build

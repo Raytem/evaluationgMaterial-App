@@ -16,6 +16,9 @@ import {
   Patch,
   ParseFilePipeBuilder,
   HttpStatus,
+  FileTypeValidator,
+  ParseFilePipe,
+  MaxFileSizeValidator,
 } from '@nestjs/common';
 import { MaterialService } from './material.service';
 import { CreateMaterialDto } from './dto/create-material.dto';
@@ -57,21 +60,14 @@ export class MaterialController {
   @ApiOperation({ summary: 'returns .xlsx file' })
   @ApiProduces('application/octet-stream')
   @Get(':id/report')
-  async getReportFromTemplate(
-    @Param('id') material_id: number,
-    @Res({ passthrough: true }) res: Response,
-  ) {
+  async getReportFromTemplate(@Param('id') material_id: number, @Res({ passthrough: true }) res: Response) {
     const material = await this.materialService.findOne(material_id, true);
 
-    const reportBuffer =
-      await this.materialService.getReportFromTemplate(material);
+    const reportBuffer = await this.materialService.getReportFromTemplate(material);
 
     const fileName = `Отчет по артикулу(${material.name}).xlsx`;
 
-    const translitedFileName = CyrillicToTranslit({ preset: 'ru' }).transform(
-      fileName,
-      '_',
-    );
+    const translitedFileName = CyrillicToTranslit({ preset: 'ru' }).transform(fileName, '_');
 
     res.set({
       'Content-Type': 'application/octet-stream',
@@ -88,31 +84,22 @@ export class MaterialController {
   @Post()
   async create(
     @UploadedFiles(
-      new ParseFilePipeBuilder()
-        .addFileTypeValidator({ fileType: 'image/*' })
-        .addMaxSizeValidator({ maxSize: 5e6 })
-        .build({
-          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
-        }),
+      new ParseFilePipe({
+        validators: [new FileTypeValidator({ fileType: 'image/*' }), new MaxFileSizeValidator({ maxSize: 5e6 })],
+        fileIsRequired: false,
+        errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+      }),
     )
     images: Multer.File[],
     @MultipartMaterialData() createMaterialDto: CreateMaterialDto,
     @User() reqUser: UserEntity,
   ) {
-    return await this.materialService.create(
-      createMaterialDto,
-      images,
-      reqUser,
-    );
+    return await this.materialService.create(createMaterialDto, images, reqUser);
   }
 
   @ApiResponse({ type: MaterialEntity })
   @Patch(':id')
-  async update(
-    @Param('id') id: number,
-    @Body() updateMaterialDto: UpdateMaterialDto,
-    @User() reqUser: UserEntity,
-  ) {
+  async update(@Param('id') id: number, @Body() updateMaterialDto: UpdateMaterialDto, @User() reqUser: UserEntity) {
     return await this.materialService.update(id, updateMaterialDto, reqUser);
   }
 
@@ -128,12 +115,8 @@ export class MaterialController {
   })
   @ApiResponse({ type: MaterialEntity, isArray: true })
   @Get()
-  async findAll(
-    @Query() materialFilterDto: MaterialFilterDto,
-    @Res({ passthrough: true }) res: Response,
-  ) {
-    const materialsAndCnt =
-      await this.materialService.findAll(materialFilterDto);
+  async findAll(@Query() materialFilterDto: MaterialFilterDto, @Res({ passthrough: true }) res: Response) {
+    const materialsAndCnt = await this.materialService.findAll(materialFilterDto);
 
     res.set('x-total-count', String(materialsAndCnt.totalCnt));
     return materialsAndCnt.materials;

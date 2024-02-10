@@ -124,15 +124,15 @@ export class DesktopService {
   }
 
   private getDesktopSetupFilePath(version: string, platform: DesktopPlatform): string {
-    return path.join(this.fileCfg.desktopSetupDirPath, this.getDesktopSetupFileName(version, platform));
+    return path.join(process.cwd(), this.fileCfg.desktopSetupDirPath, this.getDesktopSetupFileName(version, platform));
   }
 
   private getDesktopSetupFilePathWithPattern(pattern: string, platform: DesktopPlatform): string {
     switch (platform) {
       case DesktopPlatform.MAC:
-        return path.join(this.fileCfg.desktopSetupDirPath, `${pattern}.${this.setupExtensionCfg.mac}`);
+        return path.join(process.cwd(), this.fileCfg.desktopSetupDirPath, `${pattern}.${this.setupExtensionCfg.mac}`);
       case DesktopPlatform.WIN:
-        return path.join(this.fileCfg.desktopSetupDirPath, `${pattern}.${this.setupExtensionCfg.win}`);
+        return path.join(process.cwd(), this.fileCfg.desktopSetupDirPath, `${pattern}.${this.setupExtensionCfg.win}`);
     }
   }
 }

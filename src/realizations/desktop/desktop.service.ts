@@ -62,7 +62,9 @@ export class DesktopService {
         }
       } catch (e) {
         console.log(e);
-        throw new InternalServerErrorException(`cannot remove old versions of desktop setup (${platform})`);
+        throw new InternalServerErrorException(
+          `cannot remove old versions of desktop setup (${platform}), errors: [${e}]`,
+        );
       }
 
       desktopEntity = await manager.withRepository(this.desktopRepository).save({
@@ -77,9 +79,10 @@ export class DesktopService {
       await fspr.writeFile(this.getDesktopSetupFilePath(desktopEntity.version, platform), setupFile.buffer);
     } catch (e) {
       await queryRunner.rollbackTransaction();
-
       console.log(e);
-      throw new InternalServerErrorException(`cannot upload new version of desktop setup (${platform})`);
+      throw new InternalServerErrorException(
+        `cannot upload new version of desktop setup (${platform}), errors: [${e}]`,
+      );
     }
 
     await queryRunner.commitTransaction();

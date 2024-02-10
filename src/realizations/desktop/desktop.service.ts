@@ -120,6 +120,8 @@ export class DesktopService {
         return `${this.fileCfg.desktopSetupName}-${version}.${this.setupExtensionCfg.mac}`;
       case DesktopPlatform.WIN:
         return `${this.fileCfg.desktopSetupName}-${version}.${this.setupExtensionCfg.win}`;
+      case DesktopPlatform.LINUX:
+        return `${this.fileCfg.desktopSetupName}-${version}.${this.setupExtensionCfg.linux}`;
     }
   }
 
@@ -133,6 +135,8 @@ export class DesktopService {
         return path.join(process.cwd(), this.fileCfg.desktopSetupDirPath, `${pattern}.${this.setupExtensionCfg.mac}`);
       case DesktopPlatform.WIN:
         return path.join(process.cwd(), this.fileCfg.desktopSetupDirPath, `${pattern}.${this.setupExtensionCfg.win}`);
+        case DesktopPlatform.LINUX:
+          return path.join(process.cwd(), this.fileCfg.desktopSetupDirPath, `${pattern}.${this.setupExtensionCfg.linux}`);
     }
   }
 }

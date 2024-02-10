@@ -1,11 +1,5 @@
 import { plainToInstance } from 'class-transformer';
-import {
-  IsBooleanString,
-  IsEnum,
-  IsNumberString,
-  IsString,
-  validateSync,
-} from 'class-validator';
+import { IsBooleanString, IsEnum, IsNumberString, IsString, validateSync } from 'class-validator';
 import { NodeEnv } from 'src/enums/node-env';
 
 class EnvVariables {
@@ -60,6 +54,8 @@ class EnvVariables {
   SETUP_EXTENSION_MAC: string;
   @IsString()
   SETUP_EXTENSION_WIN: string;
+  @IsString()
+  SETUP_EXTENSION_LINUX: string;
 
   //db
   @IsString()

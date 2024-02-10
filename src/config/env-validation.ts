@@ -44,13 +44,7 @@ class EnvVariables {
   FILE_DESKTOP_SETUP_DIR_PATH: string;
 
   @IsString()
-  FILE_DESKTOP_UPDATE_DIR_PATH: string;
-
-  @IsString()
   FILE_DESKTOP_SETUP_NAME: string;
-
-  @IsString()
-  FILE_DESKTOP_UPDATE_NAME: string;
 
   @IsNumberString()
   FILE_RESIZE_SIZE: string;

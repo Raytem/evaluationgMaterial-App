@@ -5,27 +5,7 @@ export class CreateDesktopDto {
     type: String,
     format: 'binary',
     required: true,
-    isArray: true,
-    maxItems: 1,
-    description: '.dmg file',
+    description: 'executable file for win/mac',
   })
-  macSetup: string;
-
-  @ApiProperty({
-    type: String,
-    format: 'binary',
-    required: true,
-    isArray: true,
-    maxItems: 1,
-    description: '.exe file',
-  })
-  winSetup: string;
-
-  // @ApiProperty({
-  //   type: String,
-  //   format: 'binary',
-  //   required: true,
-  //   description: `desktop application update`,
-  // })
-  // update: string;
+  setup: string;
 }

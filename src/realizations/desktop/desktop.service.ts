@@ -1,9 +1,4 @@
-import {
-  Inject,
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Inject, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import fspr from 'fs/promises';
 import path from 'path';
 import { ConfigType } from '@nestjs/config';
@@ -11,10 +6,13 @@ import { fileConfig } from 'src/config/config-functions/file.config';
 import { DesktopEntity } from './entities/desktop.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { NewDesktopVersionFilesDto } from './dto/new-desktop-version-files.dto';
 import { FileNameAndBuffer } from './types/file-name-and-buffer';
 import { DesktopPlatform } from 'src/enums/desktop-platform.enum';
 import { setupExtensionConfig } from 'src/config/config-functions/setupExtension.config';
+import { Multer } from 'multer';
+import { promise as glob_pr } from 'glob-promise';
+import { NoSuchException } from 'src/exceptions/no-such.exception';
+import sharp from 'sharp';
 
 @Injectable()
 export class DesktopService {
@@ -40,15 +38,13 @@ export class DesktopService {
     });
 
     if (!latestDesktopEntity.length) {
-      throw new NotFoundException('No desktop version uploaded');
+      throw new NoSuchException('desktop version uploaded');
     }
 
     return latestDesktopEntity[0];
   }
-  async create(
-    version: string,
-    files: NewDesktopVersionFilesDto,
-  ): Promise<DesktopEntity> {
+
+  async create(platform: DesktopPlatform, version: string, setupFile: Multer.file): Promise<DesktopEntity> {
     let desktopEntity: DesktopEntity;
 
     const queryRunner = this.dataSource.createQueryRunner();
@@ -60,64 +56,30 @@ export class DesktopService {
       desktopEntity = await this.getLatestVersion();
 
       try {
-        await fspr.unlink(
-          this.getDesktopSetupFilePath(
-            desktopEntity.version,
-            DesktopPlatform.MAC,
-          ),
-        );
-        await fspr.unlink(
-          this.getDesktopSetupFilePath(
-            desktopEntity.version,
-            DesktopPlatform.WIN,
-          ),
-        );
-        // await fspr.unlink(this.getDesktopUpdateFilePath(desktopEntity.version));
+        const filePaths = await glob_pr(this.getDesktopSetupFilePathWithPattern('*', platform));
+        for (const filePath of filePaths) {
+          await fspr.unlink(filePath);
+        }
       } catch (e) {
         console.log(e);
-        throw new InternalServerErrorException(
-          'cannot find old version of desktop setup',
-        );
+        throw new InternalServerErrorException(`cannot remove old versions of desktop setup (${platform})`);
       }
 
-      desktopEntity = await manager
-        .withRepository(this.desktopRepository)
-        .save({
-          ...desktopEntity,
-          version,
-        });
+      desktopEntity = await manager.withRepository(this.desktopRepository).save({
+        ...desktopEntity,
+        version,
+      });
     } catch (e) {
-      desktopEntity = await manager
-        .withRepository(this.desktopRepository)
-        .save({ version });
+      desktopEntity = await manager.withRepository(this.desktopRepository).save({ version });
     }
 
     try {
-      await fspr.writeFile(
-        this.getDesktopSetupFilePath(
-          desktopEntity.version,
-          DesktopPlatform.MAC,
-        ),
-        files.macSetup[0].buffer,
-      );
-      await fspr.writeFile(
-        this.getDesktopSetupFilePath(
-          desktopEntity.version,
-          DesktopPlatform.WIN,
-        ),
-        files.winSetup[0].buffer,
-      );
-      // await fspr.writeFile(
-      //   this.getDesktopUpdateFilePath(desktopEntity.version),
-      //   files.update[0].buffer,
-      // );
+      await fspr.writeFile(this.getDesktopSetupFilePath(desktopEntity.version, platform), setupFile.buffer);
     } catch (e) {
       await queryRunner.rollbackTransaction();
 
       console.log(e);
-      throw new InternalServerErrorException(
-        'cannot upload new version of desktop app',
-      );
+      throw new InternalServerErrorException(`cannot upload new version of desktop setup (${platform})`);
     }
 
     await queryRunner.commitTransaction();
@@ -126,38 +88,27 @@ export class DesktopService {
     return desktopEntity;
   }
 
-  async getUpdate(): Promise<FileNameAndBuffer> {
-    const desktopEntity = await this.getLatestVersion();
-
-    try {
-      const fileBuffer = await fspr.readFile(
-        this.getDesktopUpdateFilePath(desktopEntity.version),
-      );
-      return {
-        fileName: this.getDesktopUpdateFileName(desktopEntity.version),
-        buffer: fileBuffer,
-      };
-    } catch (e) {
-      console.log(e);
-      throw new InternalServerErrorException('No such desktop update');
-    }
-  }
-
   async getInstaller(platform: DesktopPlatform): Promise<FileNameAndBuffer> {
-    const desktopEntity = await this.getLatestVersion();
+    await this.getLatestVersion();
 
+    const filePaths = await glob_pr(this.getDesktopSetupFilePathWithPattern('*', platform));
+
+    if (!filePaths.length) {
+      throw new NoSuchException(`desktop setup (${platform})`);
+    }
+
+    let fileBuffer: Buffer;
     try {
-      const fileBuffer = await fspr.readFile(
-        this.getDesktopSetupFilePath(desktopEntity.version, platform),
-      );
-      return {
-        fileName: this.getDesktopSetupFileName(desktopEntity.version, platform),
-        buffer: fileBuffer,
-      };
+      fileBuffer = await fspr.readFile(filePaths[0]);
     } catch (e) {
       console.log(e);
-      throw new InternalServerErrorException('No such desktop setup');
+      throw new InternalServerErrorException('Error when reading the file');
     }
+
+    return {
+      fileName: path.basename(filePaths[0]),
+      buffer: fileBuffer,
+    };
   }
 
   private getDesktopSetupFileName(version: string, platform: DesktopPlatform) {
@@ -169,24 +120,16 @@ export class DesktopService {
     }
   }
 
-  private getDesktopUpdateFileName(version: string) {
-    return `${this.fileCfg.desktopUpdateName}-${version}.dmg`;
+  private getDesktopSetupFilePath(version: string, platform: DesktopPlatform): string {
+    return path.join(this.fileCfg.desktopSetupDirPath, this.getDesktopSetupFileName(version, platform));
   }
 
-  private getDesktopSetupFilePath(
-    version: string,
-    platform: DesktopPlatform,
-  ): string {
-    return path.join(
-      this.fileCfg.desktopSetupDirPath,
-      this.getDesktopSetupFileName(version, platform),
-    );
-  }
-
-  private getDesktopUpdateFilePath(version: string): string {
-    return path.join(
-      this.fileCfg.desktopUpdateDirPath,
-      this.getDesktopUpdateFileName(version),
-    );
+  private getDesktopSetupFilePathWithPattern(pattern: string, platform: DesktopPlatform): string {
+    switch (platform) {
+      case DesktopPlatform.MAC:
+        return path.join(this.fileCfg.desktopSetupDirPath, `${pattern}.${this.setupExtensionCfg.mac}`);
+      case DesktopPlatform.WIN:
+        return path.join(this.fileCfg.desktopSetupDirPath, `${pattern}.${this.setupExtensionCfg.win}`);
+    }
   }
 }

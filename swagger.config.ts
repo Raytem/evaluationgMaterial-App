@@ -9,15 +9,13 @@ export function setupSwagger(app) {
     .addSecurity('basic', {
       type: 'http',
       scheme: 'basic',
-      description:
-        'Enter the email address in the "username" field and the password in the "password" field.',
+      description: 'Enter the email address in the "username" field and the password in the "password" field.',
     })
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('api', app, document, {
+  SwaggerModule.setup('server/api', app, document, {
     customSiteTitle: 'Evaluating material API',
-    customCss:
-      '.swagger-ui .topbar { display: none } .swagger-ui { max-width: 1100px; margin: 0 auto; }',
+    customCss: '.swagger-ui .topbar { display: none } .swagger-ui { max-width: 1100px; margin: 0 auto; }',
   });
 }

@@ -23,6 +23,10 @@
     try_files $uri = 404;
   }
 
+  location /server/adminer {
+    proxy_pass 'http://${ADMINER_HOST}:${ADMINER_PORT}';
+  }
+
   location / {
     proxy_cache_bypass $http_upgrade;
     proxy_set_header Upgrade $http_upgrade;

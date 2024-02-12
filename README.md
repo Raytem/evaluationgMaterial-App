@@ -14,10 +14,10 @@ Go to the project directory and than write the following commands:
 $ chmod +x ./init-user-db.sh
 
 #running the app
-$ docker compose up -d
+$ docker-compose --env-file .env.development up
 ```
-## API
-When application have already started, go to
+## ROUTES
 
-**http://localhost:80/api** (if you haven't changed the port)
-
+- http://localhost:80/server/api - API with SwaggerUI
+- http://localhost:80/server/adminer - DB adminer
+- http://localhost:80 - Other server routes

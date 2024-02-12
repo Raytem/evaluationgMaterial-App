@@ -6,7 +6,7 @@ networks:
     name: inside_net
     driver: bridge
 
-services: 
+services:
   nginx_proxy:
     image: nginx:1.25.2
     container_name: nginx_proxy
@@ -17,12 +17,12 @@ services:
       - 'APP_PROXY_HOST=${APP_PROXY_HOST}'
       - 'APP_HOST=app'
       - 'APP_PORT=${APP_PORT}'
+      - 'ADMINER_HOST=adminer'
+      - 'ADMINER_PORT=8080'
     volumes: 
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./default.conf.template:/etc/nginx/templates/default.conf.template
-      - ./static:/static:ro
-    depends_on: 
-      - app
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template
+      - ./${FILE_STATIC_DIR_NAME}:/${FILE_STATIC_DIR_NAME}:ro
     networks: 
       - inside_net
 
@@ -39,7 +39,7 @@ services:
     depends_on: 
       - postgres_db
     volumes:
-      - ./static:/usr/app/evaluationgMaterial-App/static
+      - ./${FILE_STATIC_DIR_NAME}:/usr/app/${FILE_STATIC_DIR_NAME}
     networks: 
       - inside_net
 
@@ -47,8 +47,6 @@ services:
     image: adminer
     container_name: adminer
     restart: always
-    ports:
-      - 8080:8080
     environment: 
       - 'ADMINER_DEFAULT_SERVER=postgres_db:5432'
     networks: 
@@ -62,10 +60,8 @@ services:
       - 'PGDATA=/var/lib/postgresql/data/pgdata'
       - 'POSTGRES_DB=${DB_NAME}'
     volumes: 
-      - ./${DB_NAME}.gz:/var/backups/${DB_NAME}.gz:ro
-      - ./init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh:ro
+      - ./postgres_data/${DB_NAME}.gz:/var/backups/${DB_NAME}.gz:ro
+      - ./scripts/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
       - ./postgres_data:/var/lib/postgresql/data
     networks: 
       - inside_net
-
-

@@ -1,9 +1,4 @@
-import {
-  ClassSerializerInterceptor,
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-} from '@nestjs/common';
+import { ClassSerializerInterceptor, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
@@ -45,6 +40,7 @@ import { AllTypesModule } from './realizations/all-types/all-types.module';
 import { DesktopModule } from './realizations/desktop/desktop.module';
 import { DeveloperGuard } from './auth/guards/developer.guard';
 import { setupExtensionConfig } from './config/config-functions/setupExtension.config';
+import { NodeEnv } from './enums/node-env';
 
 @Module({
   imports: [
@@ -52,13 +48,8 @@ import { setupExtensionConfig } from './config/config-functions/setupExtension.c
       isGlobal: true,
       validate,
       expandVariables: true,
-      load: [
-        appConfig,
-        calculationsConfig,
-        postgresConfig,
-        fileConfig,
-        setupExtensionConfig,
-      ],
+      envFilePath: [process.env.NODE_ENV === NodeEnv.PRODUCTION ? '.env' : `.env.${process.env.NODE_ENV}`],
+      load: [appConfig, calculationsConfig, postgresConfig, fileConfig, setupExtensionConfig],
     }),
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,

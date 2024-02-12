@@ -135,8 +135,8 @@ export class DesktopService {
         return path.join(process.cwd(), this.fileCfg.desktopSetupDirPath, `${pattern}.${this.setupExtensionCfg.mac}`);
       case DesktopPlatform.WIN:
         return path.join(process.cwd(), this.fileCfg.desktopSetupDirPath, `${pattern}.${this.setupExtensionCfg.win}`);
-        case DesktopPlatform.LINUX:
-          return path.join(process.cwd(), this.fileCfg.desktopSetupDirPath, `${pattern}.${this.setupExtensionCfg.linux}`);
+      case DesktopPlatform.LINUX:
+        return path.join(process.cwd(), this.fileCfg.desktopSetupDirPath, `${pattern}.${this.setupExtensionCfg.linux}`);
     }
   }
 }

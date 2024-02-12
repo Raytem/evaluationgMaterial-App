@@ -5,7 +5,7 @@ export class CreateDesktopDto {
     type: String,
     format: 'binary',
     required: true,
-    description: 'executable file for win/mac',
+    description: 'executable file for win/mac/linux',
   })
   setup: string;
 }

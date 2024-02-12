@@ -6,6 +6,4 @@ static/desktop/*
 !static/desktop/.gitkeep
 
 static/material_images/
-!static/material_images/.gitkeep 
-
-.env
+!static/material_images/.gitkeep

@@ -18,18 +18,14 @@ export class BendingTypeService {
     private bendingTypeRepository: Repository<BendingTypeEntity>,
   ) {}
 
-  async create(
-    createBendingTypeDto: CreateBendingTypeDto,
-  ): Promise<BendingTypeEntity> {
+  async create(createBendingTypeDto: CreateBendingTypeDto): Promise<BendingTypeEntity> {
     let bendingType;
     try {
       bendingType = await this.findOne(null, createBendingTypeDto.name);
     } catch {}
 
     if (bendingType) {
-      throw new BadRequestException(
-        'BendingType with this name already exists',
-      );
+      throw new BadRequestException('BendingType with this name already exists');
     }
 
     const newBendingType = await this.bendingTypeRepository.save({
@@ -54,7 +50,7 @@ export class BendingTypeService {
       bendingType = await this.bendingTypeRepository.findOneBy({
         name,
       });
-    } else {
+    } else if (id) {
       bendingType = await this.bendingTypeRepository.findOneBy({
         id,
       });
@@ -67,10 +63,7 @@ export class BendingTypeService {
     return bendingType;
   }
 
-  async update(
-    id: number,
-    updateBendingTypeDto: UpdateBendingTypeDto,
-  ): Promise<BendingTypeEntity> {
+  async update(id: number, updateBendingTypeDto: UpdateBendingTypeDto): Promise<BendingTypeEntity> {
     const bendingType = await this.findOne(id);
 
     const bendingTypeByName = await this.bendingTypeRepository.findOneBy({
@@ -78,9 +71,7 @@ export class BendingTypeService {
     });
 
     if (bendingTypeByName && bendingType.id !== bendingTypeByName.id) {
-      throw new BadRequestException(
-        'BendingType with this name already exists',
-      );
+      throw new BadRequestException('BendingType with this name already exists');
     }
 
     await this.bendingTypeRepository.update(

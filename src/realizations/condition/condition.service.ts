@@ -29,31 +29,26 @@ export class ConditionService {
 
   async create(createConditionDto: CreateConditionDto, manager: EntityManager) {
     try {
-      const abrasionType = await this.abrasionTypeService.findOne(
-        createConditionDto.abrasionType_id,
-      );
+      let abrasionType;
+      if (createConditionDto.abrasionType_id) {
+        abrasionType = await this.abrasionTypeService.findOne(createConditionDto.abrasionType_id);
+      }
 
-      const bendingType = await this.bendingTypeService.findOne(
-        createConditionDto.bendingType_id,
-      );
+      let bendingType;
+      if (createConditionDto.bendingType_id) {
+        bendingType = await this.bendingTypeService.findOne(createConditionDto.bendingType_id);
+      }
 
       let washing;
       if (createConditionDto.washing) {
-        const washingType = await this.washingTypeService.findOne(
-          createConditionDto.washing.washingType_id,
-        );
+        const washingType = await this.washingTypeService.findOne(createConditionDto.washing.washingType_id);
 
-        washing = await this.washingService.create(
-          createConditionDto.washing,
-          washingType,
-          manager,
-        );
+        washing = await this.washingService.create(createConditionDto.washing, washingType, manager);
       }
 
-      const physicalActivityType =
-        await this.physicalActivityTypeService.findOne(
-          createConditionDto.physicalActivityType_id,
-        );
+      const physicalActivityType = await this.physicalActivityTypeService.findOne(
+        createConditionDto.physicalActivityType_id,
+      );
 
       const partialConditionEntity = this.conditionRepository.create({
         ...createConditionDto,
@@ -64,9 +59,7 @@ export class ConditionService {
       });
 
       if (manager) {
-        return await manager
-          .withRepository(this.conditionRepository)
-          .save(partialConditionEntity);
+        return await manager.withRepository(this.conditionRepository).save(partialConditionEntity);
       } else {
         return await this.conditionRepository.save(partialConditionEntity);
       }

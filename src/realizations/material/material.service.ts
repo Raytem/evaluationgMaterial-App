@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  ForbiddenException,
-  Injectable,
-} from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MaterialEntity } from './entities/material.entity';
 import { ConditionService } from '../condition/condition.service';
@@ -72,8 +68,7 @@ export class MaterialService {
     reqUser: UserEntity,
   ): Promise<MaterialEntity> {
     const waterproofWeightSum =
-      createMaterialDto.waterproofFunction
-        .waterproofRealizationCriteria_weight +
+      createMaterialDto.waterproofFunction.waterproofRealizationCriteria_weight +
       createMaterialDto.waterproofFunction.dynamicWaterproofCriteria_weight +
       createMaterialDto.waterproofFunction.materialBlottingPressure_weight +
       createMaterialDto.waterproofFunction.materialBlottingTime_weight +
@@ -82,19 +77,14 @@ export class MaterialService {
     const homeostasisWeightSum =
       createMaterialDto.homeostasisFunction.waterPermeability_weight +
       createMaterialDto.homeostasisFunction.totalThermalResistance_weight +
-      createMaterialDto.homeostasisFunction
-        .waterPermeabilityDynamicCriteria_weight;
+      createMaterialDto.homeostasisFunction.waterPermeabilityDynamicCriteria_weight;
 
     const reliabilityWeightSum =
       createMaterialDto.reliabilityFunction.waterproofFunctionResource_weight +
-      createMaterialDto.reliabilityFunction
-        .relativeBlottingTimeAfterLoad_weight +
-      createMaterialDto.reliabilityFunction
-        .relativeWaterResistanceAfterLoad_weight +
-      createMaterialDto.reliabilityFunction
-        .relativeBlottingPressureAfterLoad_weight +
-      createMaterialDto.reliabilityFunction
-        .waterproofRealizationCriteriaAfterLoad_weight;
+      createMaterialDto.reliabilityFunction.relativeBlottingTimeAfterLoad_weight +
+      createMaterialDto.reliabilityFunction.relativeWaterResistanceAfterLoad_weight +
+      createMaterialDto.reliabilityFunction.relativeBlottingPressureAfterLoad_weight +
+      createMaterialDto.reliabilityFunction.waterproofRealizationCriteriaAfterLoad_weight;
 
     const estimationWeightSum =
       createMaterialDto.estimation.homeostasisFunction_weight +
@@ -118,9 +108,7 @@ export class MaterialService {
     }
 
     if (estimationWeightSum > 1 || estimationWeightSum < 0) {
-      throw new BadRequestException(
-        "The sum of the weights in 'estimation' cannot be more than 1 and less then 0",
-      );
+      throw new BadRequestException("The sum of the weights in 'estimation' cannot be more than 1 and less then 0");
     }
 
     const queryRunner = this.dataSource.createQueryRunner();
@@ -129,68 +117,41 @@ export class MaterialService {
     const manager = queryRunner.manager;
 
     try {
-      const glueType = await this.glueTypeService.findOne(
-        createMaterialDto.material.glueType_id,
-      );
+      const glueType = await this.glueTypeService.findOne(createMaterialDto.material.glueType_id);
 
-      const membraneLayerPolymerType =
-        await this.membraneLayerPolymerTypeService.findOne(
-          createMaterialDto.material.membraneLayerPolymerType_id,
-        );
+      const membraneLayerPolymerType = await this.membraneLayerPolymerTypeService.findOne(
+        createMaterialDto.material.membraneLayerPolymerType_id,
+      );
 
       const productionMethod = await this.productionMethodService.findOne(
         createMaterialDto.material.productionMethod_id,
       );
 
       //material creation
-      const condition = await this.conditionService.create(
-        createMaterialDto.condition,
-        manager,
-      );
+      const condition = await this.conditionService.create(createMaterialDto.condition, manager);
 
-      const material = await manager
-        .withRepository(this.materialRepository)
-        .save({
-          ...createMaterialDto.material,
-          condition,
-          user: reqUser,
-          productionMethod,
-          membraneLayerPolymerType,
-          glueType,
-        });
+      const material = await manager.withRepository(this.materialRepository).save({
+        ...createMaterialDto.material,
+        condition,
+        user: reqUser,
+        productionMethod,
+        membraneLayerPolymerType,
+        glueType,
+      });
 
-      await this.layerService.createMany(
-        material,
-        createMaterialDto.material.layers,
-        manager,
-      );
+      await this.layerService.createMany(material, createMaterialDto.material.layers, manager);
 
       await this.imageService.createMany(files, material, manager);
 
-      const calculatedFunctionalIndicators = this.calculationService.calcAll(
-        createMaterialDto,
-        material,
-      );
+      const calculatedFunctionalIndicators = this.calculationService.calcAll(createMaterialDto, material);
 
-      await this.waterproofFunctionService.create(
-        calculatedFunctionalIndicators.waterproofFunction,
-        manager,
-      );
+      await this.waterproofFunctionService.create(calculatedFunctionalIndicators.waterproofFunction, manager);
 
-      await this.homeostasisFunctionService.create(
-        calculatedFunctionalIndicators.homeostasisFunction,
-        manager,
-      );
+      await this.homeostasisFunctionService.create(calculatedFunctionalIndicators.homeostasisFunction, manager);
 
-      await this.reliabilityFunctionService.create(
-        calculatedFunctionalIndicators.reliabilityFunction,
-        manager,
-      );
+      await this.reliabilityFunctionService.create(calculatedFunctionalIndicators.reliabilityFunction, manager);
 
-      await this.estimationService.create(
-        calculatedFunctionalIndicators.estimation,
-        manager,
-      );
+      await this.estimationService.create(calculatedFunctionalIndicators.estimation, manager);
 
       await queryRunner.commitTransaction();
       return await this.findOne(material.id);
@@ -202,18 +163,14 @@ export class MaterialService {
     }
   }
 
-  async update(
-    id: number,
-    updateMaterialDto: UpdateMaterialDto,
-    reqUser: UserEntity,
-  ): Promise<MaterialEntity> {
+  async update(id: number, updateMaterialDto: UpdateMaterialDto, reqUser: UserEntity): Promise<MaterialEntity> {
     const material = await this.findOne(id);
 
     if (material.user.id !== reqUser.id) {
       throw new ForbiddenException('You can update only your materials');
     }
 
-    const updatedMaterial = await this.materialRepository.save({
+    await this.materialRepository.save({
       id,
       ...material,
       ...updateMaterialDto,
@@ -222,9 +179,7 @@ export class MaterialService {
     return await this.findOne(id);
   }
 
-  async findAll(
-    materialFilterDto: MaterialFilterDto,
-  ): Promise<MaterialsAndCnt> {
+  async findAll(materialFilterDto: MaterialFilterDto): Promise<MaterialsAndCnt> {
     const queryBuilder = this.materialRepository
       .createQueryBuilder('material')
       .leftJoinAndSelect('material.condition', 'condition')
@@ -233,10 +188,7 @@ export class MaterialService {
       .leftJoinAndSelect('condition.washing', 'washing')
       .leftJoinAndSelect('washing.washingType', 'washingType')
       .leftJoinAndSelect('condition.bendingType', 'bendingType')
-      .leftJoinAndSelect(
-        'condition.physicalActivityType',
-        'physicalActivityType',
-      )
+      .leftJoinAndSelect('condition.physicalActivityType', 'physicalActivityType')
       .leftJoinAndSelect('material.waterproofFunction', 'waterproofFunction')
       .leftJoinAndSelect('material.homeostasisFunction', 'homeostasisFunction')
       .leftJoinAndSelect('material.reliabilityFunction', 'reliabilityFunction')
@@ -245,10 +197,7 @@ export class MaterialService {
       .leftJoinAndSelect('layer.layerType', 'layerType')
       .leftJoinAndSelect('material.images', 'image')
       .leftJoinAndSelect('material.productionMethod', 'productionMethod')
-      .leftJoinAndSelect(
-        'material.membraneLayerPolymerType',
-        'membraneLayerPolymerType',
-      )
+      .leftJoinAndSelect('material.membraneLayerPolymerType', 'membraneLayerPolymerType')
       .leftJoinAndSelect('material.glueType', 'glueType');
 
     if (materialFilterDto.userId) {
@@ -258,19 +207,13 @@ export class MaterialService {
     }
 
     if (materialFilterDto.name) {
-      queryBuilder.andWhere(
-        `material.name ILIKE '%${materialFilterDto.name}%'`,
-      );
+      queryBuilder.andWhere(`material.name ILIKE '%${materialFilterDto.name}%'`);
     }
 
     if (materialFilterDto.membraneLayerPolymerType_id) {
-      queryBuilder.andWhere(
-        'membraneLayerPolymerType.id = :membraneLayerPolymerType_id',
-        {
-          membraneLayerPolymerType_id:
-            materialFilterDto.membraneLayerPolymerType_id,
-        },
-      );
+      queryBuilder.andWhere('membraneLayerPolymerType.id = :membraneLayerPolymerType_id', {
+        membraneLayerPolymerType_id: materialFilterDto.membraneLayerPolymerType_id,
+      });
     }
 
     if (materialFilterDto.productionMethod_id) {
@@ -308,8 +251,7 @@ export class MaterialService {
       queryBuilder.andWhere(
         'waterproofFunction.materialBlottingPressure_calculated >= :materialBlottingPressure_calculated_min',
         {
-          materialBlottingPressure_calculated_min:
-            materialFilterDto.materialBlottingPressure_calculated_min,
+          materialBlottingPressure_calculated_min: materialFilterDto.materialBlottingPressure_calculated_min,
         },
       );
     }
@@ -318,8 +260,7 @@ export class MaterialService {
       queryBuilder.andWhere(
         'waterproofFunction.materialBlottingPressure_calculated <= :materialBlottingPressure_calculated_max',
         {
-          materialBlottingPressure_calculated_max:
-            materialFilterDto.materialBlottingPressure_calculated_max,
+          materialBlottingPressure_calculated_max: materialFilterDto.materialBlottingPressure_calculated_max,
         },
       );
     }
@@ -328,8 +269,7 @@ export class MaterialService {
       queryBuilder.andWhere(
         'waterproofFunction.materialBlottingPressure_calculated >= :materialBlottingTime_calculated_min',
         {
-          materialBlottingTime_calculated_min:
-            materialFilterDto.materialBlottingTime_calculated_min,
+          materialBlottingTime_calculated_min: materialFilterDto.materialBlottingTime_calculated_min,
         },
       );
     }
@@ -338,8 +278,7 @@ export class MaterialService {
       queryBuilder.andWhere(
         'waterproofFunction.materialBlottingTime_calculated <= :materialBlottingTime_calculated_max',
         {
-          materialBlottingTime_calculated_max:
-            materialFilterDto.materialBlottingTime_calculated_max,
+          materialBlottingTime_calculated_max: materialFilterDto.materialBlottingTime_calculated_max,
         },
       );
     }
@@ -348,8 +287,7 @@ export class MaterialService {
       queryBuilder.andWhere(
         'homeostasisFunction.totalThermalResistance_calculated >= :totalThermalResistance_calculated_min',
         {
-          totalThermalResistance_calculated_min:
-            materialFilterDto.totalThermalResistance_calculated_min,
+          totalThermalResistance_calculated_min: materialFilterDto.totalThermalResistance_calculated_min,
         },
       );
     }
@@ -358,15 +296,12 @@ export class MaterialService {
       queryBuilder.andWhere(
         'homeostasisFunction.totalThermalResistance_calculated <= :totalThermalResistance_calculated_max',
         {
-          totalThermalResistance_calculated_max:
-            materialFilterDto.totalThermalResistance_calculated_max,
+          totalThermalResistance_calculated_max: materialFilterDto.totalThermalResistance_calculated_max,
         },
       );
     }
 
-    if (
-      materialFilterDto.relativeBlottingPressureAfterLoad_relativeValuation_min
-    ) {
+    if (materialFilterDto.relativeBlottingPressureAfterLoad_relativeValuation_min) {
       queryBuilder.andWhere(
         'reliabilityFunction.relativeBlottingPressureAfterLoad_relativeValuation >= :relativeBlottingPressureAfterLoad_relativeValuation_min',
         {
@@ -376,9 +311,7 @@ export class MaterialService {
       );
     }
 
-    if (
-      materialFilterDto.relativeBlottingPressureAfterLoad_relativeValuation_max
-    ) {
+    if (materialFilterDto.relativeBlottingPressureAfterLoad_relativeValuation_max) {
       queryBuilder.andWhere(
         'reliabilityFunction.relativeBlottingPressureAfterLoad_relativeValuation <= :relativeBlottingPressureAfterLoad_relativeValuation_max',
         {
@@ -417,10 +350,7 @@ export class MaterialService {
     };
   }
 
-  async findOne(
-    id: number,
-    withFunctionalIndicators = false,
-  ): Promise<MaterialEntity> {
+  async findOne(id: number, withFunctionalIndicators = false): Promise<MaterialEntity> {
     const material = await this.materialRepository.findOne({
       where: { id },
       relations: {
@@ -442,9 +372,7 @@ export class MaterialService {
     const material = await this.findOne(id);
 
     if (material.user.id !== reqUser.id) {
-      throw new ForbiddenException(
-        'You can delete only the materials you have created',
-      );
+      throw new ForbiddenException('You can delete only the materials you have created');
     }
 
     try {

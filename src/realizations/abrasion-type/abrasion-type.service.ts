@@ -18,18 +18,14 @@ export class AbrasionTypeService {
     private abrasionTypeRepository: Repository<AbrasionTypeEntity>,
   ) {}
 
-  async create(
-    createAbrasionTypeDto: CreateAbrasionTypeDto,
-  ): Promise<AbrasionTypeEntity> {
+  async create(createAbrasionTypeDto: CreateAbrasionTypeDto): Promise<AbrasionTypeEntity> {
     let abrasionType;
     try {
       abrasionType = await this.findOne(null, createAbrasionTypeDto.name);
     } catch {}
 
     if (abrasionType) {
-      throw new BadRequestException(
-        'AbrasionType with this name already exists',
-      );
+      throw new BadRequestException('AbrasionType with this name already exists');
     }
 
     const newAbrasionType = await this.abrasionTypeRepository.save({
@@ -54,7 +50,7 @@ export class AbrasionTypeService {
       abrasionType = await this.abrasionTypeRepository.findOneBy({
         name,
       });
-    } else {
+    } else if (id) {
       abrasionType = await this.abrasionTypeRepository.findOneBy({
         id,
       });
@@ -67,10 +63,7 @@ export class AbrasionTypeService {
     return abrasionType;
   }
 
-  async update(
-    id: number,
-    updateAbrasionTypeDto: UpdateAbrasionTypeDto,
-  ): Promise<AbrasionTypeEntity> {
+  async update(id: number, updateAbrasionTypeDto: UpdateAbrasionTypeDto): Promise<AbrasionTypeEntity> {
     const abrasionType = await this.findOne(id);
 
     const abrasionTypeByName = await this.abrasionTypeRepository.findOneBy({
@@ -78,9 +71,7 @@ export class AbrasionTypeService {
     });
 
     if (abrasionTypeByName && abrasionType.id !== abrasionTypeByName.id) {
-      throw new BadRequestException(
-        'AbrasionType with this name already exists',
-      );
+      throw new BadRequestException('AbrasionType with this name already exists');
     }
 
     await this.abrasionTypeRepository.update(

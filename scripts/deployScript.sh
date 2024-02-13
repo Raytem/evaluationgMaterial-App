@@ -1,6 +1,6 @@
 #!/bin/bash
 
-directory="evaluatingMaterial-App"
+directory="komfort"
 
 if [ ! -d "$directory" ]; then
     git clone "https://github.com/Raytem/$directory"
@@ -10,5 +10,6 @@ cd "$directory"
 git pull
 
 sudo docker-compose down
-docker system prune -a --force
+docker rmi app
+docker system prune --force
 sudo docker-compose up -d --build

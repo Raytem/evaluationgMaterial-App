@@ -1,4 +1,4 @@
-# Evaluating Material App
+# Komfort App
 
 ## Description
 The program being developed is designed to assess the level of functionality of materials for waterproof clothing and to store data on materials of various structures that have passed the evaluation procedure in whole or in part.

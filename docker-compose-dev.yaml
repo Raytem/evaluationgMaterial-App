@@ -30,9 +30,9 @@ services:
       - inside_net
 
   app: 
-    build:
+    build: 
       context: ./
-      dockerfile: ./docker/prod/dockerfile
+      dockerfile: ./docker/dev/dockerfile
     container_name: app
     restart: always
     environment: 

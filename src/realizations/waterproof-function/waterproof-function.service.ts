@@ -15,14 +15,9 @@ export class WaterproofFunctionService {
     manager?: EntityManager,
   ): Promise<WaterproofFunctionEntity> {
     if (manager) {
-      return await manager
-        .withRepository(this.waterProofFunctionRepository)
-        .save(createWaterproofFunctionDto);
+      return await manager.withRepository(this.waterProofFunctionRepository).save(createWaterproofFunctionDto);
     } else {
-      return await this.waterProofFunctionRepository.save(
-        createWaterproofFunctionDto,
-      );
+      return await this.waterProofFunctionRepository.save(createWaterproofFunctionDto);
     }
-    
   }
 }

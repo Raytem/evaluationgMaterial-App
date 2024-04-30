@@ -5,7 +5,9 @@ export function objNumbersToFixed(obj, cntOfNumbersAfterPoint: number) {
 
   for (const key in obj) {
     if (typeof obj[key] === 'number') {
-      obj[key] = +obj[key].toFixed(cntOfNumbersAfterPoint);
+      if (!obj[key].toString().toLocaleLowerCase().includes('e')) {
+        obj[key] = +obj[key].toFixed(cntOfNumbersAfterPoint);
+      }
     }
     if (obj[key] === Infinity) {
       obj[key] = 0;

@@ -9,12 +9,7 @@ import bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private userService: UserService,
-
-    @InjectRepository(UserEntity)
-    private userRepository: Repository<UserEntity>,
-  ) {}
+  constructor(private userService: UserService) {}
 
   async validate(loginDto: LoginDto): Promise<UserEntity> {
     try {

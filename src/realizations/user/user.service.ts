@@ -1,9 +1,4 @@
-import {
-  BadRequestException,
-  ForbiddenException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -30,9 +25,7 @@ export class UserService {
     } catch {}
 
     if (user) {
-      throw new UnauthorizedException(
-        `User with email '${createUserDto.email}' already exists`,
-      );
+      throw new UnauthorizedException(`User with email '${createUserDto.email}' already exists`);
     }
 
     const newUser = await this.userRepository.save(createUserDto);
@@ -71,11 +64,7 @@ export class UserService {
     return user;
   }
 
-  async update(
-    id: number,
-    updateUserDto: UpdateUserDto,
-    reqUser: UserEntity,
-  ): Promise<UserEntity> {
+  async update(id: number, updateUserDto: UpdateUserDto, reqUser: UserEntity): Promise<UserEntity> {
     if (reqUser.id !== id) {
       throw new ForbiddenException('You can update only your account');
     }

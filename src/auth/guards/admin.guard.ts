@@ -11,10 +11,7 @@ export class AdminGuard implements CanActivate {
     const req = context.switchToHttp().getRequest();
     const user: UserEntity | undefined = req.user;
 
-    const isForAdmin = this.reflector.getAllAndOverride(IS_ADMIN_KEY, [
-      context.getClass(),
-      context.getHandler(),
-    ]);
+    const isForAdmin = this.reflector.getAllAndOverride(IS_ADMIN_KEY, [context.getClass(), context.getHandler()]);
 
     if (isForAdmin) {
       if (!user || !user.isAdmin) {

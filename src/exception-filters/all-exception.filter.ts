@@ -3,6 +3,7 @@ import {
   Catch,
   ExceptionFilter,
   HttpException,
+  HttpExceptionBody,
   HttpStatus,
   Logger,
 } from '@nestjs/common';
@@ -18,20 +19,24 @@ export class AllExceptionFilter implements ExceptionFilter {
 
     const context = host.switchToHttp();
 
-    const httpStatus =
+    const errorResponse: HttpExceptionBody =
       exception instanceof HttpException
-        ? exception.getStatus()
-        : HttpStatus.INTERNAL_SERVER_ERROR;
+        ? {
+            statusCode: exception.getStatus(),
+            //@ts-ignore
+            message: exception.getResponse()?.message || exception.message,
+            //@ts-ignore
+            error: exception.getResponse()?.error || exception.message,
+          }
+        : {
+            statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+            message: 'Internal server error',
+            error: 'Something wend wrong',
+          };
 
     const path = httpAdapter.getRequestUrl(context.getRequest());
 
-    const responseBody = {
-      statusCode: httpStatus,
-      errorMessage: exception.message,
-      message: exception?.response?.message || exception.message,
-      path,
-      timestamp: new Date().toISOString(),
-    };
+    const responseBody: HttpExceptionBody = errorResponse;
 
     console.log('');
     this.logger.error('Error');
@@ -39,6 +44,6 @@ export class AllExceptionFilter implements ExceptionFilter {
 
     console.log(exception);
 
-    httpAdapter.reply(context.getResponse(), responseBody, httpStatus);
+    httpAdapter.reply(context.getResponse(), responseBody, errorResponse.statusCode);
   }
 }
